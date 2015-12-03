@@ -10,10 +10,6 @@ local y = 0
 map[x] = {}
 map[x][y] = true
 
-local function init_pos(x, y)
-    if type(map[x]) ~= "table" then map[x] = {} end
-end
-
 local char
 
 repeat
@@ -29,7 +25,7 @@ repeat
         x = x + 1
     end
 
-    init_pos(x, y)
+    if type(map[x]) ~= "table" then map[x] = {} end
 
     if not map[x][y] then
         deliveries = deliveries + 1
