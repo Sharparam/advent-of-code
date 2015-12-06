@@ -1,8 +1,6 @@
-local grid = {}
+local grid = require("grid")
 
-for x = 0, 999 do
-    grid[x] = {}
-end
+grid.init(false)
 
 local ops = {
     ["on"] = function() return true end,
@@ -11,15 +9,7 @@ local ops = {
 }
 
 local function count()
-    local lit = 0
-
-    for x = 0, 999 do
-        for y = 0, 999 do
-            if grid[x][y] then lit = lit + 1 end
-        end
-    end
-
-    return lit
+    return grid.accum(0, function(accum, cell) return accum + (cell and 1 or 0) end)
 end
 
 local input = io.open("input.txt", "r")
@@ -32,13 +22,7 @@ for line in input:lines("l") do
     endx = tonumber(endx)
     endy = tonumber(endy)
 
-    local func = ops[op]
-
-    for x = startx, endx do
-        for y = starty, endy do
-            grid[x][y] = func(grid[x][y])
-        end
-    end
+    grid.apply(ops[op], startx, endx, starty, endy)
 end
 
 input:close()
