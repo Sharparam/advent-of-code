@@ -7,4 +7,6 @@ input = io.open 'input.txt', 'r'
 for line in input\lines '*l'
     emulator.parse line
 
+input\close!
+
 print "The value of wire a is #{emulator.get 'a'}"
