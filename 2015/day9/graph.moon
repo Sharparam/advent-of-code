@@ -23,15 +23,8 @@ is_empty = (tbl) ->
     true
 
 copy = (tbl) ->
-    if type(tbl) != 'table'
-        return tbl
-
-    result = {}
-    
-    for k, v in pairs tbl
-        result[k] = copy v
-
-    result
+    return tbl unless type(tbl) == 'table'
+    {k, copy v for k, v in pairs tbl}
 
 shortest_path = (start, visited = {}, cost = 0) ->
     if not start
