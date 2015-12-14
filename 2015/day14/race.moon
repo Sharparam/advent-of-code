@@ -1,7 +1,7 @@
 reindeer = {}
 
 parse = (line) ->
-    name, speed, duration, cooldown = line\match '(%w+) can fly (%d+) km/s for (%d+) seconds, but then must rest for (%d+) seconds.'
+    name, speed, duration, cooldown = line\match '(%w+)[^%d]+(%d+)[^%d]+(%d+)[^%d]+(%d+)'
     reindeer[name] = :speed, :duration, :cooldown
 
 get_winner = (race_duration) ->
