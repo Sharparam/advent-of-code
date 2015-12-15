@@ -23,7 +23,7 @@ calc = (counts, ignore_calories = false) ->
         durability += counts[i] * data.durability
         flavor += counts[i] * data.flavor
         texture += counts[i] * data.texture
-        calories += counts[i] * data.calories unless ignore_calories
+        calories += counts[i] * data.calories
 
     capacity = 0 if capacity < 0
     durability = 0 if durability < 0
@@ -33,7 +33,7 @@ calc = (counts, ignore_calories = false) ->
 
     score = capacity * durability * flavor * texture
     score *= calories unless ignore_calories
-    score
+    score, calories
 
 generate = (tbl = {}, i = 1, count = #ingredients, limit = 100, aggregator = 0) ->
     if i == count
@@ -47,19 +47,19 @@ generate = (tbl = {}, i = 1, count = #ingredients, limit = 100, aggregator = 0) 
 combinations = ->
     coroutine.wrap -> generate!
 
-best_score = ->
+best_score = (calorie_watch = false) ->
     max = 0
 
-    for combination in combinations!
-        score = calc combination, true
-        max = score if score > max
+    --for combination in combinations!
+    --    score = calc combination, true
+    --    max = score if score > max
 
-    --for first = 0, 100
-    --    for second = 0, 100 - first
-    --        for third = 0, 100 - first - second
-    --            fourth = 100 - first - second - third
-    --            score = calc {first, second, third, fourth}, true
-    --            max = score if score > max
+    for first = 0, 100
+        for second = 0, 100 - first
+            for third = 0, 100 - first - second
+                fourth = 100 - first - second - third
+                score, calories = calc {first, second, third, fourth}, true
+                max = score if score > max and (not calorie_watch or calories == 500)
 
     max
 
