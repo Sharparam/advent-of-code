@@ -1,0 +1,5 @@
+# Ignore generated Lua files
+*.lua
+
+# Ignore garbage test file
+garbage.txt
