@@ -14,24 +14,14 @@ parse = (line) ->
     for item, count in line\gmatch '(%a+): (%d+)'
         aunts[id][item] = tonumber count
 
-is_match = (id, attributes) ->
-    for item, count in pairs aunts[id]
-        return false unless attributes[item] == count
+is_match = (aunt, attributes, comparer) ->
+    for item, count in pairs aunt
+        return false unless (comparer or comparers[item]) count, attributes[item]
     true
 
-find_match = (attributes) ->
+find_match = (attributes, comparer) ->
     for id, aunt in ipairs aunts
-        return id if is_match id, attributes
+        return id if is_match aunt, attributes, comparer
     -1
 
-is_real_match = (id, attributes) ->
-    for item, count in pairs aunts[id]
-        return false unless comparers[item] count, attributes[item]
-    true
-
-find_real_match = (attributes) ->
-    for id, aunt in ipairs aunts
-        return id if is_real_match id, attributes
-    -1
-
-{ :parse, :find_match, :find_real_match }
+{ :parse, :find_match }
