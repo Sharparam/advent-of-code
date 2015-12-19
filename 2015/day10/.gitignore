@@ -1,2 +1,6 @@
 # Ignore generated Lua files
 *.lua
+
+# Ignore C# program executable
+Program.exe
+
