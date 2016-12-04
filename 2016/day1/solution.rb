@@ -30,9 +30,8 @@ class Point
   end
 
   def turn(direction)
-    @orientation += direction == :r ? 1 : -1
-    @orientation = 0 if @orientation >= MOVEMENT.keys.size
-    @orientation = MOVEMENT.keys.size - 1 if @orientation < 0
+    @orientation += direction == :r ? 1 : MOVEMENT.keys.size - 1
+    @orientation %= MOVEMENT.keys.size
   end
 
   def move(steps)
