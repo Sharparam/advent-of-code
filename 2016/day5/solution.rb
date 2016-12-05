@@ -1,0 +1,3 @@
+input = STDIN.readline
+
+
