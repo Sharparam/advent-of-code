@@ -2,13 +2,11 @@
 # encoding: utf-8
 # force_string_literal: true
 
-input = STDIN.readlines.map(&:strip)
-
 counts = []
 
-input.first.size.times { counts << Hash.new(0) }
-
-input.each do |message|
+STDIN.readlines.map(&:strip).tap do |input|
+  input.first.size.times { counts << Hash.new(0) }
+end.each do |message|
   message.chars.each.with_index { |c, i| counts[i][c] += 1 }
 end
 
