@@ -4,38 +4,41 @@
 
 input = STDIN.readline.strip
 
-def solve(input, second = false)
+def solve(input)
+  i_size = input.size
+
   if !input.include? '('
-    return [input.size] * 2
+    return [i_size, i_size]
   end
 
-  length = 0
+  part_1 = 0
+  part_2 = 0
   index = 0
 
-  while index < input.size
+  while index < i_size
     if input[index] != '('
-      length += 1
+      part_1 += 1
+      part_2 += 1
       index += 1
       next
     end
 
-    marker, count, repeat = input[index..-1].match(/^\((\d+)x(\d+)\)/).to_a
-    count = count.to_i
-    repeat = repeat.to_i
+    m_end = input.index ')', index
+    x_i = input.index 'x', index
 
-    if second
-      d_length, d_index = solve(input[index + marker.size..index + marker.size + count - 1], second)
-    else
-      d_length = count
-      d_index = count
-    end
+    count = input[index + 1..x_i - 1].to_i
+    repeat = input[x_i + 1..m_end - 1].to_i
 
-    length += d_length * repeat
-    index += marker.size + d_index
+    data_end = m_end + count
+
+    _, d_length = solve(input[m_end + 1..data_end])
+
+    part_1 += count * repeat
+    part_2 += d_length * repeat
+    index = data_end
   end
 
-  [length, index]
+  [part_1, part_2]
 end
 
-puts "(1) #{solve(input).first}"
-puts "(2) #{solve(input, true).first}"
+solve(input).each.with_index { |r, i| puts "(#{i + 1}) #{r}" }
