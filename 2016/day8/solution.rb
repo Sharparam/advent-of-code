@@ -8,5 +8,5 @@ screen = Screen.new
 
 STDIN.each_line { |l| screen.process l.strip }
 
-puts screen
 puts "(1) #{screen.lit_count}"
+puts "(2)\n#{screen}"
