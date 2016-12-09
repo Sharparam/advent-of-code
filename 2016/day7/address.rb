@@ -1,5 +1,5 @@
 # encoding: utf-8
-# force_string_literal: true
+# frozen_string_literal: true
 
 class Address
   ABBA_PATTERN = /([a-z0-9])(?!\1)([a-z0-9])\2\1/

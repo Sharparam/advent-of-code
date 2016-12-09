@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-# force_string_literal: true
+# frozen_string_literal: true
 
 counts = []
 
