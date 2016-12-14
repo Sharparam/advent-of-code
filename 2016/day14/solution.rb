@@ -48,7 +48,7 @@ def check_match!(key, to_check, count)
   )
 end
 
-while true
+loop do
   key = gen input, counter
   key_2 = gen_extra key
 
