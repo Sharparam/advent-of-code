@@ -36,7 +36,7 @@ def get_unbalanced(node)
     unbalanced = node.nodes.find { |n| n.total == weight }
     result = get_unbalanced unbalanced
     return result if result.is_a? Numeric
-    if result.name == unbalanced.name
+    if result == unbalanced
         others = groups.last.first
         diff = weight - others
         result = unbalanced.weight - diff
