@@ -4,7 +4,7 @@ class CPU
     attr_reader :highest
 
     def initialize
-        @regs = {}
+        @regs = Hash.new(0)
     end
 
     def inc(value) value end
@@ -12,7 +12,6 @@ class CPU
     def run(text) eval text end
 
     def method_missing(symbol, *args)
-        @regs[symbol] ||= 0
         (@regs[symbol] += args.first.to_i).tap do |val|
             @highest = val if @highest.nil? || @highest < val
         end
