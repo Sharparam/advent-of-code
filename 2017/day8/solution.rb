@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 class CPU
-    attr_reader :highest
+    attr_reader :highest, :regs
 
     def initialize
         @regs = Hash.new(0)
@@ -16,13 +16,9 @@ class CPU
             @highest = val if @highest.nil? || @highest < val
         end
     end
-
-    def max_value
-        @regs.values.max
-    end
 end
 
 cpu = CPU.new
 cpu.run $<.read
-puts cpu.max_value
+puts cpu.regs.values.max
 puts cpu.highest
