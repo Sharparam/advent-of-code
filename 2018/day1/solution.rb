@@ -2,7 +2,7 @@
 
 freqs = File.readlines('input.txt').map(&:to_i)
 
-puts "Part 1: #{freqs.inject(0) { |a, e| a + e }}"
+puts "Part 1: #{freqs.reduce(0) { |a, e| a + e }}"
 
 occurrences = Hash.new(0).tap { |h| h[0] = 1 }
 found = nil
