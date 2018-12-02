@@ -6,8 +6,7 @@ twos = 0
 threes = 0
 
 ids.each do |id|
-    counts = Hash.new(0)
-    id.each_char { |c| counts[c] += 1 }
+    counts = id.chars.reduce(Hash.new(0)) { |h, e| h[e] += 1; h }
     twos += 1 if counts.any? { |k, v| v == 2 }
     threes += 1 if counts.any? { |k, v| v == 3 }
 end
