@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'set'
+
 freqs = File.readlines('input.txt').map(&:to_i)
 
 puts "Part 1: #{freqs.sum}"
