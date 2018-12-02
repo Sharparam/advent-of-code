@@ -2,7 +2,7 @@
 
 freqs = File.readlines('input.txt').map(&:to_i)
 
-puts "Part 1: #{freqs.reduce(0) { |a, e| a + e }}"
+puts "Part 1: #{freqs.sum}"
 
 multiples = Set.new
 freq = 0
