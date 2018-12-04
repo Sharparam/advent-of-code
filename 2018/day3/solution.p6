@@ -17,10 +17,10 @@ grammar AoC::Input {
       }
     }
   }
-  token id { \d+ { make $/.Int } }
+  token id { \d+ { make +$/ } }
   token position { $<x>=<num> ',' $<y>=<num> }
   token size { $<width>=<num> x $<height>=<num> }
-  token num { \d+ { make $/.Int } }
+  token num { \d+ { make +$/ } }
 }
 
 my $matches = AoC::Input.parsefile('input.txt');
