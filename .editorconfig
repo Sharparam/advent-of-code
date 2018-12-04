@@ -3,3 +3,9 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 indent_style = space
+
+[*.rb]
+indent_size = 2
+
+[*.{p6,pm6,pod6,t}]
+indent_size = 2

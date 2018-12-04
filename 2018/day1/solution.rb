@@ -10,8 +10,8 @@ multiples = Set.new
 freq = 0
 
 freqs.cycle do |current|
-    freq += current
-    break unless multiples.add? freq
+  freq += current
+  break unless multiples.add? freq
 end
 
 puts "Part 2: #{freq}"
