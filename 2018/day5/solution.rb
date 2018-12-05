@@ -2,7 +2,7 @@
 
 require 'set'
 
-input = File.read('test.txt').strip
+input = File.read('input.txt').strip
 
 part1 = input.split('')
 
