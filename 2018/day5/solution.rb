@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'set'
-require 'pry'
 
 input = File.read('test.txt').strip
 
@@ -35,15 +34,11 @@ part1 = react input
 
 puts "Part 1: #{part1.size}"
 
-exit
-
 letters = input.upcase.split('').uniq
 
 puts letters
 
 smallest = input.size
-
-#binding.pry
 
 letters.each.with_index do |letter, index|
   puts "Testing with letter #{letter} (#{index + 1} / #{letters.size})"
