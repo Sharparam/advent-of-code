@@ -10,11 +10,12 @@ sub react(@o) {
       @a.push: $_;
     }
   }
-  @a.elems - 1;
+  @a.splice: 1;
 }
 
 my @ords = 'input.txt'.IO.slurp.chomp.comb>>.ord;
-say "Part 1: {react(@ords)}";
+my @part1 = react(@ords);
+say "Part 1: {@part1.elems}";
 
-my $part2 = ('A'.ord..'Z'.ord).map(-> $o { react(@ords.grep({ $_ != $o && $_ != ($o + 32) })) }).min;
+my $part2 = ('A'.ord..'Z'.ord).map(-> $o { react(@part1.grep({ $_ != $o && $_ != ($o + 32) })).elems }).min;
 say "Part 2: {$part2}"
