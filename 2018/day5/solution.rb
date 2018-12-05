@@ -19,7 +19,6 @@ def react(str)
     arr.each.with_index do |e, i|
       n = arr[i..i+1]
       if n.map(&:upcase).uniq.size == 1 && n.uniq.size == 2
-        #arr.slice!(i..i+1)
         bad_indices.add i
         bad_indices.add i + 1
         replaced = true
