@@ -4,7 +4,7 @@ use v6;
 sub react(@o) {
   my @a = [0];
   for @o {
-    if (@a[*-1] - $_).abs == 32 {
+    if @a[*-1] +^ $_ == 32 {
       @a.pop;
     } else {
       @a.push: $_;
