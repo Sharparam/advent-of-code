@@ -22,7 +22,7 @@ def build(d)
   a = d.shift 2
   node = Node.new
   node.children.concat a[0].times.map { build d }
-  node.tap { |n| n.metadata.concat d.shift(a[1]) }
+  node.tap { |n| n.metadata.concat d.shift a[1] }
 end
 
 root = build data
