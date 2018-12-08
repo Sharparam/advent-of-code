@@ -11,8 +11,7 @@ class Node
   def leaf?; @children.empty?; end
 
   def value
-    return @metadata.sum if leaf?
-    @metadata.map { |i| @children[i - 1]&.value }.compact.sum
+    leaf? ? @metadata.sum : @metadata.map { |i| @children[i - 1]&.value }.compact.sum
   end
 end
 
@@ -25,6 +24,4 @@ def build(d)
   node.tap { |n| n.metadata.concat d.shift a[1] }
 end
 
-root = build data
-
-puts "Part 2: #{root.value}"
+puts "Part 2: #{build(data).value}"
