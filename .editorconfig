@@ -9,3 +9,6 @@ indent_size = 2
 
 [*.{p6,pm6,pod6,t}]
 indent_size = 2
+
+[*.py]
+indent_size = 4
