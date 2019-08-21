@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 local freqs = {}
 local part1 = 0
 
