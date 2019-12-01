@@ -2,10 +2,7 @@
 
 def calc(mass)
   fuel = mass / 3 - 2
-
-  return 0 if fuel <= 0
-
-  return fuel + calc(fuel)
+  fuel <= 0 ? 0 : fuel + calc(fuel)
 end
 
 masses = File.readlines('input.txt').map(&:to_i)
