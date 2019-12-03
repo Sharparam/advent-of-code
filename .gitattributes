@@ -1,0 +1,6 @@
+* text=auto
+
+*.rb text eol=lf
+*.py text eol=lf
+*.p6 text eol=lf
+*.lua text eol=lf

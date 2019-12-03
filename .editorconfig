@@ -6,6 +6,7 @@ indent_style = space
 
 [*.rb]
 indent_size = 2
+end_of_line = lf
 
 [*.{p6,pm6,pod6,t}]
 indent_size = 2
