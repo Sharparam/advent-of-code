@@ -1159,4 +1159,4 @@ $RECYCLE.BIN/
 
 *.txt
 !input.txt
-!test.txt
+!test*.txt
