@@ -1160,3 +1160,4 @@ $RECYCLE.BIN/
 *.txt
 !input.txt
 !test*.txt
+!example*.txt
