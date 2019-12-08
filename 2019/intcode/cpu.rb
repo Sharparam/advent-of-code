@@ -33,11 +33,16 @@ module Intcode
     }.freeze
 
     attr_reader :memory
+    attr_reader :output
 
-    def initialize
+    def initialize(program = nil, debug = false)
       @ip = 0
       @input = Queue.new
-      @debug = false
+      @output = []
+      @debug = debug
+      @program = program&.dup
+      @memory = @program&.dup
+      @halted = false
     end
 
     def debug!(enabled)
@@ -57,15 +62,32 @@ module Intcode
     end
 
     def run!
-      @ip = 0
       @running = true
 
       while @running do
         opcode = OPS[get_opcode]
         print "#{@memory[@ip]}: #{opcode.to_s.upcase} " if @debug
         result = send(opcode)
-        @ip += 1 + ARG_COUNTS[opcode] unless result == :jumped
+        @ip += 1 + ARG_COUNTS[opcode] unless result == :jumped || result == :block
       end
+
+      self
+    end
+
+    def reset!
+      @memory = @program.dup
+      @ip = 0
+      @input = Queue.new
+      @output = []
+      self
+    end
+
+    def halted?
+      @halted == true
+    end
+
+    def dup
+      CPU.new @program, @debug
     end
 
     private
@@ -91,6 +113,11 @@ module Intcode
     end
 
     def read
+      if @input.empty?
+        @running = false
+        puts "(BLOCK)" if @debug
+        return :block
+      end
       val = @input.deq
       addr = @memory[@ip + 1]
       puts  "##{addr}" if @debug
@@ -100,6 +127,7 @@ module Intcode
     def write
       val = get_arg 1
       puts if @debug
+      output << val
       puts val
     end
 
@@ -150,6 +178,8 @@ module Intcode
 
     def halt
       @running = false
+      @halted = true
+      puts
     end
 
     def get_opcode
