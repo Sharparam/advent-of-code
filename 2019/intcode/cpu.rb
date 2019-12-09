@@ -13,6 +13,7 @@ module Intcode
       6 => :jz,
       7 => :lt,
       8 => :eq,
+      9 => :modrel,
       99 => :halt
     }.freeze
 
@@ -24,12 +25,14 @@ module Intcode
       jnz: 2,
       jz: 2,
       lt: 3,
-      eq: 3
+      eq: 3,
+      modrel: 1
     }.tap { |h| h.default = 0 }.freeze
 
     MODES = {
       0 => :addr,
-      1 => :immediate
+      1 => :immediate,
+      2 => :relative
     }.freeze
 
     attr_reader :memory
@@ -43,6 +46,7 @@ module Intcode
       @program = program&.dup
       @memory = @program&.dup
       @halted = false
+      @relative_base = 0
     end
 
     def debug!(enabled)
@@ -66,7 +70,7 @@ module Intcode
 
       while @running do
         opcode = OPS[get_opcode]
-        print "#{@memory[@ip]}: #{opcode.to_s.upcase} " if @debug
+        print '%4d: [%05d] %6s ' % [ @ip, read_mem(@ip), opcode.to_s.upcase ] if @debug
         result = send(opcode)
         @ip += 1 + ARG_COUNTS[opcode] unless result == :jumped || result == :block
       end
@@ -97,8 +101,8 @@ module Intcode
       print ", " if @debug
       b = get_arg 2
       print ", " if @debug
-      addr = @memory[@ip + 3]
-      puts "##{addr}" if @debug
+      addr = get_addr 3
+      puts if @debug
       @memory[addr] = a + b
     end
 
@@ -107,8 +111,8 @@ module Intcode
       print ", " if @debug
       b = get_arg 2
       print ", " if @debug
-      addr = @memory[@ip + 3]
-      puts "##{addr}" if @debug
+      addr = get_addr 3
+      puts if @debug
       @memory[addr] = a * b
     end
 
@@ -119,8 +123,8 @@ module Intcode
         return :block
       end
       val = @input.deq
-      addr = @memory[@ip + 1]
-      puts  "##{addr}" if @debug
+      addr = get_addr 1
+      puts if @debug
       @memory[addr] = val
     end
 
@@ -159,8 +163,8 @@ module Intcode
       print ", " if @debug
       b = get_arg 2
       print ", " if @debug
-      addr = @memory[@ip + 3]
-      puts "##{addr}" if @debug
+      addr = get_addr 3
+      puts if @debug
 
       @memory[addr] = (a < b) ? 1 : 0
     end
@@ -170,10 +174,17 @@ module Intcode
       print ", " if @debug
       b = get_arg 2
       print ", " if @debug
-      addr = @memory[@ip + 3]
-      puts "##{addr}" if @debug
+      addr = get_addr 3
+      puts if @debug
 
       @memory[addr] = (a == b) ? 1 : 0
+    end
+
+    def modrel
+      amount = get_arg 1
+      puts if @debug
+
+      @relative_base += amount
     end
 
     def halt
@@ -182,21 +193,43 @@ module Intcode
       puts
     end
 
+    def read_mem(addr)
+      @memory[addr] || 0
+    end
+
     def get_opcode
-      @memory[@ip] % 100
+      read_mem(@ip) % 100
     end
 
     def get_mode(pos)
-      MODES[(@memory[@ip] / (10 ** (pos + 1))) % 2]
+      MODES[(read_mem(@ip) / (10 ** (pos + 1))) % 10]
+    end
+
+    def get_addr(pos)
+      val = read_mem(@ip + pos)
+      mode = get_mode pos
+
+      if mode == :relative
+        print "R#{val}=" if @debug
+        val += @relative_base
+        mode = :addr
+      end
+
+      if mode == :addr
+        print "##{val}" if @debug
+      end
+
+      val
     end
 
     def get_arg(pos)
-      val = @memory[@ip + pos]
+      val = read_mem(@ip + pos)
       mode = get_mode pos
 
-      if mode == :addr
-        print "##{val}=" if @debug
-        val = @memory[val]
+      if mode != :immediate
+        addr = get_addr pos
+        print '=' if @debug
+        val = read_mem addr
       end
 
       print val if @debug
