@@ -4,7 +4,6 @@ require 'set'
 require 'matrix'
 
 DEBUG = ENV['DEBUG']
-FLOAT_THRESHOLD = 10**(-5)
 
 class Vector
   def x
@@ -16,26 +15,7 @@ class Vector
   end
 end
 
-def dist(a, b)
-  Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2)
-end
-
 def on_line?(a, b, point)
-  xs = [a.x, b.x]
-  ys = [a.y, b.y]
-  top = ys.min
-  bot = ys.max
-  left = xs.min
-  right = xs.max
-
-  # if a.x == b.x
-  #   return point.y >= top && point.y <= bot
-  # end
-
-  # if a.y == b.y
-  #   return point.x >= left && point.x <= right
-  # end
-
   dxc = point.x - a.x
   dyc = point.y - a.y
   dx1 = b.x - a.x
