@@ -61,35 +61,39 @@ data.each_with_index do |line, line_index|
   end
 end
 
-stats = {}
+def calc_angle(dx, dy)
+  Math::PI + Math.atan2(-dx, -dy)
+end
+
+bases = {}
 
 points.each do |point|
-  puts "Testing #{point}"
-  stats[point] = 0
+  base = {}
+  bases[point] = base
+
   targets = points.dup
   targets.delete point
   targets.each do |target|
-    print "#{point} --> #{target}? " if DEBUG
-    potentials = targets.dup
-    potentials.delete target
-    if DEBUG && false
-      blocking = potentials.select { |p| on_line? point, target, p }
-      puts "BLOCKING: "
-      p blocking
-      blocked = blocking.any?
-    else
-      blocked = potentials.any? { |p| on_line? point, target, p }
-    end
-    puts blocked ? "BLOCKED" : "OK" if DEBUG
-    stats[point] += 1 unless blocked
+    dx = point.x - target.x
+    dy = point.y - target.y
+    angle = calc_angle dx, dy
+    set = (base[angle] ||= Set.new)
+    set << target
   end
 end
 
-best = stats.max_by { |(k, v)| v }
-best_point = best.first
-best_visible = best.last
+best_base = bases.max_by { |(k, v)| v.keys.size }
+best_point = best_base.first
+best_visible = best_base.last.keys.size
+best_base = bases[best_base.first]
+
 puts "Best point is #{best_point} which can see #{best_visible} asteroids"
-puts "Part 1: #{stats.values.max}"
+puts "Part 1: #{best_visible}"
+
+abort "Doesn't work for <200 reachable asteroids" if best_base.keys.size < 200
+
+part2_point = best_base[best_base.keys.sort.reverse[199]].first
+puts "Part 2: #{part2_point.x * 100 + part2_point.y}"
 
 if DEBUG
   require 'pry'
