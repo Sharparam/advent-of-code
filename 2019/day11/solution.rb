@@ -54,8 +54,6 @@ def run(start_color)
     pos += vel
   end
 
-  #puts "Part 1: #{colors.size}"
-
   colors
 end
 
