@@ -38,7 +38,7 @@ module Intcode
     attr_reader :memory
     attr_reader :output
 
-    def initialize(program = nil, debug = false)
+    def initialize(program = nil, print_output = true, debug = false)
       @ip = 0
       @input = Queue.new
       @output = []
@@ -47,6 +47,7 @@ module Intcode
       @memory = @program&.dup
       @halted = false
       @relative_base = 0
+      @print_output = true
     end
 
     def debug!(enabled)
@@ -62,6 +63,11 @@ module Intcode
 
     def input!(value)
       @input.enq value
+      self
+    end
+
+    def print_output!(enabled)
+      @print_output = enabled
       self
     end
 
@@ -86,12 +92,16 @@ module Intcode
       self
     end
 
+    def running?
+      @running == true
+    end
+
     def halted?
       @halted == true
     end
 
     def dup
-      CPU.new @program, @debug
+      CPU.new @program, @print_output, @debug
     end
 
     private
@@ -132,7 +142,7 @@ module Intcode
       val = get_arg 1
       puts if @debug
       output << val
-      puts val
+      puts val if @print_output
     end
 
     def jnz
