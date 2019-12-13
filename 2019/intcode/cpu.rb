@@ -47,7 +47,7 @@ module Intcode
       @memory = @program&.dup
       @halted = false
       @relative_base = 0
-      @print_output = true
+      @print_output = print_output
     end
 
     def debug!(enabled)
@@ -69,6 +69,10 @@ module Intcode
     def print_output!(enabled)
       @print_output = enabled
       self
+    end
+
+    def clear_output!
+      @output.clear
     end
 
     def run!
