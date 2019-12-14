@@ -3,6 +3,7 @@
 require 'set'
 
 PATH = ARGV.first || 'input'
+FUEL = ARGV[1]&.to_i || 1
 
 Recipe = Struct.new :requires, :produces
 
@@ -15,7 +16,7 @@ class Node
     @label = label
     @parents = Set.new
     @children = Set.new
-    @required = label == :FUEL ? 1 : nil
+    @required = label == :FUEL ? FUEL : nil
     @recipes = {}
   end
 
