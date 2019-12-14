@@ -66,10 +66,6 @@ lines = File.readlines(PATH)
 
 nodes = {}
 
-def parse_node(text)
-  text.scan /(\d+)\s+(\w+)/
-end
-
 lines.each do |line|
   parsed = line.scan(/(\d+)\s+(\w+)/).map do |(a, b)|
     label = b.to_sym
