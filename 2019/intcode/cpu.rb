@@ -38,15 +38,15 @@ module Intcode
     attr_reader :memory
     attr_reader :output
 
-    def initialize(program = nil, print_output = true, debug = false)
-      @ip = 0
+    def initialize(program = nil, print_output = true, debug = false, memory = nil, ip = 0, rb = 0)
+      @ip = ip
       @input = Queue.new
       @output = []
       @debug = debug
       @program = program&.dup
-      @memory = @program&.dup
+      @memory = memory || @program&.dup
       @halted = false
-      @relative_base = 0
+      @relative_base = rb
       @print_output = print_output
     end
 
@@ -105,7 +105,7 @@ module Intcode
     end
 
     def dup
-      CPU.new @program, @print_output, @debug
+      CPU.new @program.dup, @print_output, @debug, @memory.dup, @ip, @relative_base
     end
 
     private
