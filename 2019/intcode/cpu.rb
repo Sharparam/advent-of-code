@@ -37,6 +37,7 @@ module Intcode
 
     attr_reader :memory
     attr_reader :output
+    attr_reader :input
 
     def initialize(program = nil, print_output = true, debug = false, memory = nil, ip = 0, rb = 0)
       @ip = ip
@@ -56,7 +57,12 @@ module Intcode
     end
 
     def load!(file)
-      @program = File.read(file).split(',').map(&:to_i)
+      if file.is_a? Array
+        @program = file
+      else
+        @program = File.read(file).split(',').map(&:to_i)
+      end
+
       @memory = @program.dup
       self
     end
