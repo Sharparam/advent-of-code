@@ -31,14 +31,13 @@ loop do
   loop do
     value = calc x, y
     line_sum += value
+    sum += value if x < 50 && y < 50
     start_x = x if last == 0 && value == 1
     last_x = x if value == 1
-    break if (last == 1 && value == 0) || (y < 50 && x > y)
+    break if (last == 1 && value == 0) || (y < 50 && x > 49)
     last = value
     x += 1
   end
-
-  sum += line_sum
 
   puts "#{y}: #{line_sum}" if DEBUG
 
