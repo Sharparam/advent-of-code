@@ -55,7 +55,7 @@ loop do
     previous_end_x = previous_line.last
 
     if current_start_x + 99 <= previous_end_x
-      puts "Pat 2: #{(previous_end_x - 99) * 10000 + (y - 99)}"
+      puts "Part 2: #{(previous_end_x - 99) * 10000 + (y - 99)}"
       break
     end
   end
