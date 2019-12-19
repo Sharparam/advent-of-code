@@ -210,7 +210,7 @@ module Intcode
     def halt
       @running = false
       @halted = true
-      puts
+      puts if @debug
     end
 
     def read_mem(addr)
