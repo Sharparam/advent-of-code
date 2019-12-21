@@ -68,7 +68,14 @@ module Intcode
     end
 
     def input!(value)
-      @input.enq value
+      case value
+      when Array
+        value.each { |v| input! v }
+      when String
+        value.chars.map(&:ord).each { |v| input! v }
+      else
+        @input.enq value
+      end
       self
     end
 
