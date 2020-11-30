@@ -1213,3 +1213,5 @@ $RECYCLE.BIN/
 !test*.txt
 !example*.txt
 !notes*.txt
+
+/init.yml
