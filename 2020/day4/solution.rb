@@ -17,9 +17,9 @@ validators = {
   'hgt' => -> v {
     v =~ /^(\d+)(cm|in)$/ && $2 == 'cm' ? $1.to_i.between?(150, 193) : $1.to_i.between?(59, 76)
   },
-  'hcl' => -> v { v =~ /^#[\da-f]{6}$/ },
-  'ecl' => -> v { v =~ /^amb|blu|brn|gry|grn|hzl|oth$/ },
-  'pid' => -> v { v =~ /^\d{9}$/ }
+  'hcl' => /^#[\da-f]{6}$/,
+  'ecl' => /^amb|blu|brn|gry|grn|hzl|oth$/,
+  'pid' => /^\d{9}$/
 }
 
-puts passports.count { |p| validators.all? { |k, v| v.call(p[k]) } }
+puts passports.count { |p| validators.all? { |k, v| v === p[k] } }
