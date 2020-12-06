@@ -5,4 +5,4 @@ groups = ARGF.read.split("\n\n").map { |g|
 }
 
 puts groups.sum { |g| g.flatten.uniq.size }
-puts groups.sum { |g| g.reduce(:intersection).size }
+puts groups.sum { |g| g.reduce(:&).size }
