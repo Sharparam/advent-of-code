@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 RULES = Hash[ARGF.readlines.map { |line|
   parts = line.split 'bags contain'
@@ -7,43 +8,31 @@ RULES = Hash[ARGF.readlines.map { |line|
   [type.freeze, contains.freeze].freeze
 }].freeze
 
-OUR_BAG = 'shiny gold'.freeze
+OUR_BAG = 'shiny gold'
 
-def count(type, rules, inside = nil)
+def count(inside = nil)
   result = 0
 
-  if inside.nil?
-    rules.each do |k, v|
-      next if k == OUR_BAG
-      if v.key?(type)
-        result += 1 if v[type] > 0
-      else
-        rest = rules.dup.tap { _1.delete k }
-        result += count(type, rest, v.keys)
-      end
-    end
-  else
-    subrules = rules.select { inside.include? _1 }
-    subrules.each do |k, v|
-      if v.key?(type)
-        return 1
-      else
-        rest = rules.dup.tap { _1.delete k }
-        return 1 if count(type, rest, v.keys) > 0
-      end
+  (inside || RULES.keys).each do |key|
+    next if key == OUR_BAG
+    rule = RULES[key]
+    if (rule[OUR_BAG] || 0) > 0
+      return 1 if inside
+      result += 1
+    elsif count(rule.keys) > 0
+      return 1 if inside
+      result += 1
     end
   end
 
   result
 end
 
-def bags(type, rules, root = false)
-  my_rules = rules[type]
+def bags(type, root = false)
+  my_rules = RULES[type]
   return 1 if my_rules.empty?
-  (root ? 0 : 1) + my_rules.sum {
-    bags(_1, rules) * _2
-  }
+  (root ? 0 : 1) + my_rules.sum { bags(_1) * _2 }
 end
 
-puts count(OUR_BAG, RULES)
-puts bags(OUR_BAG, RULES, true)
+puts count()
+puts bags(OUR_BAG, true)
