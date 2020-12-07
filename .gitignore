@@ -1215,3 +1215,6 @@ $RECYCLE.BIN/
 !notes*.txt
 
 /init.yml
+
+# Ignore itsbth input files
+itsbth
