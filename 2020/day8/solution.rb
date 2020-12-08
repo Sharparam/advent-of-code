@@ -12,8 +12,7 @@ def test(program)
   loop do
     return [true, acc] if pc >= program.size
     op, val = program[pc]
-    return [false, acc] if seen.include? pc
-    seen.add pc
+    return [false, acc] unless seen.add? pc
     case op
     when :acc
       acc += val
