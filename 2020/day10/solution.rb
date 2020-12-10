@@ -26,8 +26,7 @@ start = withends.first
 previous = withends.first
 withends.drop(1).each do |jolt|
   if jolt - previous > 1
-    diff = previous - start
-    oneseqs << diff + 1 if diff > 1
+    oneseqs << previous - start + 1
     start = jolt
   end
   previous = jolt
