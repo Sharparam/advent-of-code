@@ -20,8 +20,6 @@ end
 
 puts diffs[1] * diffs[3]
 
-oneseqs = ([0] + adapters + [DEVICE]).each_cons(2).reduce([1]) { |a, (f, l)|
+puts ([0] + adapters + [DEVICE]).each_cons(2).reduce([1]) { |a, (f, l)|
   (l - f == 1) ? a.tap { a[a.size - 1] += 1 } : a << 1
-}
-
-puts oneseqs.map(&trib).reduce(:*)
+}.map(&trib).reduce(:*)
