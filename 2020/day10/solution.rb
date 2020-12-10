@@ -20,16 +20,8 @@ end
 
 puts diffs[1] * diffs[3]
 
-withends = [0] + adapters + [DEVICE]
-oneseqs = []
-start = withends.first
-previous = withends.first
-withends.drop(1).each do |jolt|
-  if jolt - previous > 1
-    oneseqs << previous - start + 1
-    start = jolt
-  end
-  previous = jolt
-end
+oneseqs = ([0] + adapters + [DEVICE]).each_cons(2).reduce([1]) { |a, (f, l)|
+  (l - f == 1) ? a.tap { a[a.size - 1] += 1 } : a << 1
+}
 
 puts oneseqs.map(&trib).reduce(:*)
