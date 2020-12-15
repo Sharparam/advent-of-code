@@ -7,12 +7,10 @@ def solve(turns)
   data = [-1] * turns
   NUMS[..-2].each_with_index { data[_1] = _2 + 1 }
 
-  last = NUMS.last
-  turn = NUMS.size
+  last, turn = NUMS.last, NUMS.size
 
   while turn < turns
-    first = data[last]
-    data[last] = turn
+    first, data[last] = data[last], turn
     last = first == -1 ? 0 : turn - first
     turn += 1
   end
