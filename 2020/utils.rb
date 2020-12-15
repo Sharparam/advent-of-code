@@ -28,3 +28,14 @@ module Utils
     end
   end
 end
+
+module Enumerable
+  def mean
+    sum.to_f / size
+  end
+
+  def median
+    return self[size / 2] if size % 2 != 0
+    (self[size / 2 - 1] + self[size / 2]) / 2.0
+  end
+end
