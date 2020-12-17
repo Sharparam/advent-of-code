@@ -1,71 +1,48 @@
 #!/usr/bin/env ruby
 
 require 'matrix'
-require 'pp'
+require 'set'
 
-require_relative 'exts'
+NEIGHBOUR_DIFFS = Hash[
+  [3, 4].map { |s| [s, [-1, 0, 1].repeated_permutation(s).reject { _1.all?(&:zero?) }.map { Vector[*_1] }.to_a] }
+]
 
-NEIGHBOUR_DIFFS = [-1, 0, 1].repeated_permutation(3).reject { |d| d.all?(&:zero?) }.map { |d| Vector[*d] }.to_a.freeze
-
-def render(grid)
-  x_min, x_max = grid.keys.map(&:x).minmax
-  y_min, y_max = grid.keys.map(&:y).minmax
-  z_min, z_max = grid.keys.map(&:z).minmax
-  width = x_max - x_min + 1
-  puts '-' * width
-  puts "X: #{x_min}..#{x_max} Y: #{y_min}..#{y_max}"
-  (z_min..z_max).each do |z|
-    puts "z=#{z}"
-    (y_min..y_max).each do |y|
-      (x_min..x_max).each do |x|
-        pos = Vector[x, y, z]
-        char = grid[pos] ? ?# : ?.
-        print char
-      end
-      puts
-    end
+class Vector
+  def neighbours
+    NEIGHBOUR_DIFFS[size].map { self + _1 }
   end
-  puts '-' * width
 end
 
-grid = Hash[ARGF.readlines.map(&:chomp).flat_map.with_index do |line, y|
-  line.split('').map.with_index { |cell, x| [Vector[x, y, 0], cell == ?#] }
-end]
+def count_adjacents(grid, pos)
+  neighbours = pos.neighbours
+  neighbours.count { grid.include? _1 }
+end
 
-grid.default_proc = -> (h, k) { h[k] = false }
-
-x_min, x_max = grid.keys.map(&:x).minmax
-x_min -= 1
-x_max += 1
-y_min, y_max = grid.keys.map(&:y).minmax
-y_min -= 1
-y_max += 1
-extra = (x_min..x_max).to_a.product((y_min..y_max).to_a).flat_map {
-  [Vector[*_1, -1], Vector[*_1, 0], Vector[*_1, 1]]
-}
-extra.each { |p| grid[p] }
-
-step = -> {
-  copy = grid.dup
-
-  grid.keys.each do |pos|
-    neighbours = pos.neighbours
-    active_count = neighbours.count { |n| grid[n] }
-    if grid[pos]
-      copy[pos] = active_count == 2 || active_count == 3
-    else
-      copy[pos] = active_count == 3
+def step(grid)
+  counts = grid.flat_map do |pos|
+    [pos, *pos.neighbours.reject { grid.include? _1 }].map do
+      [_1, grid.include?(_1), count_adjacents(grid, _1)]
     end
-    #puts "#{pos}: #{grid[pos]} -> #{copy[pos]}"
   end
 
-  grid.merge! copy
+  counts.each do |pos, active, count|
+    if active
+      grid.delete pos unless count == 2 || count == 3
+    else
+      grid.add pos if count == 3
+    end
+  end
+end
 
-  #render grid
-}
+LINES = ARGF.readlines.map(&:chomp)
 
-#render grid
+grids = [-> (x, y) { Vector[x, y, 0] }, -> (x, y) { Vector[x, y, 0, 0] }].map do |f|
+  LINES.flat_map.with_index do |line, y|
+    line.split('').map.with_index { |v, x| [f[x, y], v == ?#] }
+  end.select { _2 }.map(&:first).to_set
+end
 
-6.times { step[] }
-
-puts grid.count { _2 }
+grids.each do |grid|
+  6.times { step grid }
+  puts grid.size
+end
