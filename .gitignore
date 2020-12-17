@@ -1208,6 +1208,9 @@ $RECYCLE.BIN/
 
 .ionide/
 
+# Include custom libs
+!/lib
+
 *.txt
 !input.txt
 !test*.txt
