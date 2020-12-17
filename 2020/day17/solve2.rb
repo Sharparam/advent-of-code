@@ -14,17 +14,9 @@ end]
 grid.default_proc = -> (h, k) { h[k] = false }
 
 x_min, x_max = grid.keys.map(&:x).minmax
-x_min -= 1
-x_max += 1
 y_min, y_max = grid.keys.map(&:y).minmax
-y_min -= 1
-y_max += 1
 z_min, z_max = grid.keys.map(&:z).minmax
-z_min -= 1
-z_max += 1
 w_min, w_max = grid.keys.map(&:w).minmax
-w_min -= 1
-w_max += 1
 
 (x_min-1..x_max+1).each do |x|
   (y_min-1..y_max+1).each do |y|
