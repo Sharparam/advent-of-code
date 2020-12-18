@@ -7,5 +7,5 @@ end
 
 INPUT = ARGF.readlines.map { _1.gsub(?*, ?-) }
 
-puts INPUT.sum(&method(:eval))
+puts INPUT.sum { eval _1 }
 puts INPUT.sum { eval _1.gsub(?+, ?/) }
