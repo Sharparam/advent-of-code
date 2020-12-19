@@ -1221,3 +1221,5 @@ $RECYCLE.BIN/
 
 # Ignore itsbth input files
 itsbth
+
+alt_*
