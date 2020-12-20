@@ -55,28 +55,12 @@ class Tile
     self.class.new @id, @grid.transpose.map(&:reverse)
   end
 
-  def rotate!()
-    # Array.transpose does not have a version that mutates
-    @grid = @grid.transpose.map(&:reverse)
-    self
-  end
-
   def flip_horizontal()
     self.class.new @id, @grid.map(&:reverse)
   end
 
-  def flip_horizontal!()
-    @grid.map!(&:reverse)
-    self
-  end
-
   def flip_vertical()
     self.class.new @id, @grid.reverse
-  end
-
-  def flip_vertical!()
-    @grid.reverse!
-    self
   end
 
   def shave
@@ -281,8 +265,7 @@ while corners_found < 4
     break
   end
   unless found_next_row
-    puts "FAILED to find next row for tile #{current_tile.id}"
-    binding.pry
+    abort "FAILED to find next row for tile #{current_tile.id}"
   end
 end
 
