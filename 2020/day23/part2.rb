@@ -6,7 +6,7 @@ class LinkedList
   attr_reader :head, :min, :max
 
   def initialize
-    @head = nil
+    @head = nil # only used during initial construction
     @tail = nil # only used during initial construction
     @min = nil
     @max = nil
@@ -69,8 +69,6 @@ class LinkedList
 
     @min = @value_node_map.values.min_by(&:value) if recalc_min
     @max = @value_node_map.values.max_by(&:value) if recalc_max
-
-    @head = nxt if slice_start.value == head.value || slice_stop.value == head.value
 
     slice_start
   end
