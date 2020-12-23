@@ -7,6 +7,7 @@ class LinkedList
 
   def initialize
     @head = nil
+    @tail = nil # only used during initial construction
     @min = nil
     @max = nil
     @value_node_map = {}
@@ -18,89 +19,70 @@ class LinkedList
 
   def append(value)
     if head
-      node = Node.new value, tail, head
+      node = Node.new value, head
       @min = node if @min.nil? || @min.value > node.value
       @max = node if @max.nil? || @max.value < node.value
       @value_node_map[value] = node
-      tail.next = node
-      head.prev = node
+      @tail.next = node
+      @tail = node
     else
       @head = Node.new value
-      @min = @head
-      @max = @head
-      @value_node_map[value] = @head
+      @tail = head
       head.next = head
-      head.prev = head
+      @min = head
+      @max = head
+      @value_node_map[value] = head
     end
   end
 
-  def append_after(node, from, to)
-    node = find node unless node.is_a? Node
-    fail "Could not find node to append after" unless node
-    from.prev = nil
-    to.next = nil
-    @min = from if from.value < @min.value
-    @max = from if from.value > @max.value
-    @value_node_map[from.value] = from
-    n = from
+  def append_after(node, from)
+    nxt = node.next
+    node.next = from
+    n = node
     while n = n.next
       @min = n if n.value < @min.value
       @max = n if n.value > @max.value
       @value_node_map[n.value] = n
+      if n.next.nil?
+        n.next = nxt
+        break
+      end
     end
-    nxt = node.next
-    node.next = from
-    from.prev = node
-    nxt.prev = to
-    to.next = nxt
+
     from
   end
 
-  def slice!(from, to)
-    prev = from.prev
-    nxt = to.next
-    prev.next = nxt
-    nxt.prev = prev
-    from.prev = nil
-    to.next = nil
-    recalc_min = from.value <= @min.value
-    recalc_max = from.value >= @max.value
-    @value_node_map.delete from.value
-    node = from
-    while node = node.next
-      recalc_min ||= node.value <= @min.value
-      recalc_max ||= node.value >= @max.value
-      @value_node_map.delete node.value
+  def slice!(from, count)
+    slice_start = from.next
+    slice_stop = from.next count
+    nxt = slice_stop.next
+    slice_stop.next = nil
+
+    n = from
+    while n = n.next
+      recalc_min ||= n.value <= @min.value
+      recalc_max ||= n.value >= @max.value
+      @value_node_map.delete n.value
     end
+
+    from.next = nxt
 
     @min = @value_node_map.values.min_by(&:value) if recalc_min
     @max = @value_node_map.values.max_by(&:value) if recalc_max
 
-    @head = nxt if from.value == head.value || to.value == head.value
-    [from, to]
-  end
+    @head = nxt if slice_start.value == head.value || slice_stop.value == head.value
 
-  private
-
-  def tail
-    head&.prev
+    slice_start
   end
 end
 
 class Node
-  attr_writer :prev, :next
+  attr_writer :next
   attr_reader :value
 
-  def initialize(value, prev = nil, nxt = nil)
+  def initialize(value, nxt = nil)
     @value = value
     @next = nxt
-    @prev = prev
-  end
-
-  def prev(count = 1)
-    return self if count < 1
-    return @prev if count == 1
-    @prev.prev count - 1
   end
 
   def next(count = 1)
@@ -124,7 +106,7 @@ current = cups.head
 10_000_000.times do |t|
   threshold = t % 100_000 == 0
   puts t if DEBUG && threshold
-  slice_start, slice_stop = cups.slice! current.next, current.next(3)
+  slice = cups.slice! current, 3
 
   dest_value = current.value - 1
   dest = cups.find dest_value
@@ -134,7 +116,7 @@ current = cups.head
     dest = cups.find dest_value
   end
 
-  cups.append_after dest, slice_start, slice_stop
+  cups.append_after dest, slice
 
   current = current.next
 end
