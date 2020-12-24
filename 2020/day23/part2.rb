@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-DEBUG = true
+DEBUG = false
 
 MAX_VALUE = 1_000_000
 ITERATIONS = 10_000_000
