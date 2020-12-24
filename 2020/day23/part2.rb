@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-DEBUG = false
+DEBUG = true
+
+MAX_VALUE = 1_000_000
+ITERATIONS = 10_000_000
 
 class LinkedList
   attr_reader :head, :min, :max
@@ -54,39 +57,32 @@ class LinkedList
 
   def slice!(from, count)
     slice_start = from.next
-    slice_stop = from.next count
-    nxt = slice_stop.next
-    slice_stop.next = nil
 
     n = from
-    while n = n.next
-      recalc_min ||= n.value <= @min.value
-      recalc_max ||= n.value >= @max.value
+    count.times do
+      n = n.next
+      if n.value == @min.value
+        @min = @value_node_map[n.value + 1]
+      elsif n.value == @max.value
+        @max = @value_node_map[n.value - 1]
+      end
       @value_node_map.delete n.value
     end
 
-    from.next = nxt
-
-    @min = @value_node_map.values.min_by(&:value) if recalc_min
-    @max = @value_node_map.values.max_by(&:value) if recalc_max
+    from.next = n.next
+    n.next = nil
 
     slice_start
   end
 end
 
 class Node
-  attr_writer :next
+  attr_accessor :next
   attr_reader :value
 
   def initialize(value, nxt = nil)
     @value = value
     @next = nxt
-  end
-
-  def next(count = 1)
-    return self if count < 1
-    return @next if count == 1
-    @next.next count - 1
   end
 end
 
@@ -97,11 +93,11 @@ cups = LinkedList.new
 input.chars.map(&:to_i).each { cups.append _1 }
 
 max_cup = cups.max.value
-(max_cup + 1..1_000_000).each { cups.append _1 }
+(max_cup + 1..MAX_VALUE).each { cups.append _1 }
 
 current = cups.head
 
-10_000_000.times do |t|
+ITERATIONS.times do |t|
   threshold = t % 100_000 == 0
   puts t if DEBUG && threshold
   slice = cups.slice! current, 3
