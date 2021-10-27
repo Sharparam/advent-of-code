@@ -3,4 +3,8 @@
 *.rb text eol=lf
 *.py text eol=lf
 *.p6 text eol=lf
+*.raku text eol=lf
+*.rakumod text eol=lf
+*.rakudoc text eol=lf
+*.rakutest text eol=lf
 *.lua text eol=lf
