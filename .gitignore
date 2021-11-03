@@ -1211,6 +1211,9 @@ $RECYCLE.BIN/
 # Include custom libs
 !/lib
 
+# Include Makefiles
+!/*/*/Makefile
+
 *.txt
 !input.txt
 !test*.txt
