@@ -1,6 +1,7 @@
 * text=auto
 
 *.rb text eol=lf
+*.rs text eol=lf
 *.py text eol=lf
 *.p6 text eol=lf
 *.raku text eol=lf

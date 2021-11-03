@@ -3,13 +3,17 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 indent_style = space
-
-[*.rb]
 indent_size = 2
+
+[*.{rb,rs,py,p6,raku,rakumod,rakudoc,rakutest,lua}]
 end_of_line = lf
 
-[*.{p6,pm6,pod6,t,raku,rakumod,rakutest,rakudoc}]
-indent_size = 2
-
 [*.py]
+indent_size = 4
+
+[*.cs]
+indent_size = 4
+
+[Makefile]
+indent_style = tab
 indent_size = 4
