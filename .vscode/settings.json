@@ -1,5 +1,14 @@
 {
   "python.linting.flake8Enabled": true,
   "python.formatting.provider": "black",
-  "solargraph.diagnostics": false
+  "solargraph.diagnostics": false,
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": false,
+  "[javascript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }
