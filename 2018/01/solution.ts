@@ -5,7 +5,7 @@ const sum = freqs.reduce((a, e) => a + e);
 
 console.log(`Part 1: ${sum}`);
 
-const multiples = new Set();
+const multiples: Set<number> = new Set();
 let freq = 0;
 
 for (let i = 0;; i = (i + 1) % freqs.length) {
