@@ -29,8 +29,6 @@ class Particle
   def distance
     @position.sum(&:abs)
   end
-
-  def to_s = "p=#{@position}, v=#{@velocity}, a=#{@acceleration}"
 end
 
 PARTICLES = ARGF.readlines.map { |l| Particle.new(*l.scan(/-?\d+/).map(&:to_i).each_slice(3).map { |s| Vector[*s] }) }
