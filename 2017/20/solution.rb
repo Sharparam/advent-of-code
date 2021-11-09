@@ -3,14 +3,6 @@
 
 require 'matrix'
 
-class Vector
-  def x = self[0]
-  def y = self[0]
-  def z = self[0]
-
-  def to_s = "<#{x}, #{y}, #{z}>"
-end
-
 class Particle
   attr_reader :position
 
