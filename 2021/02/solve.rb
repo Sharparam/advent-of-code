@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-instructions = ARGF.readlines.map(&:split).map { |i, n| [i.to_sym, n.to_i] }
-
 $position = 0
 $depth = 0 # also aim
 $depth2 = 0
@@ -15,7 +13,7 @@ end
 def down(n) = $depth += n
 def up(n) = $depth -= n
 
-instructions.each { send(*_1) }
+eval ARGF.read
 
 puts $position * $depth
 puts $position * $depth2
