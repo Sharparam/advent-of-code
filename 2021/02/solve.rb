@@ -13,5 +13,4 @@ def up(n) = $depth -= n
 
 eval ARGF.read
 
-puts $position * $depth
-puts $position * $depth2
+puts $position * $depth, $position * $depth2
