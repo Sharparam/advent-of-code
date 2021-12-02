@@ -4,9 +4,7 @@ my $position = 0;
 my $aim = 0;
 my $depth = 0;
 
-my @instructions = 'input'.IO.lines».&{ .split: ' ' };
-
-for @instructions -> ($dir, $n) {
+for 'input'.IO.lines».&{ .split: ' ' } -> ($dir, $n) {
   given $dir {
     when 'forward' {
       $position += $n;
