@@ -1,4 +1,3 @@
 #!/usr/bin/env raku
 
-my @nums = 'input'.IO.lines».Int;
-for 1, 3 { say [+] @nums Z< @nums[$_..*] };
+with lines() -> \n { for 1,3 { say [+] n Z< n[$_..*] } };
