@@ -1,26 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-input = ARGF.readlines
-freqs = Hash.new(0)
-cols = [''] * input.first.size
+input = ARGF.readlines.map(&:strip)
 
-input.each do |line|
-  line.chars.each_with_index do |c, i|
-    cols[i] += c
-  end
-end
-
-gamma = ''
-epsilon = ''
-
-cols.each do |col|
-  t = col.chars.tally
-  gamma += t.max_by { |_, v| v }.first
-  epsilon += t.min_by { |_, v| v }.first
-end
-
-puts gamma.to_i(2) * epsilon.to_i(2)
+puts input.first.size.times.map { |i| input.map { _1[i] }.tally }.map { |f| f.minmax_by { _2 } }.map { _1.map(&:first) }.reduce(['', '']) { [_1[0] + _2[0], _1[1] + _2[1]] }.map { _1.to_i(2) }.reduce(:*)
 
 oxy_nums = input.dup
 index = 0
