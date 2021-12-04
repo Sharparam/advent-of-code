@@ -4,12 +4,7 @@
 require 'set'
 
 numbers = ARGF.readline.split(',').map(&:to_i)
-ARGF.readline
-boards = ARGF.read.split("\n\n")
-
-boards = boards.map do |board|
-  board.strip.split("\n").map { |l| l.split.map(&:to_i) }
-end
+boards = ARGF.read.split("\n\n").map { |b| b.strip.split("\n").map { _1.split.map(&:to_i) } }
 
 marked = Set.new
 winners = []
