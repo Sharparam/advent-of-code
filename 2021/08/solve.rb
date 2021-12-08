@@ -8,35 +8,11 @@ data = ARGF.readlines.map do |line|
   { patterns: patterns.map { _1.chars.sort.join }, output: output.map { _1.chars.sort.join } }
 end
 
-SEGMENT_SIZES = {
-  0 => 6,
-  1 => 2,
-  2 => 5,
-  3 => 5,
-  4 => 4,
-  5 => 5,
-  6 => 6,
-  7 => 3,
-  8 => 7,
-  9 => 6
-}
-
-SIZE_TO_SEGMENTS = {
-  2 => [1],
-  3 => [7],
-  4 => [4],
-  5 => [2, 3, 5],
-  6 => [0, 6, 9],
-  7 => [8]
-}
-
 UNIQUE_SEGMENTS = Set[2, 4, 3, 7]
 
-# p data
 puts data.map { _1[:output] }.flatten.count { UNIQUE_SEGMENTS.include? _1.size }
 
 def solve_entry(entry)
-  # print entry
   patterns, output = entry[:patterns], entry[:output]
   candidates = {}
   candidates[1] = patterns.find { _1.size == 2 }
