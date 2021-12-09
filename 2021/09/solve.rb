@@ -4,18 +4,14 @@
 require 'set'
 
 map = Hash.new(10)
-ARGF.readlines.each_with_index do |line, row|
-  line.strip().split('').map(&:to_i).each_with_index do |num, col|
-    map[[col, row]] = num
-  end
+ARGF.readlines.each_with_index do |l, r|
+  l.strip().split('').map(&:to_i).each_with_index { map[[_2, r]] = _1 }
 end
 
 def around(pos)
   [
-    [pos[0], pos[1] - 1],
-    [pos[0], pos[1] + 1],
-    [pos[0] - 1, pos[1]],
-    [pos[0] + 1, pos[1]]
+    [pos[0], pos[1] - 1], [pos[0], pos[1] + 1],
+    [pos[0] - 1, pos[1]], [pos[0] + 1, pos[1]]
   ]
 end
 
