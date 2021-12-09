@@ -21,7 +21,7 @@ end
 
 lows = map.keys.select { |p| around(p).all? { map[p] < map[_1] } }
 
-puts lows.map { map[_1].succ }.sum
+puts lows.map { map[_1] + 1 }.sum
 
 puts lows.map { |start|
   visited = Set.new
