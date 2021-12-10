@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-input = ARGF.readlines.map(&:strip)
-
-OPEN = '([{<'.chars
-CLOSE = ')]}>'.chars
-
 MAP = {
   '(' => ')',
   '[' => ']',
@@ -20,17 +15,17 @@ POINTS = {
   '>' => 25137
 }.freeze
 
-AC_SCORE = {
+SCORE = {
   ')' => 1,
   ']' => 2,
   '}' => 3,
   '>' => 4
 }.freeze
 
-illegal = []
-autocomplete_scores = []
+illegal = 0
+scores = []
 
-input.each do |line|
+ARGF.readlines.map(&:strip).each do |line|
   next_close = []
   incomplete = true
   line.chars.each do |char|
@@ -39,15 +34,13 @@ input.each do |line|
     else
       expected = next_close.pop
       next if char == expected
-      illegal << char
+      illegal += POINTS[char]
       incomplete = false
       break
     end
   end
-  next unless incomplete
-  score = next_close.reverse.reduce(0) { |a, e| (a * 5) + AC_SCORE[e] }
-  autocomplete_scores << score
+  scores << next_close.reverse.reduce(0) { |a, e| (a * 5) + SCORE[e] } if incomplete
 end
 
-puts illegal.map { |c| POINTS[c] }.sum
-puts autocomplete_scores.sort[autocomplete_scores.size / 2]
+puts illegal
+puts scores.sort[scores.size / 2]
