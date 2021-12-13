@@ -4,7 +4,7 @@
 require 'set'
 
 input, instructions = ARGF.read.split("\n\n")
-grid = input.lines.map { [*_1.split(',').map(&:to_i)] }.to_set
+grid = input.scan(/\d+/).map(&:to_i).each_slice(2).to_set
 instructions = instructions.scan(/(x|y)=(\d+)/).map { [_1 == 'x' ? 0 : 1, _2.to_i] }
 
 def vis(grid)
