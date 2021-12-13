@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'matrix'
+require 'set'
 
 class Vector
   def x = self[0]
@@ -15,26 +16,22 @@ class Vector
 end
 
 input, instructions = ARGF.read.split("\n\n")
-grid = Hash[input.lines.map { |l| [Vector[*l.split(',').map(&:to_i)], true] }]
+grid = input.lines.map { Vector[*_1.split(',').map(&:to_i)] }.to_set
 instructions = instructions.scan(/(x|y)=(\d+)/).map { |a, n| [a.to_sym, n.to_i] }
 
 def vis(grid)
-  max_x = grid.keys.map(&:x).max
-  max_y = grid.keys.map(&:y).max
+  max_x = grid.map(&:x).max
+  max_y = grid.map(&:y).max
   (0..max_y).each do |y|
     (0..max_x).each do |x|
-      print(grid[Vector[x, y]] ? '##' : '..')
+      print(grid.include?(Vector[x, y]) ? '##' : '..')
     end
     puts
   end
 end
 
 def fold(grid, axis, pos)
-  Hash[grid.keys.map do |key|
-    new_key = key.dup
-    new_key.send("#{axis}=", pos - (key.send(axis) - pos).abs)
-    [new_key, true]
-  end]
+  grid.map { |k| k.dup.tap { _1.send("#{axis}=", pos - (k.send(axis) - pos).abs) } }.to_set
 end
 
 puts fold(grid, *instructions[0]).size
