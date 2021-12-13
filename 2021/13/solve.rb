@@ -22,12 +22,7 @@ instructions = instructions.scan(/(x|y)=(\d+)/).map { |a, n| [a.to_sym, n.to_i] 
 def vis(grid)
   max_x = grid.map(&:x).max
   max_y = grid.map(&:y).max
-  (0..max_y).each do |y|
-    (0..max_x).each do |x|
-      print(grid.include?(Vector[x, y]) ? '##' : '..')
-    end
-    puts
-  end
+  puts (0..max_y).map { |y| (0..max_x).map { grid.include?(Vector[_1, y]) ? '##' : '..' }.join }
 end
 
 def fold(grid, axis, pos)
