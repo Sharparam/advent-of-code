@@ -4,29 +4,18 @@
 require 'matrix'
 require 'set'
 
-class Vector
-  def x = self[0]
-  def x=(v)
-    self[0] = v
-  end
-  def y = self[1]
-  def y=(v)
-    self[1] = v
-  end
-end
-
 input, instructions = ARGF.read.split("\n\n")
 grid = input.lines.map { Vector[*_1.split(',').map(&:to_i)] }.to_set
-instructions = instructions.scan(/(x|y)=(\d+)/).map { |a, n| [a.to_sym, n.to_i] }
+instructions = instructions.scan(/(x|y)=(\d+)/).map { |a, n| [a == 'x' ? 0 : 1, n.to_i] }
 
 def vis(grid)
-  max_x = grid.map(&:x).max
-  max_y = grid.map(&:y).max
+  max_x = grid.map(&:first).max
+  max_y = grid.map { _1[1] }.max
   puts (0..max_y).map { |y| (0..max_x).map { grid.include?(Vector[_1, y]) ? '##' : '..' }.join }
 end
 
 def fold(grid, axis, pos)
-  grid.map { |k| k.dup.tap { _1.send("#{axis}=", pos - (k.send(axis) - pos).abs) } }.to_set
+  grid.map { |k| k.dup.tap { _1[axis] = pos - (k[axis] - pos).abs } }.to_set
 end
 
 puts fold(grid, *instructions[0]).size
