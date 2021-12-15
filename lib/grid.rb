@@ -49,7 +49,7 @@ class Grid
     puts "~~~" * width
   end
 
-  private
+  protected
 
   def draw_tile(pos, opts)
     return '###' unless passable?(pos)
@@ -81,5 +81,12 @@ class GridWithWeights < Grid
 
   def cost(source, destination)
     @weights[destination]
+  end
+
+  protected
+
+  def draw_tile(pos, opts)
+    return sprintf(' %-2d', @weights[pos]) if opts[:weights]
+    super
   end
 end

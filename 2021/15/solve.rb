@@ -8,10 +8,10 @@ input = ARGF.readlines.map(&:strip).map { _1.split('').map(&:to_i) }
 WIDTH = input[0].size
 HEIGHT = input.size
 START = Vector[0, 0]
+GOAL = Vector[WIDTH - 1, HEIGHT - 1]
 FULL_WIDTH = WIDTH * 5
 FULL_HEIGHT = HEIGHT * 5
 FULL_GOAL = Vector[FULL_WIDTH - 1, FULL_HEIGHT - 1]
-GOAL = Vector[WIDTH - 1, HEIGHT - 1]
 
 grid = GridWithWeights.new(WIDTH, HEIGHT)
 full_grid = GridWithWeights.new(FULL_WIDTH, FULL_HEIGHT)
