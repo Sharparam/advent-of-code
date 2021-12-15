@@ -24,7 +24,6 @@ input.each_with_index do |row, y|
       (0..4).each do |n2|
         new_weight = weight + n + n2
         new_weight -= 9 if new_weight > 9
-
         full_grid.add_weight Vector[x + (WIDTH * n), y + (HEIGHT * n2)], new_weight
         full_grid.add_weight Vector[x + (WIDTH * n2), y + (HEIGHT * n)], new_weight
       end
