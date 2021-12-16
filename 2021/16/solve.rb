@@ -19,12 +19,6 @@ MODES = {
   1 => :packets
 }
 
-LITERAL_VALUE_SIZE = 4 * 5
-
-class Packet
-  attr_reader :version, :type
-end
-
 hex = ARGF.readline.strip
 # puts hex
 bin_width = hex.size * 4
