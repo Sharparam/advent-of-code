@@ -17,7 +17,17 @@ TYPES = {
 MODES = {
   0 => :bits,
   1 => :packets
-}
+}.freeze
+
+OPS = {
+  sum: -> { _1.sum },
+  product: -> { _1.reduce :* },
+  min: -> { _1.min },
+  max: -> { _1.max },
+  gt: -> { _1.reduce(:>) ? 1 : 0 },
+  lt: -> { _1.reduce(:<) ? 1 : 0 },
+  eq: -> { _1.reduce(:==) ? 1 : 0 }
+}.freeze
 
 hex = ARGF.readline.strip
 # puts hex
@@ -73,22 +83,7 @@ def parse_packet(data, position, versions)
         op_values << value
       end
     end
-    case type
-    when :sum
-      final_value = op_values.sum
-    when :product
-      final_value = op_values.reduce(1, :*)
-    when :min
-      final_value = op_values.min
-    when :max
-      final_value = op_values.max
-    when :gt
-      final_value = op_values[0] > op_values[1] ? 1 : 0
-    when :lt
-      final_value = op_values[0] < op_values[1] ? 1 : 0
-    when :eq
-      final_value = op_values[0] == op_values[1] ? 1 : 0
-    end
+    final_value = OPS[type][op_values]
   end
   [position, final_value]
 end
