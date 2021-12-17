@@ -37,7 +37,7 @@ max_y = 0
 
 (1..X_RANGE.max).each do |x_vel|
   # magic max range found by experimentation
-  (Y_RANGE.min..500).each do |y_vel|
+  (Y_RANGE.min..Y_RANGE.min.abs).each do |y_vel|
     vel = Vector[x_vel, y_vel]
     success, max = test(X_RANGE, Y_RANGE, vel)
     next unless success
