@@ -33,7 +33,7 @@ end
 
 def enhance(image, step)
   xmin, xmax, ymin, ymax = bounds(image)
-  Hash[(xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { |x, y| Vector[x, y] }.map { [_1, ALGORITHM[read(image, _1)]] }].tap { _1.default = default(step) }
+  Hash[(xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { Vector[_1, _2] }.map { [_1, ALGORITHM[read(image, _1)]] }].tap { _1.default = default(step) }
 end
 
 def vis(image)
