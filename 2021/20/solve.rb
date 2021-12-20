@@ -4,8 +4,7 @@
 require 'matrix'
 
 ALGORITHM = ARGF.readline.strip.chars.map { _1 == '#' ? 1 : 0 }
-IMAGE = Hash[ARGF.readlines[1..].flat_map.with_index { |r, y| r.strip.chars.map.with_index { |p, x| [Vector[x, y], p == '#' ? 1 : 0] } }]
-IMAGE.default = 0
+IMAGE = Hash[ARGF.readlines[1..].flat_map.with_index { |r, y| r.strip.chars.map.with_index { |p, x| [Vector[x, y], p == '#' ? 1 : 0] } }].tap { _1.default = 0 }
 
 SQUARE_DELTAS = [
   Vector[-1, -1], Vector[0, -1], Vector[1, -1],
@@ -17,9 +16,8 @@ def square_vectors(pos)
   SQUARE_DELTAS.map { pos + _1 }
 end
 
-def read_number(image, pos)
-  square_pos = square_vectors(pos)
-  square_pos.flat_map { image[_1] }.join.to_i(2)
+def read(image, pos)
+  square_vectors(pos).flat_map { image[_1] }.join.to_i(2)
 end
 
 def bounds(image)
@@ -34,18 +32,8 @@ def default(step)
 end
 
 def enhance(image, step)
-  image = image.dup
-  enhanced = Hash.new(default(step))
-
   xmin, xmax, ymin, ymax = bounds(image)
-  (ymin-1..ymax+1).each do |y|
-    (xmin-1..xmax+1).each do |x|
-      pos = Vector[x, y]
-      enhanced[pos] = ALGORITHM[read_number(image, pos)]
-    end
-  end
-
-  enhanced
+  Hash[(xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { |x, y| Vector[x, y] }.map { [_1, ALGORITHM[read(image, _1)]] }].tap { _1.default = default(step) }
 end
 
 def vis(image)
