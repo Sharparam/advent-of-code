@@ -34,8 +34,12 @@ end
 puts (player_1_score > player_2_score ? player_2_score : player_1_score) * die_rolls
 
 OUTCOMES = [1, 2, 3].repeated_permutation(3).map(&:sum).tally
+CACHE = {}
 
 def dirac(flag = true, p1 = 0, p2 = 0, p1_score = 0, p2_score = 0)
+  cache_key = [flag, p1, p2, p1_score, p2_score]
+  return CACHE[cache_key] if CACHE.key? cache_key
+
   return [1, 0] if p1_score >= 21
   return [0, 1] if p2_score >= 21
 
@@ -58,6 +62,8 @@ def dirac(flag = true, p1 = 0, p2 = 0, p1_score = 0, p2_score = 0)
       result[1] += o_r[1] * count
     end
   end
+
+  CACHE[cache_key] = result
 
   result
 end
