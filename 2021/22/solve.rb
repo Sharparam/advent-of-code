@@ -4,7 +4,6 @@
 require 'matrix'
 
 reactor = {}
-reactor2 = {}
 
 ARGF.each_line do |line|
   puts "Processing: #{line}"
@@ -17,13 +16,12 @@ ARGF.each_line do |line|
     yrange.each do |y|
       next if y < -50 || y > 50
       zrange.each do |z|
+        next if z < -50 || z > 50
         pos = Vector[x, y, z]
-        reactor[pos] = op if z < -50 || z > 50
-        reactor2[pos] = op
+        reactor[pos] = op
       end
     end
   end
 end
 
 puts reactor.values.count(true)
-puts reactor2.values.count(true)
