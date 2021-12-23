@@ -229,7 +229,6 @@ input = ARGF.read.scan(/\w/).map(&:to_sym).each_slice(4).to_a
 
 puts solve(input)
 
-input.insert 1, %i[D C B A]
-input.insert 2, %i[D B A C]
+input.insert 1, %i[D C B A], %i[D B A C]
 
 puts solve(input)
