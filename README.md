@@ -1,5 +1,4 @@
-Advent of Code
-==============
+# Advent of Code
 
 In this repo you can find the code for my solutions to [Advent of Code](http://adventofcode.com/)!
 
