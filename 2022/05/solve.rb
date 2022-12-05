@@ -5,17 +5,8 @@ require 'pry'
 
 layout, moves = ARGF.read.split("\n\n").map { |b| b.lines.map(&:chomp) }
 
-cranes = layout.pop.split.map { [] }
 moves = moves.map { |m| m.scan(/\d+/).map(&:to_i).then { |(q, f, t)| [q, f - 1, t - 1] } }
-
-layout.each do |l|
-  cranes.each_with_index do |c, i|
-    if l =~ /^.{#{i * 4}}\[([A-Z])\]/
-      c.unshift $1
-    end
-  end
-end
-
+cranes = layout.map(&:chars).transpose.map(&:reverse).select { _1[0] =~ /\d/ }.map { |l| l[1..].reject { _1 == ' ' } }
 cranes_2 = cranes.map(&:dup)
 
 moves.each do |(q, f, t)|
