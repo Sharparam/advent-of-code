@@ -1,13 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-input = ARGF.readlines.map(&:chomp)
-
 files = Hash.new(0)
 
 cwd = []
 
-input.each do |line|
+ARGF.readlines.map(&:chomp).each do |line|
   case line
   when /^\$ cd \/$/
     cwd.clear
