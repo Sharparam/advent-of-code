@@ -14,8 +14,8 @@ DELTAS = {
 MOVES = ARGF.readlines.map(&:split).map { |d, n| [d.to_sym, n.to_i] }
 
 head = Vector[0, 0]
-tail = Vector[0, 0]
-visited = Set.new [Vector[0, 0]]
+tails = 9.times.map { Vector[0, 0] }
+visits = 9.times.map { Set[Vector[0, 0]]}
 
 def cursed(h, t)
   hx, hy = h[0], h[1]
@@ -56,11 +56,15 @@ MOVES.each do |dir, n|
   delta = DELTAS[dir]
   n.times do
     head += delta
-    move = cursed head, tail
-    tail += move
 
-    visited.add tail
+    tails.each_with_index do |tail, i|
+      parent = i == 0 ? head : tails[i - 1]
+      move = cursed parent, tail
+      tails[i] += move
+      visits[i].add tails[i]
+    end
   end
 end
 
-puts visited.size
+puts visits[0].size
+puts visits[8].size
