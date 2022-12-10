@@ -17,7 +17,7 @@ puts 19.step(cycles.size, 40).map { cycles[_1] * (_1 + 1) }.sum
 
 crt = 240.times.map do |i|
   v = cycles[i]
-  (v - 1..v + 1).include?(i % 40) ? '#' : ':'
+  (v - 1..v + 1).include?(i % 40) ? '##' : '  '
 end
 
 puts crt.each_slice(40).map(&:join).join("\n")
