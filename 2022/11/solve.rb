@@ -4,12 +4,12 @@
 require 'pry'
 
 MONKEY_RE = %r{
-  \s*Monkey\ (?<i>\d+):\n
-  \s+Starting\ items:\ (?<items>[^\n]+)\n
-  \s+Operation:\ (?<op>[^\n]+)\n
-  \s+Test:\ divisible\ by\ (?<divisor>\d+)\n
-  \s+If\ true:\ throw\ to\ monkey\ (?<t>\d+)\n
-  \s+If\ false:\ throw\ to\ monkey\ (?<f>\d+)
+  [^\d]+(?<i>\d+):\n
+  [^\d]+(?<items>[^\n]+)\n
+  [^:]+:\ (?<op>[^\n]+)\n
+  [^\d]+(?<divisor>\d+)\n
+  [^\d]+(?<t>\d+)\n
+  [^\d]+(?<f>\d+)
 }imx
 
 class Monkey
