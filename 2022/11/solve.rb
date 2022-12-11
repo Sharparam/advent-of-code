@@ -77,10 +77,6 @@ class Monkey
   def add!(item)
     @items.push item
   end
-
-  def to_s
-    @items.join ', '
-  end
 end
 
 input = ARGF.read
