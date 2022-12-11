@@ -3,7 +3,7 @@
 
 require 'pry'
 
-RE = /^  [^\d]+(?<i>[^\n]+).+?: (?<o>[^\n]+).+?(?<d>\d+).+?(?<t>\d+).+?(?<f>\d+)/im
+RE = /^  [^\d]+([^\n]+).+?: ([^\n]+).+?(\d+).+?(\d+).+?(\d+)/im
 
 class Monkey
   attr_reader :true_target, :false_target, :inspect_count
@@ -25,10 +25,10 @@ class Monkey
 
   def self.from_string(str)
     match = RE.match(str)
-    items = match[?i].split(',').map(&:to_i)
-    divisor = match[?d].to_i
-    t, f = match[?t].to_i, match[?f].to_i
-    Monkey.new(items, match[?o], divisor, t, f)
+    items = match[1].split(',').map(&:to_i)
+    divisor = match[3].to_i
+    t, f = match[4].to_i, match[5].to_i
+    Monkey.new(items, match[2], divisor, t, f)
   end
 
   def self.from_strings(strs)
