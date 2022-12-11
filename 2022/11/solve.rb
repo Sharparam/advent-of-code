@@ -3,14 +3,7 @@
 
 require 'pry'
 
-MONKEY_RE = %r{
-  [^\d]+(?<i>\d+):\n
-  [^\d]+(?<items>[^\n]+)\n
-  [^:]+:\ (?<op>[^\n]+)\n
-  [^\d]+(?<divisor>\d+)\n
-  [^\d]+(?<t>\d+)\n
-  [^\d]+(?<f>\d+)
-}imx
+RE = /^  [^\d]+(?<items>[^\n]+).+?: (?<op>[^\n]+).+?(?<divisor>\d+).+?(?<t>\d+).+?(?<f>\d+)/im
 
 class Monkey
   attr_reader :true_target, :false_target, :inspect_count
@@ -31,21 +24,15 @@ class Monkey
   end
 
   def self.from_string(str)
-    match = MONKEY_RE.match(str)
-    index = match['i'].to_i
+    match = RE.match(str)
     items = match['items'].split(',').map(&:to_i)
     divisor = match['divisor'].to_i
     t, f = match['t'].to_i, match['f'].to_i
-    [index, Monkey.new(items, match['op'], divisor, t, f)]
+    Monkey.new(items, match['op'], divisor, t, f)
   end
 
   def self.from_strings(strs)
-    monkeys = []
-    strs.split("\n\n").each do |str|
-      i, m = self.from_string(str)
-      monkeys[i] = m
-    end
-    monkeys
+    strs.split("\n\n").map { self.from_string _1 }
   end
 
   def test(worry)
