@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'matrix'
+require 'benchmark'
 
 require_relative '../../lib/astar'
 require_relative '../../lib/grid'
@@ -37,10 +38,7 @@ positions.each do |pos|
 end
 
 _, costs = AStar.find_path(grid, start, goal)
-
 puts costs[goal]
 
 starts = positions.select { |pos| cells[pos[1]][pos[0]] == ?a.ord }
-
-puts starts.map { AStar.find_path(grid, _1, goal)[1][goal] }.compact.min
-
+puts AStar.find_path(grid, starts, goal)[1][goal]

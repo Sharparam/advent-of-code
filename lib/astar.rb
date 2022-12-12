@@ -8,11 +8,20 @@ module AStar
       heuristic ||= method(:default_heuristic)
 
       frontier = PriorityQueue.new
-      frontier.enqueue start, 0
       came_from = {}
       cost_so_far = {}
-      came_from[start] = nil
-      cost_so_far[start] = 0
+
+      if start.is_a?(Enumerable) && !start.is_a?(Vector)
+        start.each do
+          frontier.enqueue _1, 0
+          came_from[_1] = nil
+          cost_so_far[_1] = 0
+        end
+      else
+        frontier.enqueue start, 0
+        came_from[start] = nil
+        cost_so_far[start] = 0
+      end
 
       while frontier.any?
         current = frontier.dequeue
