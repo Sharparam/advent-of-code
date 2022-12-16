@@ -14,14 +14,15 @@ ARGF.readlines.each do |line|
   end
 end
 
+HAS_FLOW = valves.select { _2[:rate] != 0 }.map { |k, _| k }.to_set
+
 def solve(valves, memory, mins, current, score, visited, opened)
   key = [mins, current, score]
   return memory[key] if memory.key?(key)
 
   return score if mins <= 0
 
-  remaining = valves.keys.reject { opened.include? _1 }
-  return score if remaining.all? { valves[_1][:rate] == 0 }
+  return score if HAS_FLOW.all? { opened.include? _1 }
 
   visited = visited.dup
   visited.add current
