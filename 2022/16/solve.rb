@@ -31,8 +31,6 @@ def solve(valves, memory, mins, current, score, visited, opened)
   valve = valves[current]
   rate = valve[:rate]
 
-  scenarios = [score]
-
   max = score
 
   tovisit = valve[:tunnels]
