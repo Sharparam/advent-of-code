@@ -3,8 +3,6 @@
 
 require 'set'
 
-require 'pry'
-
 valves = {}
 
 ARGF.readlines.each do |line|
@@ -20,9 +18,9 @@ def solve(valves, memory, mins, current, score, visited, opened)
   key = [mins, current, score]
   return memory[key] if memory.key?(key)
 
-  return score if mins <= 0 || visited.size == valves.keys.size
+  return score if mins <= 0
 
-  remaining = valves.keys.reject { visited.include? _1 }
+  remaining = valves.keys.reject { opened.include? _1 }
   return score if remaining.all? { valves[_1][:rate] == 0 }
 
   visited = visited.dup
@@ -52,5 +50,3 @@ def solve(valves, memory, mins, current, score, visited, opened)
 end
 
 puts solve(valves, {}, 30, :AA, 0, Set.new, Set.new)
-
-# binding.pry
