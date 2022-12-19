@@ -57,9 +57,15 @@ class Blueprint
       return stock[:geode]
     end
 
-    paths = RESOURCES.select { |t| @costs[t].all? { |r, n| stock[r] >= n } }.to_set
+    make_geode = production[:obsidian] != 0 && stock[:ore] >= @costs[:geode][:ore] && stock[:obsidian] >= @costs[:geode][:obsidian]
+    make_ore = !make_geode && production[:ore] < @caps[:ore] && stock[:ore] >= @costs[:ore][:ore]
+    make_clay = !make_geode && production[:clay] < @caps[:clay] && stock[:ore] >= @costs[:clay][:ore]
+    make_obsidian = !make_geode && production[:clay] != 0 && production[:obsidian] < @caps[:obsidian] && stock[:ore] >= @costs[:obsidian][:ore] && stock[:clay] >= @costs[:obsidian][:clay]
 
-    production.each { |t, n| stock[t] += n }
+    stock[:ore] += production[:ore]
+    stock[:clay] += production[:clay]
+    stock[:obsidian] += production[:obsidian]
+    stock[:geode] += production[:geode]
 
     if maxes.key?(time_left)
       if stock[:geode] < maxes[time_left]
@@ -74,32 +80,60 @@ class Blueprint
 
     time_left -= 1
 
-    n = time_left
-    remaining_potential = production[:geode] * n + n * (n + 1) / 2
+    remaining_potential = production[:geode] * time_left + time_left * (time_left + 1) / 2
     if stock[:geode] + remaining_potential <= maxes[0]
       memory[cache_key] = 0
       return 0
     end
 
-    paths -= [:ore] if production[:ore] >= @caps[:ore]
-    paths -= [:clay] if production[:clay] >= @caps[:clay]
-    paths -= [:obsidian] if production[:clay] == 0 || production[:obsidian] >= @caps[:obsidian]
-    paths -= [:geode] if production[:obsidian] == 0
-
-    paths -= %i[ore clay obsidian] if paths.include?(:geode)
-
-    results = []
-
-    paths.each do |path|
-      costs = @costs[path]
-      new_prod = production.dup.tap { _1[path] += 1}
-      new_stock = stock.dup.tap { |h| costs.each { |r, n| h[r] -= n } }
-      results.push solve(time_left, new_stock, new_prod, maxes, memory)
+    if make_geode
+      new_prod = production.dup.tap { _1[:geode] += 1}
+      new_stock = stock.dup.tap do |h|
+        h[:ore] -= @costs[:geode][:ore]
+        h[:obsidian] -= @costs[:geode][:obsidian]
+      end
+      result = solve(time_left, new_stock, new_prod, maxes, memory)
+      memory[cache_key] = result
+      return result
     end
 
-    results.push(solve(time_left, stock, production, maxes, memory)) unless paths.include?(:geode)
+    if !make_ore && !make_clay && !make_obsidian
+      result = solve(time_left, stock, production, maxes, memory)
+      memory[cache_key] = result
+      return result
+    end
 
-    memory[cache_key] = results.max
+    max = 0
+
+    if make_ore
+      new_prod = production.dup.tap { _1[:ore] += 1}
+      new_stock = stock.dup.tap do |h|
+        h[:ore] -= @costs[:ore][:ore]
+      end
+      result = solve(time_left, new_stock, new_prod, maxes, memory)
+      max = result if result > max
+    end
+
+    if make_clay
+      new_prod = production.dup.tap { _1[:clay] += 1}
+      new_stock = stock.dup.tap do |h|
+        h[:ore] -= @costs[:clay][:ore]
+      end
+      result = solve(time_left, new_stock, new_prod, maxes, memory)
+      max = result if result > max
+    end
+
+    if make_obsidian
+      new_prod = production.dup.tap { _1[:obsidian] += 1}
+      new_stock = stock.dup.tap do |h|
+        h[:ore] -= @costs[:obsidian][:ore]
+        h[:clay] -= @costs[:obsidian][:clay]
+      end
+      result = solve(time_left, new_stock, new_prod, maxes, memory)
+      max = result if result > max
+    end
+
+    memory[cache_key] = max
   end
 
   def print_stock(stock)
