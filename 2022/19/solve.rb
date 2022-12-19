@@ -109,21 +109,19 @@ end
 
 BLUEPRINTS = ARGF.read.scan(/\d+/).map(&:to_i).each_slice(7).map { Blueprint.from_array(_1) }.freeze
 
-total = 0
-
-BLUEPRINTS.each do |blueprint|
-  # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
-  result = blueprint.solve()
-
-  total += result * blueprint.id
+def part1()
+  BLUEPRINTS.sum do |blueprint|
+    # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
+    blueprint.solve() * blueprint.id
+  end
 end
 
-puts total
-
-part2_bps = BLUEPRINTS.take(3)
-part2_geodes = part2_bps.map do |blueprint|
-  # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
-  blueprint.solve(32)
+def part2()
+  BLUEPRINTS.take(3).map do |blueprint|
+    # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
+    blueprint.solve(32)
+  end.reduce(:*)
 end
 
-puts part2_geodes.reduce(:*)
+puts part1()
+puts part2()
