@@ -97,12 +97,6 @@ class Blueprint
       return result
     end
 
-    if !make_ore && !make_clay && !make_obsidian
-      result = solve(time_left, stock, production, maxes, memory)
-      memory[cache_key] = result
-      return result
-    end
-
     max = 0
 
     if make_ore
@@ -132,6 +126,9 @@ class Blueprint
       result = solve(time_left, new_stock, new_prod, maxes, memory)
       max = result if result > max
     end
+
+    result = solve(time_left, stock, production, maxes, memory)
+    max = result if result > max
 
     memory[cache_key] = max
   end
