@@ -35,7 +35,7 @@ input_url = "https://adventofcode.com/#{year}/day/#{day}/input"
 
 pp options if verbose
 
-abort 'Target file already exists' if File.exists? filename
+abort 'Target file already exists' if File.exist? filename
 abort 'Missing session token' unless session_id
 
 puts "Session token is #{session_id}" if verbose
