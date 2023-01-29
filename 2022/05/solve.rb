@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'pry'
-
 layout, moves = ARGF.read.split("\n\n").map { |b| b.lines.map(&:chomp) }
 
 moves = moves.map { |m| m.scan(/\d+/).map(&:to_i).then { |(q, f, t)| [q, f - 1, t - 1] } }
