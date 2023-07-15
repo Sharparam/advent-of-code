@@ -30,7 +30,7 @@ dry_run = options[:'dry-run']
 year = options[:year] || now.year
 day = options[:day] || now.day
 session_id = options[:session] || YAML.load_file('init.yml')['session']
-filename = options[:output] || "#{year}/#{'%02d' % day}/input"
+filename = options[:output] || "src/#{year}/#{'%02d' % day}/input"
 input_url = "https://adventofcode.com/#{year}/day/#{day}/input"
 
 pp options if verbose
