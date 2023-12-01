@@ -3,7 +3,7 @@
 
 lines = ARGF.read.lines
 
-puts lines.sum { _1.scan(/\d/).then { |m| [m.first, m.last].join.to_i } }
+puts lines.sum { _1.scan(/\d/).then { |m| [m[0], m[-1]].join.to_i } }
 
 re = /(?=(\d|one|two|three|four|five|six|seven|eight|nine))/
 map = {
@@ -19,4 +19,4 @@ map = {
 }
 
 digits = lines.map { _1.scan(re).flatten.map { |d| map[d] || d.to_i } }
-puts digits.sum { |d| [d.first, d.last].join.to_i }
+puts digits.sum { |d| [d[0], d[-1]].join.to_i }
