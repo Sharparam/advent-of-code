@@ -7,8 +7,8 @@ def mult(index, out_index)
   MULTIPLIERS[((index + 1) / (out_index + 1)) % 4]
 end
 
-def digit(num)
-  num.abs % 10
+def digit(n)
+  n.abs % 10
 end
 
 def phase(data)

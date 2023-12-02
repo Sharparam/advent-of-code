@@ -34,7 +34,7 @@ DIRS = {
   }
 }
 
-def run(start_color)
+def run(start_c)
   colors = {
     Vector[0, 0] => start_color
   }
@@ -47,9 +47,9 @@ def run(start_color)
   while !cpu.halted?
     cpu.input!(colors[pos])
     cpu.run!
-    color = cpu.output[-2]
+    c = cpu.output[-2]
     dir = cpu.output[-1]
-    colors[pos] = color
+    colors[pos] = c
     vel = DIRS[dir][vel]
     pos += vel
   end
