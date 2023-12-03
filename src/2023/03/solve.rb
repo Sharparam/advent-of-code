@@ -73,7 +73,7 @@ part2 = 0
 gears.each do |gear|
   nums = numbers.select { |n| gear[:pos].around?(n[:start], n[:stop]) }
   if nums.size == 2
-    part2 += nums.reduce(1) { |a, e| a * e[:value] }
+    part2 += nums[0][:value] * nums[1][:value]
   end
 end
 
