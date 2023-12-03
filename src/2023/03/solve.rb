@@ -54,8 +54,6 @@ ARGF.read.lines.each_with_index do |line, row|
   end
 end
 
-puts "Total sum: #{numbers.sum { |n| n[:value] }}"
-
 part1 = 0
 
 seen = Set.new
