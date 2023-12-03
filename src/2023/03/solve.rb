@@ -15,52 +15,36 @@ class Vector
   def to_s = "(#{x}, #{y})"
 end
 
-numbers = []
+$numbers = []
+$num = []
 symbols = []
 
-id = 0
+def addnum(startx, stopx, y)
+  $numbers << { value: $num.join.to_i, start: Vector[startx, y], stop: Vector[stopx, y] }
+  $num = []
+end
+
 ARGF.read.lines.each_with_index do |line, row|
-  num = []
   x = 0
-  line.chomp.chars.each_with_index do |char, col|
+  line.chars.each_with_index do |char, col|
     case char
     when '.'
-      if num.any?
-        number = num.join.to_i
-        num = []
-        start = Vector[x, row]
-        stop = Vector[col - 1, row]
-        numbers << { id: id += 1, value: number, start: start, stop: stop }
-      end
+      addnum(x, col - 1, row) if $num.any?
     when /\d/
-      x = col if num.empty?
-      num << char
+      x = col if $num.empty?
+      $num << char
     else
-      if num.any?
-        number = num.join.to_i
-        num = []
-        start = Vector[x, row]
-        stop = Vector[col - 1, row]
-        numbers << { id: id += 1, value: number, start: start, stop: stop }
-      end
-      symbols << { value: char, pos: Vector[col, row] }
+      addnum(x, col - 1, row) if $num.any?
+      symbols << { value: char, pos: Vector[col, row] } unless char == ?\n
     end
-  end
-  if num.any?
-    number = num.join.to_i
-    start = Vector[x, row]
-    stop = Vector[line.chomp.size - 1, row]
-    numbers << { id: id += 1, value: number, start: start, stop: stop }
   end
 end
 
 part1 = 0
 
-seen = Set.new
-numbers.each do |number|
-  if !seen.include?(number[:id]) && symbols.any? { |symbol| symbol[:pos].around?(number[:start], number[:stop]) }
+$numbers.each do |number|
+  if symbols.any? { |symbol| symbol[:pos].around?(number[:start], number[:stop]) }
     part1 += number[:value]
-    seen.add number[:id]
   end
 end
 
@@ -71,7 +55,7 @@ gears = symbols.select { |s| s[:value] == '*' }
 part2 = 0
 
 gears.each do |gear|
-  nums = numbers.select { |n| gear[:pos].around?(n[:start], n[:stop]) }
+  nums = $numbers.select { |n| gear[:pos].around?(n[:start], n[:stop]) }
   if nums.size == 2
     part2 += nums[0][:value] * nums[1][:value]
   end
