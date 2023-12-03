@@ -41,18 +41,18 @@ class GamesActions {
 my $input = $*ARGFILES.slurp;
 my @games = Games.parse($input, actions => GamesActions.new).made;
 
-my $part1 = [+] @games.map: -> $game {
+my $part1 = [+] @games.map: -> %game {
   my $valid = True;
 
-  for @($game<bags>) -> %bag {
+  for @(%game<bags>) -> %bag {
     $valid = False if %bag<red> > 12 || %bag<green> > 13 || %bag<blue> > 14;
     for %bag.kv -> $c, $n {
-      $game<mins>{$c} = $n if $n > $game<mins>{$c};
+      %game<mins>{$c} = $n if $n > %game<mins>{$c};
     }
   }
 
-  $game<power> = [*] $game<mins>.values;
-  $valid ?? $game<id> !! 0
+  %game<power> = [*] %game<mins>.values;
+  $valid ?? %game<id> !! 0
 };
 
 say $part1;
