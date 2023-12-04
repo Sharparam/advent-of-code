@@ -1,11 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-cards = Hash[ARGF.read.lines.map do |line|
-  t, l = line.split(':')
-  id = t.scan(/\d+/)[0].to_i
-  w, n = l.split('|').map { _1.split(' ').map(&:to_i) }
-  [id, [w, n]]
+cards = Hash[ARGF.read.scan(/^[^\d]+(\d+): ([\d\ ]+) \| (.+)$/).map do
+  [_1.to_i, [_2.split.map(&:to_i), _3.split.map(&:to_i)]]
 end]
 
 win_count = {}
