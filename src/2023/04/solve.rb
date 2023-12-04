@@ -32,6 +32,4 @@ ids.each do |id|
   c_ids.each { total_count[_1] += e }
 end
 
-# p total_count
-
 puts total_count.values.sum
