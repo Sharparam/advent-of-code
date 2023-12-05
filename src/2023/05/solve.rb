@@ -53,8 +53,7 @@ ARGF.read.lines(chomp: true).each do |line|
   case line
   when /^seeds:/
     seeds = line.scan(/\d+/).map(&:to_i)
-  when /^(\w+)-to-(\w+) map/
-    src = $1.to_sym
+  when /map:$/
     maps << Map.new
   when /^(\d+) (\d+) (\d+)/
     maps[-1].add $1.to_i, $2.to_i, $3.to_i
@@ -66,5 +65,4 @@ maps.each { _1.sort! }
 puts seeds.map { |s| maps.reduce(s) { _2.map _1 } }.min
 
 ranges = seeds.each_slice(2).map { (_1...(_1 + _2)) }
-
 puts maps.reduce(ranges) { |a, e| a.flat_map { e.map_range _1 } }.sort_by(&:min)[0].min
