@@ -63,10 +63,7 @@ end
 
 maps.each { _1.sort! }
 
-puts seeds.map { |seed|
-  maps.each { seed = _1.map seed }
-  seed
-}.min
+puts seeds.map { |s| maps.reduce(s) { _2.map _1 } }.min
 
 ranges = seeds.each_slice(2).map { (_1...(_1 + _2)) }
 
