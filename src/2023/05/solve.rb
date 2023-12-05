@@ -2,98 +2,72 @@
 # frozen_string_literal: true
 
 class Map
-  attr_reader :source, :dest
-
-  def initialize(source, dest)
-    @source = source
-    @dest = dest
-    @overrides = []
-    @rev_overrides = []
+  def initialize()
+    @entries = []
   end
 
-  def add(dest_start, source_start, length)
-    checker = -> (s_id) { s_id >= source_start && s_id <= source_start + length - 1 }
-    converter = -> (s_id) {
-      offset = s_id - source_start
-      dest_start + offset
-    }
-    @overrides << [checker, converter]
-
-    rev_checker = -> (d_id) { d_id >= dest_start && d_id <= dest_start + length - 1 }
-    rev_converter = -> (d_id) {
-      offset = d_id - dest_start
-      source_start + offset
-    }
-    @rev_overrides << [rev_checker, rev_converter]
+  def add(dest, source, length)
+    source_range = (source ... source + length)
+    dest_range = (dest ... dest + length)
+    offset = dest - source
+    @entries << { dst: dest_range, src: source_range, offset: offset }
   end
 
-  def resolve(id)
-    @overrides.each do |checker, converter|
-      return converter.(id) if checker.(id)
+  def sort!
+    @entries.sort_by! { _1[:src].min }
+  end
+
+  def map(id)
+    @entries.each do |entry|
+      return id + entry[:offset] if entry[:src].include? id
     end
 
     id
   end
 
-  def rev_resolve(id)
-    @rev_overrides.each do |checker, converter|
-      return converter.(id) if checker.(id)
+  def map_range(source)
+    result = []
+
+    min, max = source.minmax
+
+    @entries.each do |entry|
+      src, offset = entry[:src], entry[:offset]
+      break if src.min > max
+      next if min > src.max || max < src.min
+
+      result << (min .. src.min - 1) if min < src.min
+      result << ([min, src.min].max + offset .. [max, src.max].min + offset)
+      min = [min, src.max + 1].max
     end
 
-    id
-  end
+    result << (min..max) if min <= max
 
-  def to_s
-    "map from #{@source} to #{@dest}"
+    result
   end
 end
 
 seeds = []
-maps = {}
-rev_maps = {}
+maps = []
 
 ARGF.read.lines(chomp: true).each do |line|
   case line
   when /^seeds:/
     seeds = line.scan(/\d+/).map(&:to_i)
   when /^(\w+)-to-(\w+) map/
-    $source = $1.to_sym
-    $dest = $2.to_sym
-    maps[$source] = Map.new $source, $dest
-    rev_maps[$dest] = maps[$source]
+    src = $1.to_sym
+    maps << Map.new
   when /^(\d+) (\d+) (\d+)/
-    maps[$source].add $1.to_i, $2.to_i, $3.to_i
+    maps[-1].add $1.to_i, $2.to_i, $3.to_i
   end
 end
 
-lowest = []
+maps.each { _1.sort! }
 
-seeds.each do |seed|
-  source = :seed
-  until source == :location
-    mapper = maps[source]
-    seed = mapper.resolve(seed)
-    source = mapper.dest
-  end
+puts seeds.map { |seed|
+  maps.each { seed = _1.map seed }
+  seed
+}.min
 
-  lowest << seed
-end
+ranges = seeds.each_slice(2).map { (_1...(_1 + _2)) }
 
-puts lowest.min
-
-ranges = seeds.each_slice(2).map { (_1..(_1 + _2 - 1)) }
-
-(0..).each do |final|
-  current = rev_maps[:location]
-  value = final
-  while current.source != :seed
-    new_val = current.rev_resolve(value)
-    value = new_val
-    current = rev_maps[current.source]
-  end
-  value = maps[:seed].rev_resolve(value)
-  if ranges.any? { |r| r.include?(value) }
-    puts final
-    exit
-  end
-end
+puts maps.reduce(ranges) { |a, e| a.flat_map { e.map_range _1 } }.sort_by(&:min)[0].min
