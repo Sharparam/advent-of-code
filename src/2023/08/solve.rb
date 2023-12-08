@@ -15,37 +15,23 @@ ARGF.readlines(chomp: true).each do |line|
   end
 end
 
-count = 0
-current = :AAA
-
-steps.cycle.each do |s|
-  break if current == :ZZZ
-  count += 1
-  current = nodes[current][s]
-end
-
-puts count
-
 starts = nodes.keys.select { _1.to_s[-1] == ?A }.to_set
 goals = nodes.keys.select { _1.to_s[-1] == ?Z }.to_set
 
-cycles = starts.map { [_1, {}] }.to_h
+cycles = starts.map { [_1, 0] }.to_h
 
 starts.each do |start|
   current = start
   count = 0
   steps.cycle.each do |s|
     if goals.include? current
-      if cycles[start][:first]
-        cycles[start][:length] = count - cycles[start][:first]
-        break
-      else
-        cycles[start][:first] = count
-      end
+      cycles[start] = count
+      break
     end
     count += 1
     current = nodes[current][s]
   end
 end
 
-puts cycles.values.map { _1[:length] }.reduce(&:lcm)
+puts cycles[:AAA]
+puts cycles.values.reduce(&:lcm)
