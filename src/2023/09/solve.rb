@@ -7,4 +7,3 @@ def extrapolate(seq)
 end
 
 puts ARGF.readlines(chomp: true).map { _1.split.map(&:to_i) }.map(&method(:extrapolate)).transpose.map(&:sum)
-
