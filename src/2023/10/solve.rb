@@ -45,38 +45,11 @@ NEIGHBORS = {
   J: [Vector[0, -1], Vector[-1, 0]],
   '7': [Vector[-1, 0], Vector[0, 1]],
   F: [Vector[1, 0], Vector[0, 1]]
-}
+}.tap { _1.default = [] }
 
-NEIGHBORS.keys.each do |type|
-  case type
-  when :'|'
-    next if start[1] == 0 || start[1] == HEIGHT - 1
-    next unless %i[| 7 F].include?(grid[start + Vector[0, -1]])
-    next unless %i[| L J].include?(grid[start + Vector[0, 1]])
-  when :'-'
-    next if start[0] == 0 || start[0] == WIDTH - 1
-    next unless %i[- L F].include? grid[start + Vector[-1, 0]]
-    next unless %i[- J 7].include? grid[start + Vector[1, 0]]
-  when :L
-    next if start[1] == 0 || start[0] == WIDTH - 1
-    next unless %i[| 7 F].include? grid[start + Vector[0, -1]]
-    next unless %i[- J 7].include? grid[start + Vector[1, 0]]
-  when :J
-    next if start[1] == 0 || start[0] == 0
-    next unless %i[| 7 F].include? grid[start + Vector[0, -1]]
-    next unless %i[- L F].include? grid[start + Vector[-1, 0]]
-  when :'7'
-    next if start[0] == 0 || start[1] == HEIGHT - 1
-    next unless %i[- L F].include? grid[start + Vector[-1, 0]]
-    next unless %i[| L J].include? grid[start + Vector[0, 1]]
-  when :F
-    next if start[0] == WIDTH - 1 || start[1] == HEIGHT - 1
-    next unless %i[- J 7].include? grid[start + Vector[1, 0]]
-    next unless %i[| L J].include? grid[start + Vector[0, 1]]
-  end
-  grid[start] = type
-  break
-end
+grid[start] = NEIGHBORS.find { |_, ds|
+  ds.all? { |d| NEIGHBORS[grid[start + d]].any? { _1 == d * -1 } }
+}[0]
 
 dists = Hash.new(Float::INFINITY).tap { _1[start] = 0 }
 STARTS = NEIGHBORS[grid[start]]
