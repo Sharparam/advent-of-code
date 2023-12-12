@@ -1222,7 +1222,8 @@ $RECYCLE.BIN/
 
 /init.yml
 
-# Ignore itsbth input files
+# Ignore input files from other people
+camille
 itsbth
 
 alt_*
