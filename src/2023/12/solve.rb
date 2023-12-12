@@ -1,24 +1,33 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-def gen(chars, i = 0, result = [''])
-  return result if i == chars.size
+class NilClass; def empty?; true; end; end
 
-  c = chars[i]
+CACHE = {}
 
-  if c != ??
-    return gen chars, i + 1, result.map { _1 + c }
+def valids(records, counts)
+  key = [records, counts].hash
+  return CACHE[key] if CACHE.key? key
+  return 1 if records.empty? && !counts.any?
+  return 0 if records.empty? && counts.any?
+  return 0 if records[0] == ?# && !counts.any?
+  return CACHE[key] = valids(records[1..], counts) if records[0] == ?.
+  if records[0] == ??
+    rest = records[1..]
+    return CACHE[key] = valids(rest, counts) + valids("##{rest}", counts)
   end
+  return 0 if records.size < counts[0]
+  return 0 if records[..counts[0] - 1].include? ?.
+  return 0 if records.size >= counts[0] && records[counts[0]] == ?#
 
-  new = result.flat_map { [_1 + ?., _1 + ?#] }
-  gen chars, i + 1, new
+  CACHE[key] = valids(records[counts[0] + 1..], counts[1..])
 end
 
-puts ARGF.readlines(chomp: true).sum { |line|
+puts ARGF.readlines.each_with_index.reduce([0, 0]) { |a, (line, i)|
   records, counts = line.split ' '
   counts = counts.split(',').map(&:to_i)
-  m = counts.map { "\#{#{_1}}" }.join "\\.+"
-  re = /^\.*#{m}\.*$/
+  p1 = valids records, counts
+  p2 = valids ([records] * 5).join(??), counts * 5
 
-  gen(records).count { re.match? _1 }
+  [a[0] + p1, a[1] + p2]
 }
