@@ -18,7 +18,7 @@ puts ARGF.readlines(chomp: true).sum { |line|
   records, counts = line.split ' '
   counts = counts.split(',').map(&:to_i)
   m = counts.map { "\#{#{_1}}" }.join "\\.+"
-  re = Regexp.new "^\\.*#{m}\\.*$"
+  re = /^\.*#{m}\.*$/
 
   gen(records).count { re.match? _1 }
 }
