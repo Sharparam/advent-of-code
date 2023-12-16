@@ -1,69 +1,68 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'matrix'
 require 'set'
 
-GRID = Hash[ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
-  line.chars.map.with_index { |c, x| [Vector[x, y], c] }
-}]
+GRID = ARGF.readlines(chomp: true).map(&:chars)
+HEIGHT, WIDTH = GRID.size, GRID[0].size
 
-WIDTH = GRID.keys.map { _1[0] }.max + 1
-HEIGHT = GRID.keys.map { _1[1] }.max + 1
+U, D, L, R = 0, 1, 2, 3
+DIRS = [[0, -1], [0, 1], [-1, 0], [1, 0]]
 
-DIRS = {
-  UP: Vector[0, -1],
-  DOWN: Vector[0, 1],
-  LEFT: Vector[-1, 0],
-  RIGHT: Vector[1, 0]
-}.freeze
+def cantor(x, y)
+  ((x + y) * (x + y + 1)) / 2 + y
+end
+
+def cantor3(x, y, z)
+  cantor(cantor(x, y), z)
+end
 
 def solve(start)
   queue = [start]
-  seen = Set.new queue
-  lit = Set.new [start[0]]
+  seen = Set.new [cantor3(*start)]
+  lit = Set.new [cantor(start[0], start[1])]
 
   while queue.any?
-    beam = queue.shift
-    pos, dir = beam
-    tile = GRID[pos]
+    x, y, dir = queue.shift
+    dx, dy = DIRS[dir]
 
-    while pos[0] >= 0 && pos[0] < WIDTH && pos[1] >= 0 && pos[1] < HEIGHT
-      tile = GRID[pos]
-      lit.add pos
-      if tile == '-' && dir[1] != 0
-        queue.push [pos, DIRS[:LEFT]] if seen.add? [pos, DIRS[:LEFT]]
-        queue.push [pos, DIRS[:RIGHT]] if seen.add? [pos, DIRS[:RIGHT]]
+    while x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT
+      tile = GRID[y][x]
+      lit.add cantor(x, y)
+      if tile == '-' && dy != 0
+        queue.push [x, y, L] if seen.add? cantor3(x, y, L)
+        queue.push [x, y, R] if seen.add? cantor3(x, y, R)
         break
-      elsif tile == '|' && dir[0] != 0
-        queue.push [pos, DIRS[:UP]] if seen.add? [pos, DIRS[:UP]]
-        queue.push [pos, DIRS[:DOWN]] if seen.add? [pos, DIRS[:DOWN]]
+      elsif tile == '|' && dx != 0
+        queue.push [x, y, U] if seen.add? cantor3(x, y, U)
+        queue.push [x, y, D] if seen.add? cantor3(x, y, D)
         break
       elsif tile == '/'
-        dir = Vector[dir[1] * -1, dir[0] * -1]
+        dx, dy = dy * -1, dx * -1
       elsif tile == '\\'
-        dir = Vector[dir[1], dir[0]]
+        dx, dy = dy, dx
       end
 
-      pos += dir
+      x += dx
+      y += dy
     end
   end
 
   lit.size
 end
 
-puts solve([Vector[0, 0], DIRS[:RIGHT]])
+puts solve([0, 0, R])
 
 starts = (0...WIDTH).flat_map { |x|
-  (0...HEIGHT).map { |y| Vector[x, y] }
-}.select {
-  _1[0] == 0 || _1[1] == 0 || _1[0] == WIDTH - 1 || _1[1] == HEIGHT - 1
-}.flat_map { |pos|
+  (0...HEIGHT).map { |y| [x, y] }
+}.select { |(x, y)|
+  x == 0 || y == 0 || x == WIDTH - 1 || y == HEIGHT - 1
+}.flat_map { |(x, y)|
   a = []
-  a.push [pos, DIRS[:RIGHT]] if pos[0] == 0
-  a.push [pos, DIRS[:LEFT]] if pos[0] == WIDTH - 1
-  a.push [pos, DIRS[:UP]] if pos[1] == HEIGHT - 1
-  a.push [pos, DIRS[:DOWN]] if pos[1] == 0
+  a.push [x, y, R] if x == 0
+  a.push [x, y, L] if x == WIDTH - 1
+  a.push [x, y, U] if y == HEIGHT - 1
+  a.push [x, y, D] if y == 0
   a
 }
 
