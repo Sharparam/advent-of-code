@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'benchmark'
-
-Benchmark.bm do |x|
-  x.report do
-
 lines = ARGF.read.lines
 
 puts lines.sum { _1.scan(/\d/).then { |m| [m[0], m[-1]].join.to_i } }
@@ -25,6 +20,3 @@ map = {
 
 digits = lines.map { _1.scan(re).flatten.map { |d| map[d] || d.to_i } }
 puts digits.sum { |d| [d[0], d[-1]].join.to_i }
-
-end
-end
