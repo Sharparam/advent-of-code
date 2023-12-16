@@ -20,32 +20,36 @@ DIRS = {
 
 def solve(start)
   queue = [start]
-  seen = Set.new
+  seen = Set.new queue
+  lit = Set.new [start[0]]
 
   while queue.any?
     beam = queue.shift
     pos, dir = beam
-    next if pos[0] < 0 || pos[0] >= WIDTH || pos[1] < 0 || pos[1] >= HEIGHT
-    next unless seen.add? beam
     tile = GRID[pos]
-    if tile == '-' && dir[1] != 0
-      queue.push [pos + DIRS[:LEFT], DIRS[:LEFT]]
-      queue.push [pos + DIRS[:RIGHT], DIRS[:RIGHT]]
-    elsif tile == '|' && dir[0] != 0
-      queue.push [pos + DIRS[:UP], DIRS[:UP]]
-      queue.push [pos + DIRS[:DOWN], DIRS[:DOWN]]
-    elsif tile == '/'
-      new_dir = Vector[dir[1] * -1, dir[0] * -1]
-      queue.push [pos + new_dir, new_dir]
-    elsif tile == '\\'
-      new_dir = Vector[dir[1], dir[0]]
-      queue.push [pos + new_dir, new_dir]
-    else
-      queue.push [pos + dir, dir]
+
+    while pos[0] >= 0 && pos[0] < WIDTH && pos[1] >= 0 && pos[1] < HEIGHT
+      tile = GRID[pos]
+      lit.add pos
+      if tile == '-' && dir[1] != 0
+        queue.push [pos, DIRS[:LEFT]] if seen.add? [pos, DIRS[:LEFT]]
+        queue.push [pos, DIRS[:RIGHT]] if seen.add? [pos, DIRS[:RIGHT]]
+        break
+      elsif tile == '|' && dir[0] != 0
+        queue.push [pos, DIRS[:UP]] if seen.add? [pos, DIRS[:UP]]
+        queue.push [pos, DIRS[:DOWN]] if seen.add? [pos, DIRS[:DOWN]]
+        break
+      elsif tile == '/'
+        dir = Vector[dir[1] * -1, dir[0] * -1]
+      elsif tile == '\\'
+        dir = Vector[dir[1], dir[0]]
+      end
+
+      pos += dir
     end
   end
 
-  seen.map(&:first).uniq.size
+  lit.size
 end
 
 puts solve([Vector[0, 0], DIRS[:RIGHT]])
