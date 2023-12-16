@@ -28,29 +28,19 @@ def solve(start)
     next if pos[0] < 0 || pos[0] >= WIDTH || pos[1] < 0 || pos[1] >= HEIGHT
     next unless seen.add? beam
     tile = GRID[pos]
-    if tile == '-' && (dir == DIRS[:UP] || dir == DIRS[:DOWN])
+    if tile == '-' && dir[1] != 0
       queue.push [pos + DIRS[:LEFT], DIRS[:LEFT]]
       queue.push [pos + DIRS[:RIGHT], DIRS[:RIGHT]]
-    elsif tile == '|' && (dir == DIRS[:RIGHT] || dir == DIRS[:LEFT])
+    elsif tile == '|' && dir[0] != 0
       queue.push [pos + DIRS[:UP], DIRS[:UP]]
       queue.push [pos + DIRS[:DOWN], DIRS[:DOWN]]
-    elsif tile == '/' && dir == DIRS[:RIGHT]
-      queue.push [pos + DIRS[:UP], DIRS[:UP]]
-    elsif tile == '/' && dir == DIRS[:LEFT]
-      queue.push [pos + DIRS[:DOWN], DIRS[:DOWN]]
-    elsif tile == '/' && dir == DIRS[:UP]
-      queue.push [pos + DIRS[:RIGHT], DIRS[:RIGHT]]
-    elsif tile == '/' && dir == DIRS[:DOWN]
-      queue.push [pos + DIRS[:LEFT], DIRS[:LEFT]]
-    elsif tile == '\\' && dir == DIRS[:RIGHT]
-      queue.push [pos + DIRS[:DOWN], DIRS[:DOWN]]
-    elsif tile == '\\' && dir == DIRS[:LEFT]
-      queue.push [pos + DIRS[:UP], DIRS[:UP]]
-    elsif tile == '\\' && dir == DIRS[:UP]
-      queue.push [pos + DIRS[:LEFT], DIRS[:LEFT]]
-    elsif tile == '\\' && dir == DIRS[:DOWN]
-      queue.push [pos + DIRS[:RIGHT], DIRS[:RIGHT]]
-    elsif tile == '.' || tile == '-' || tile == '|' || tile == '/' || tile == '\\'
+    elsif tile == '/'
+      new_dir = Vector[dir[1] * -1, dir[0] * -1]
+      queue.push [pos + new_dir, new_dir]
+    elsif tile == '\\'
+      new_dir = Vector[dir[1], dir[0]]
+      queue.push [pos + new_dir, new_dir]
+    else
       queue.push [pos + dir, dir]
     end
   end
