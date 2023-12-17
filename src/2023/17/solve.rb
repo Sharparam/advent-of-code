@@ -4,9 +4,9 @@
 require 'matrix'
 require 'set'
 
-# using an external gem for priority queue
-# I could use my own (in /lib/pqueue.rb), but it's quite a bit slower
-require 'algorithms' # gem install algorithms
+# using an external gem for pairing heap
+# I could use my own priority queue (in /lib/pqueue.rb), but it's quite a bit slower
+require 'pairing_heap' # gem install pairing_heap
 
 def cantor(x, y)
   ((x + y) * (x + y + 1)) / 2 + y
@@ -63,7 +63,7 @@ def neighbors(current, last_dir, min, max)
 end
 
 def solve(source = START, target = GOAL, &neighbors)
-  queue = Containers::PriorityQueue.new { |a, b| (a <=> b) == -1 }
+  queue = PairingHeap::SimplePairingHeap.new
   queue.push [source, -1, 0], 0
 
   seen = Set.new
