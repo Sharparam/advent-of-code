@@ -3,16 +3,12 @@
 
 require 'matrix'
 
-DIRMAP = { ?R => 0, ?D => 1, ?L => 2, ?U => 3 }
 DIRS = [Vector[1, 0], Vector[0, 1], Vector[-1, 0], Vector[0, -1]]
-
-def manhattan(a, b)
-  (a[0] - b[0]).abs + (a[1] - b[1]).abs
-end
+DIRMAP = { ?R => 0, ?D => 1, ?L => 2, ?U => 3 }
 
 def shoelace(vertices)
   vertices.each_cons(2).sum { |c, n|
-    c[0] * n[1] - n[0] * c[1] + manhattan(c, n)
+    c[0] * n[1] - n[0] * c[1] + (c[0] - n[0]).abs + (c[1] - n[1]).abs
   } / 2 + 1
 end
 
