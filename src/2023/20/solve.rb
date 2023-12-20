@@ -97,8 +97,6 @@ firsts = {}
 seconds = {}
 counts = { false => 0, true => 0 }
 
-seen = Set.new
-
 loop do
   queue = [[:button, :broadcaster, false]]
   n += 1
