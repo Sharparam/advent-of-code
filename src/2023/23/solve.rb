@@ -47,6 +47,10 @@ class Graph
     @edges[source][dest] = weight
   end
 
+  def remove_edge(source, dest)
+    @edges[source].delete(dest)
+  end
+
   def has_edge?(source, dest)
     @edges.key?(source) && @edges[source].key?(dest)
   end
@@ -61,6 +65,10 @@ class Graph
 
   def neighbors(source)
     @edges[source].keys
+  end
+
+  def find_sources(dest)
+    @edges.flat_map { |s, h| h.keys.map { |d| [d, s] } }.select { |d, s| d == dest }.map(&:last)
   end
 
   def debug
@@ -193,5 +201,14 @@ end
 puts bfs(&method(:neighbors))
 
 graph = compress(&method(:neighbors_2))
+
+goal = GOAL.hash
+
+# Optimize the final intersection before the goal
+# so that the only possible path is to the goal
+# Taking any other path at the final intersection will make it impossible
+# to reach the goal because it will be blocked.
+source = graph.find_sources(goal)[0]
+(graph.neighbors(source) - [goal]).each { |dest| graph.remove_edge(source, dest) }
 
 puts bfs2(graph)
