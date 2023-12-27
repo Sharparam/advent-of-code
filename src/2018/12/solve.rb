@@ -31,15 +31,26 @@ end
 
 puts final_pots.sum
 
+delta = nil
+delta_count = 0
+
 part2_pots = 50_000_000_000.times.reduce(pots) do |pots, i|
   old_sum = pots.sum
   new_pots = transform(pots)
   new_sum = new_pots.sum
-  if i == 125
+  new_delta = new_sum - old_sum
+  if new_delta == delta
+    delta_count += 1
+  else
+    delta_count = 1
+  end
+  if delta_count == 3
     remaining = 50_000_000_000 - i - 1
-    final_result = new_sum + remaining * 88
+    final_result = new_sum + remaining * delta
     puts final_result
     exit
   end
+
+  delta = new_delta
   new_pots
 end
