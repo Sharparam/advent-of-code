@@ -1230,3 +1230,12 @@ alt_*
 
 # Ignore everything IntelliJ/IDEA, for now
 .idea/
+
+# Ignore dump files
+*.dump
+
+# Ignore Flamegraph files
+flamegraph*
+
+# Ignore videos
+*.webm
