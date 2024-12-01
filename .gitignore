@@ -1239,3 +1239,6 @@ flamegraph*
 
 # Ignore videos
 *.webm
+
+# Ignore adjusted files for Golfcoder
+golf*.rb
