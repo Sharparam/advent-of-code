@@ -9,7 +9,7 @@ def validate(report)
 end
 
 def validate2(report)
-  validate(report) || report.combination(report.size - 1).any? { validate _1 }
+  report.combination(report.size - 1).any? { validate _1 }
 end
 
 puts reports.count { validate _1 }
