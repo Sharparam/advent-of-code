@@ -4,17 +4,8 @@
 reports = ARGF.map { |line| line.split.map(&:to_i) }
 
 def validate(report)
-  slices = report.each_cons(2)
-  diffs = slices.map { _2 - _1 }
-  dirs = diffs.map { _1 == 0 ? 0 : _1 / _1.abs }
-
-  same_dir = dirs.uniq.size == 1
-
-  return false unless same_dir && dirs.uniq[0] != 0
-
-  abs = diffs.map(&:abs)
-
-  abs.all? { (1..3).cover? _1 }
+  diffs = report.each_cons(2).map { _2 - _1 }
+  diffs.all? { (1..3) === _1 } || diffs.all? { (-3..-1) === _1 }
 end
 
 def validate2(report)
@@ -27,15 +18,5 @@ def validate2(report)
   false
 end
 
-def count(reports, part2 = false)
-  reports.count { |report|
-    if part2
-      validate2 report
-    else
-      validate report
-    end
-  }
-end
-
-puts count(reports)
-puts count(reports, true)
+puts reports.count { validate _1 }
+puts reports.count { validate2 _1 }
