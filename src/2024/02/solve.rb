@@ -9,11 +9,7 @@ def validate(report)
 end
 
 def validate2(report)
-  validate(report) || report.size.times.any? do |index|
-    r = report.dup
-    r.delete_at index
-    validate r
-  end
+  validate(report) || report.combination(report.size - 1).any? { validate _1 }
 end
 
 puts reports.count { validate _1 }
