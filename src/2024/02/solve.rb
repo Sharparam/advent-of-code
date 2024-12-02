@@ -9,13 +9,11 @@ def validate(report)
 end
 
 def validate2(report)
-  return true if validate(report)
-  report.size.times do |index|
+  validate(report) || report.size.times.any? do |index|
     r = report.dup
     r.delete_at index
-    return true if validate r
+    validate r
   end
-  false
 end
 
 puts reports.count { validate _1 }
