@@ -1,30 +1,13 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-class Computer
-  def initialize(advanced = false)
-    @advanced = advanced
-    @enabled = true
+puts ARGF.read.scan(/(mul)\((\d+),(\d+)\)|(do(?:n't)?)\(\)/).reduce({ p1: 0, p2: 0, e: true }) { |s, i|
+  case i
+  in ["mul", a, b, *]
+    s[:p1] += a.to_i * b.to_i
+    s[:p2] += a.to_i * b.to_i if s[:e]
+  in [*, "do"] then s[:e] = true
+  in [*, "don't"] then s[:e] = false
   end
-
-  def MUL(x, y)
-    @enabled ? x * y : 0
-  end
-
-  def DO()
-    return 0 unless @advanced
-    @enabled = true
-    0
-  end
-
-  def DONT()
-    return 0 unless @advanced
-    @enabled = false
-    0
-  end
-end
-
-instrs = ARGF.read.upcase.delete(?').scan(/MUL\(\d+,\d+\)|DO(?:NT)?\(\)/)
-
-puts Computer.new.then { |c| instrs.sum { c.instance_eval _1 } }
-puts Computer.new(true).then { |c| instrs.sum { c.instance_eval _1 } }
+  s
+}.then { [_1[:p1], _1[:p2]] }
