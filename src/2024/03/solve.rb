@@ -24,7 +24,7 @@ class Computer
   end
 end
 
-instrs = ARGF.read.upcase.gsub("DON'T", "DONT").scan(/MUL\(\d+,\d+\)|DO(?:NT)?\(\)/)
+instrs = ARGF.read.upcase.delete(?').scan(/MUL\(\d+,\d+\)|DO(?:NT)?\(\)/)
 
 puts Computer.new.then { |c| instrs.sum { c.instance_eval _1 } }
 puts Computer.new(true).then { |c| instrs.sum { c.instance_eval _1 } }
