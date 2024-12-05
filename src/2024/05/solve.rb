@@ -30,6 +30,4 @@ def sort(a, b)
   end
 end
 
-# p middles.sum
-
-p incorrect.map { _1.sort(&method(:sort)) }.sum { _1[_1.size / 2] }
+puts incorrect.map { _1.sort(&method(:sort)) }.sum { _1[_1.size / 2] }
