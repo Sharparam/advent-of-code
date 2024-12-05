@@ -17,6 +17,4 @@ puts updates.sum { |pages|
   0
 }
 
-puts incorrect.map { _1.sort { |a, b|
-  rules[a].include?(b) ? -1 : rules[b].include?(a) ? 1 : 0
-} }.sum { _1[_1.size / 2] }
+puts incorrect.sum { _1.sort { |a, b| rules[a].include?(b) ? -1 : rules[b].include?(a) ? 1 : 0 }[_1.size / 2] }
