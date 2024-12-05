@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-RULES = Hash[ARGF.readlines.map { |line|
+rules = Hash[ARGF.readlines.map { |line|
   parts = line.split 'bags contain'
   type = parts.first.strip
   contains = Hash[parts.last.scan(/(\d+) (\w+ \w+) bags?/).map { [_2, _1.to_i].freeze }]
@@ -13,9 +13,9 @@ OUR_BAG = 'shiny gold'
 def count(inside = nil)
   result = 0
 
-  (inside || RULES.keys).each do |key|
+  (inside || rules.keys).each do |key|
     next if key == OUR_BAG
-    rule = RULES[key]
+    rule = rules[key]
     if (rule[OUR_BAG] || 0) > 0
       return 1 if inside
       result += 1
@@ -29,7 +29,7 @@ def count(inside = nil)
 end
 
 def bags(type, root = false)
-  my_rules = RULES[type]
+  my_rules = rules[type]
   return 1 if my_rules.empty?
   (root ? 0 : 1) + my_rules.sum { bags(_1) * _2 }
 end

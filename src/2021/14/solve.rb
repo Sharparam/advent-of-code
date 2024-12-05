@@ -5,13 +5,13 @@ TEMPLATE = ARGF.readline.strip
 FIRST, LAST = [TEMPLATE[0], TEMPLATE[-1]]
 PAIRS = TEMPLATE.chars.each_cons(2).tally
 ARGF.readline
-RULES = Hash[ARGF.read.scan(/(..) -> (.)/).map { [_1.chars, _2] }].freeze
+rules = Hash[ARGF.read.scan(/(..) -> (.)/).map { [_1.chars, _2] }].freeze
 
 def step(pairs)
   result = Hash.new(0)
   pairs.each do |pair, count|
-    if RULES.key? pair
-      char = RULES[pair]
+    if rules.key? pair
+      char = rules[pair]
       result[[pair[0], char]] += count
       result[[char, pair[1]]] += count
     else

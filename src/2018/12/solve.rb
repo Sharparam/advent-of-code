@@ -5,7 +5,7 @@ initial, rules = ARGF.read.split("\n\n")
 
 pots = initial.split(": ")[1].chars.map.with_index { |p, i| p == ?# ? i : nil }.compact
 
-RULES = rules.lines.map { |line|
+rules = rules.lines.map { |line|
   current, result = line.split(" => ").map(&:chomp)
   result = result == ?#
   state = current.chars.map.with_index { |c, i| [i - 2, c == ?#] }.to_h
@@ -18,7 +18,7 @@ def transform(pots)
   min_i -= 2
   max_i += 2
   (min_i..max_i).each do |i|
-    rule = RULES.find { |s, r| s.all? { |d, c| pots.include?(i + d) == c } }
+    rule = rules.find { |s, r| s.all? { |d, c| pots.include?(i + d) == c } }
     new_pots.push(i) if (rule && rule[1]) || pots[i] == true
   end
 

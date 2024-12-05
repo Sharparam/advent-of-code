@@ -4,28 +4,19 @@
 orderings, updates = ARGF.read.split "\n\n"
 
 orderings = orderings.lines.map { _1.split("|").map(&:to_i) }
-RULES = orderings.reduce({}) { |a, (left, right)| (a[left] ||= Set.new).add(right); a }
+rules = orderings.reduce(Hash.new { _1[_2] = Set.new }) { |a, (l, r)| a[l].add(r); a }
 updates = updates.lines.map { _1.split(",").map(&:to_i) }
 
 incorrect = []
 
 puts updates.sum { |pages|
   next pages[pages.size / 2] if pages.size.times.all? { |i|
-    *before, current = pages[..i]
-    !RULES.key?(current) || before.all? { !RULES[current].include? _1 }
+    pages[..i].then { |*h, t| h.all? { !rules[t].include? _1 } }
   }
   incorrect << pages
   0
 }
 
-def sort(a, b)
-  if RULES.key?(a) && RULES[a].include?(b)
-    -1
-  elsif RULES.key?(b) && RULES[b].include?(a)
-    1
-  else
-    0
-  end
-end
-
-puts incorrect.map { _1.sort(&method(:sort)) }.sum { _1[_1.size / 2] }
+puts incorrect.map { _1.sort { |a, b|
+  rules[a].include?(b) ? -1 : rules[b].include?(a) ? 1 : 0
+} }.sum { _1[_1.size / 2] }
