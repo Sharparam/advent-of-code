@@ -3,19 +3,17 @@
 
 orderings, updates = ARGF.read.split "\n\n"
 
-orderings = orderings.lines.map { _1.split('|').map(&:to_i) }
+orderings = orderings.lines.map { _1.split("|").map(&:to_i) }
 RULES = orderings.reduce({}) { |a, (left, right)| (a[left] ||= Set.new).add(right); a }
 updates = updates.lines.map { _1.split(",").map(&:to_i) }
 
 incorrect = []
 
 puts updates.sum { |pages|
-  if pages.size.times.all? { |i|
-      *before, current = pages[..i]
-      !RULES.key?(current) || before.all? { |t| !RULES[current].include? t }
-    }
-    next pages[pages.size / 2]
-  end
+  next pages[pages.size / 2] if pages.size.times.all? { |i|
+    *before, current = pages[..i]
+    !RULES.key?(current) || before.all? { !RULES[current].include? _1 }
+  }
   incorrect << pages
   0
 }
