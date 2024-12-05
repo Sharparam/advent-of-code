@@ -10,9 +10,7 @@ updates = updates.lines.map { _1.split(",").map(&:to_i) }
 incorrect = []
 
 puts updates.sum { |pages|
-  next pages[pages.size / 2] if pages.size.times.all? { |i|
-    pages[..i].then { |*h, t| h.all? { !rules[t].include? _1 } }
-  }
+  next pages[pages.size / 2] if pages.size.times.all? { |i| pages[..i].then { |*h, t| h.all? { !rules[t].include? _1 } } }
   incorrect << pages
   0
 }
