@@ -9,14 +9,10 @@ class Integer
   end
 end
 
-def validate(eq, ops)
-  t, *values = eq
-  ops = ops.repeated_permutation(values.size - 1).to_a
-  t if ops.any? { |o|
-    values.each_with_index.reduce { |(a, _), (e, i)|
-      a.send(o[i - 1], e)
-    } == t
-  }
+def validate(t, values, ops, head)
+  return ops.any? { t == head.send(_1, values[0]) } if values.size == 1
+
+  ops.any? { validate t, values[1..], ops, head.send(_1, values[0]) }
 end
 
 PART1_OPS = %i[+ *].freeze
@@ -24,11 +20,11 @@ PART2_OPS = %i[+ * c].freeze
 
 failed = []
 
-part1 = equations.filter_map {
-  result = validate(_1, PART1_OPS)
+part1 = equations.filter {
+  result = validate(_1[0], _1[2..], PART1_OPS, _1[1])
   next result if result
   failed << _1
-  nil
-}.sum
+  false
+}.sum { _1[0] }
 puts part1
-puts failed.filter_map { validate(_1, PART2_OPS) }.sum + part1
+puts failed.filter { validate(_1[0], _1[2..], PART2_OPS, _1[1]) }.sum { _1[0] } + part1
