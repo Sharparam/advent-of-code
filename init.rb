@@ -54,7 +54,7 @@ else
   Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
     puts "Performing GET request to #{uri}" if verbose
     request = Net::HTTP::Get.new(uri)
-    request['User-Agent'] = "Sharparam-AoC/1.0 (github.com/Sharparam/advent-of-code)"
+    request['User-Agent'] = 'Sharparam-AoC/1.0 (github.com/Sharparam/advent-of-code)'
     request['From'] = 'sharparam@sharparam.com'
     request['Cookie'] = "session=#{CGI.escape session_id}"
     response = http.request request
