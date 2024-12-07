@@ -3,7 +3,11 @@
   "solargraph.diagnostics": false,
   "deno.enable": true,
   "deno.lint": true,
-  "deno.unstable": false,
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.semanticHighlighting.enabled": true,
+    "editor.formatOnSave": false
+  },
   "[javascript]": {
     "editor.defaultFormatter": "denoland.vscode-deno"
   },
