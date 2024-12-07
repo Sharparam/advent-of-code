@@ -5,7 +5,6 @@ require 'date'
 require 'fileutils'
 require 'net/http'
 require 'optparse'
-require 'pp'
 require 'yaml'
 
 options = {}
