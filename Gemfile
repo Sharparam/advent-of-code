@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+gemspec
+
 group :development do
   gem 'profile'
   gem 'pry'
@@ -9,4 +11,12 @@ group :development do
   gem 'ruby-lsp'
   gem 'solargraph'
   gem 'stackprof'
+end
+
+group :test do
+  gem 'rspec'
+end
+
+group :development, :test do
+  gem 'rake'
 end
