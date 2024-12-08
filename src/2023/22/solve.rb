@@ -15,9 +15,8 @@ class Rect
 end
 
 class Brick
-  attr_reader :startx, :starty, :stopx, :stopy
+  attr_reader :startx, :starty, :stopx, :stopy, :rect
   attr_accessor :startz, :stopz
-  attr_reader :rect
 
   def initialize(startx, starty, startz, stopx, stopy, stopz)
     @startx, @starty, @startz, @stopx, @stopy, @stopz = startx, starty, startz, stopx, stopy, stopz
@@ -37,7 +36,7 @@ class Grid
   def dup = Grid.new @bricks.map(&:dup)
 
   def settle!
-    sorted_bricks = @bricks.select { |b| b.startz > 1 }.sort_by { |b| b.startz }
+    sorted_bricks = @bricks.select { |b| b.startz > 1 }.sort_by(&:startz)
 
     rects = Hash.new { |h, k| h[k] = [] }
     @bricks.select { |b| b.startz == 1 }.each { |b| rects[b.stopz].push b.rect }
@@ -47,7 +46,7 @@ class Grid
       next rects[brick.stopz].push brick.rect if rects[brick.startz - 1].any? { |r| brick.rect.intersects? r }
       moved += 1
       reduction = 1
-      reduction += 1 while brick.startz - reduction > 1 && !rects[brick.startz - 1 - reduction].any? { |r| brick.rect.intersects? r }
+      reduction += 1 while brick.startz - reduction > 1 && rects[brick.startz - 1 - reduction].none? { |r| brick.rect.intersects? r }
       brick.startz -= reduction
       brick.stopz -= reduction
       rects[brick.stopz].push brick.rect

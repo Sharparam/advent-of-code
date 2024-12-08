@@ -3,7 +3,6 @@
 
 require 'digest'
 require 'matrix'
-require 'set'
 
 # #########
 # #S| | | #
@@ -39,7 +38,7 @@ def valid_positions(pos, moves)
   md5 = Digest::MD5.hexdigest data
   first = md5[..3]
   valid_dirs = DIRECTIONS.select.with_index { |_, i| OPEN.include? first[i] }
-  valid_dirs.map { |p, d| [pos + p, d] }.select { |p, _| !wall? p }
+  valid_dirs.map { |p, d| [pos + p, d] }.reject { |p, _| wall? p }
 end
 
 def shortest(pos, path)

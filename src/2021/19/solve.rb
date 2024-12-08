@@ -2,9 +2,7 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 require 'pry'
-require 'pp'
 
 DEBUG = false
 
@@ -30,30 +28,30 @@ end
 V = Vector
 
 TRANSFORMS = [
-  -> p { V[ p.z,  p.y, -p.x] },
-  -> p { V[-p.y,  p.z, -p.x] },
-  -> p { V[-p.z, -p.y, -p.x] },
-  -> p { V[ p.y, -p.z, -p.x] },
-  -> p { V[ p.z,  p.x,  p.y] },
-  -> p { V[-p.x,  p.z,  p.y] },
-  -> p { V[-p.z, -p.x,  p.y] },
-  -> p { V[ p.x, -p.z,  p.y] },
-  -> p { V[ p.y,  p.x, -p.z] },
-  -> p { V[-p.x,  p.y, -p.z] },
-  -> p { V[-p.y, -p.x, -p.z] },
-  -> p { V[ p.x, -p.y, -p.z] },
-  -> p { V[ p.y,  p.z,  p.x] },
-  -> p { V[-p.z,  p.y,  p.x] },
-  -> p { V[-p.y, -p.z,  p.x] },
-  -> p { V[ p.z, -p.y,  p.x] },
-  -> p { V[ p.x,  p.z, -p.y] },
-  -> p { V[-p.z,  p.x, -p.y] },
-  -> p { V[-p.x, -p.z, -p.y] },
-  -> p { V[ p.z, -p.x, -p.y] },
-  -> p { V[ p.x,  p.y,  p.z] },
-  -> p { V[-p.y,  p.x,  p.z] },
-  -> p { V[-p.x, -p.y,  p.z] },
-  -> p { V[ p.y, -p.x,  p.z] }
+  ->p { V[ p.z,  p.y, -p.x] },
+  ->p { V[-p.y,  p.z, -p.x] },
+  ->p { V[-p.z, -p.y, -p.x] },
+  ->p { V[ p.y, -p.z, -p.x] },
+  ->p { V[ p.z,  p.x,  p.y] },
+  ->p { V[-p.x,  p.z,  p.y] },
+  ->p { V[-p.z, -p.x,  p.y] },
+  ->p { V[ p.x, -p.z,  p.y] },
+  ->p { V[ p.y,  p.x, -p.z] },
+  ->p { V[-p.x,  p.y, -p.z] },
+  ->p { V[-p.y, -p.x, -p.z] },
+  ->p { V[ p.x, -p.y, -p.z] },
+  ->p { V[ p.y,  p.z,  p.x] },
+  ->p { V[-p.z,  p.y,  p.x] },
+  ->p { V[-p.y, -p.z,  p.x] },
+  ->p { V[ p.z, -p.y,  p.x] },
+  ->p { V[ p.x,  p.z, -p.y] },
+  ->p { V[-p.z,  p.x, -p.y] },
+  ->p { V[-p.x, -p.z, -p.y] },
+  ->p { V[ p.z, -p.x, -p.y] },
+  ->p { V[ p.x,  p.y,  p.z] },
+  ->p { V[-p.y,  p.x,  p.z] },
+  ->p { V[-p.x, -p.y,  p.z] },
+  ->p { V[ p.y, -p.x,  p.z] }
 ].freeze
 
 def rotate(map)

@@ -20,4 +20,3 @@ straight_lines = lines.select { _1[0] == _2[0] || _1[1] == _2[1] }
 
 puts straight_lines.flat_map { line_coords *_1 }.tally.count { _2 > 1 }
 puts lines.flat_map { line_coords *_1 }.tally.count { _2 > 1 }
-

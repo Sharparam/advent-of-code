@@ -37,9 +37,7 @@ def display(map, visited)
   puts '=' * 40
   HEIGHT.times do |y|
     WIDTH.times do |x|
-      if visited.include?(Vector[y, x])
-        next print 'X'
-      end
+      next print 'X' if visited.include?(Vector[y, x])
       tile = map[y][x]
       case tile
       when :wall
@@ -47,7 +45,7 @@ def display(map, visited)
       when :empty
         print ?.
       else
-        print tile.to_s
+        print tile
       end
     end
     puts
@@ -59,19 +57,19 @@ def travel(map)
   pos = START
   dir = Vector[-1, 0]
   visited = Set.new
-  visited_2 = Set.new
-  visited_2.add [START, Vector[-1, 0]]
+  visited2 = Set.new
+  visited2.add [START, Vector[-1, 0]]
   while pos[0].between?(0, HEIGHT - 1) && pos[1].between?(0, WIDTH - 1)
     visited.add pos
     new_pos = pos + dir
     break unless new_pos[0].between?(0, HEIGHT - 1) && new_pos[1].between?(0, WIDTH - 1)
     tile = map[new_pos[0]]&.[](new_pos[1])
     if tile == :wall
-      visited_2.add [new_pos, dir]
+      visited2.add [new_pos, dir]
       dir = TURNS[dir]
     else
       pos = new_pos
-      return nil unless visited_2.add? [new_pos, dir]
+      return nil unless visited2.add? [new_pos, dir]
     end
   end
 
@@ -84,8 +82,7 @@ puts visited.size
 
 loop_count = 0
 
-visited.each_with_index do |v_pos, i|
-  # puts "#{i + 1} / #{visited.size}" if (i + 1) % 100 == 0 || i + 1 == visited.size
+visited.each do |v_pos|
   next if v_pos == START
   next if MAP[v_pos[0]][v_pos[1]] == :wall
   map = MAP.map(&:dup)

@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 valves = {}
 
 ARGF.readlines.each do |line|
@@ -14,7 +12,7 @@ ARGF.readlines.each do |line|
   end
 end
 
-HAS_FLOW = valves.select { _2[:rate] != 0 }.map { |k, _| k }.to_set
+HAS_FLOW = valves.reject { _2[:rate] == 0 }.map { |k, _| k }.to_set
 
 def solve(valves, memory, mins, current, score, visited, opened)
   key = [mins, current, score]
@@ -53,7 +51,7 @@ def solve(valves, memory, mins, current, score, visited, opened)
 
   memory[key] = [max, max_opened]
 
-  return [max, max_opened]
+  [max, max_opened]
 end
 
 part1, opened = solve(valves, {}, 30, :AA, 0, Set.new, Set.new)

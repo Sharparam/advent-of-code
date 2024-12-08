@@ -36,7 +36,7 @@ end
 def new_type(grid, x, y)
   current = grid[y][x]
   surrounding = []
-  ((x - 1 .. x + 1).to_a.product((y - 1 .. y + 1).to_a) - [[x, y]]).each do |(sx, sy)|
+  ((x - 1..x + 1).to_a.product((y - 1..y + 1).to_a) - [[x, y]]).each do |(sx, sy)|
     next if sx < 0 || sx >= grid[y].size || sy < 0 || sy >= grid.size
     surrounding << grid[sy][sx]
   end

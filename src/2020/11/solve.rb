@@ -1,14 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'pp'
-
 TYPES = { ?L => :empty, ?. => :floor, ?# => :occupied }
 SEATS = ARGF.readlines.map { |l| l.chomp.chars.map { TYPES[_1] } }
 
 def count_occupied(grid, x, y)
-  (y-1..y+1).flat_map { |y1|
-    (x-1..x+1).map { |x1| [x1, y1] }
+  (y - 1..y + 1).flat_map { |y1|
+    (x - 1..x + 1).map { |x1| [x1, y1] }
   }.reject { |x1, y1|
     (x1 == x && y1 == y) || x1 < 0 || y1 < 0
   }.count { |x1, y1| (grid[y1] || [])[x1] == :occupied }
@@ -23,8 +21,8 @@ def locate(grid, x, y, dir)
 end
 
 def count_occupied_2(grid, x, y)
-  (y-1..y+1).flat_map { |y1|
-    (x-1..x+1).map { |x1| [x1, y1] }
+  (y - 1..y + 1).flat_map { |y1|
+    (x - 1..x + 1).map { |x1| [x1, y1] }
   }.reject { |x1, y1|
     (x1 == x && y1 == y) || x1 < 0 || y1 < 0
   }.count { |x1, y1| locate(grid, x1, y1, [x1 - x, y1 - y]) == :occupied }

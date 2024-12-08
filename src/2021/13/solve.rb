@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 input, instructions = ARGF.read.split("\n\n")
 grid = input.scan(/\d+/).map(&:to_i).each_slice(2).to_set
 instructions = instructions.scan(/(x|y)=(\d+)/).map { [_1 == 'x' ? 0 : 1, _2.to_i] }

@@ -7,7 +7,7 @@ start = nil
 
 GRID = ARGF.readlines(chomp: true).map.with_index do |line, y|
   line.chars.each_with_index do |char, x|
-     start = Vector[x, y] if char == ?S
+    start = Vector[x, y] if char == ?S
   end
 end
 
@@ -16,9 +16,9 @@ WIDTH = GRID[0].size
 raise 'Input must be square' unless HEIGHT == WIDTH
 SIZE = HEIGHT
 
-DIRS = [Vector[1, 0], Vector[-1, 0], Vector[0, 1], Vector[0, -1]]
+DIRS = [Vector[1, 0], Vector[-1, 0], Vector[0, 1], Vector[0, -1]].freeze
 
-P2_STEPS = 26501365
+P2_STEPS = 26_501_365
 
 def reachable(poses)
   poses.flat_map { |pos| DIRS.map { pos + _1 }.reject { |pos|
@@ -30,7 +30,7 @@ poses = [start]
 values = []
 n = 0
 
-until values.size == 3 do
+until values.size == 3
   n += 1
   poses = reachable(poses).uniq
   puts poses.size if n == 64
@@ -84,7 +84,7 @@ X = (P2_STEPS - SIZE / 2) / SIZE
 # puts "B = #{B}"
 # puts "C = #{C}"
 
-puts A * X ** 2 + B * X + C
+puts A * X**2 + B * X + C
 
 # With this, I'm going to put it officially:
 # AoC 2023 day 21 part 2 can suck Santa's lollipop.

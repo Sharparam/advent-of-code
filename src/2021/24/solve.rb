@@ -12,7 +12,7 @@ y_adds = adds.map(&:last)
 divs = input.map(&:split).select { _1[0] == 'div' }.map { _1.last.to_i }
 results = []
 
-find = -> w, i, zz, path {
+find = ->w, i, zz, path {
   if i == 14
     results << path.join[0...14].to_i
     return

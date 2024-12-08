@@ -10,7 +10,7 @@ win_count = {}
 puts cards.sum { |i, (w, n)|
   c = n.count { w.include? _1 }
   win_count[i] = c
-  c == 0 ? 0 : 2 ** (c - 1)
+  c == 0 ? 0 : 2**(c - 1)
 }
 
 total_count = Hash[win_count.keys.map { [_1, 1] }]

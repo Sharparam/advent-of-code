@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 class Vector
   def x = self[0]

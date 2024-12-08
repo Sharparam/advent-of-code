@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 MAZE = {}
 ARGF.readlines.map { _1.strip.split('-') }.each do |a, b|
   MAZE[a] ||= []

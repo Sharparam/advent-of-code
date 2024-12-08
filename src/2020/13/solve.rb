@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'pp'
-
 EARLIEST = ARGF.readline.to_i
 SCHEDULE = ARGF.readline.split(?,).map(&:to_i)
 IDS = SCHEDULE.reject(&:zero?)
@@ -17,7 +15,7 @@ puts IDS.map { [_1, solve(_1)] }.min_by { _2 }.then { _1 * (_2 - EARLIEST) }
 
 OFFSETS = Hash[SCHEDULE.map.with_index { [_1.to_i, _2] }.reject { _1[0].zero? } ]
 
-def solve2()
+def solve2
   current = 0
 
   loop do

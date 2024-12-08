@@ -7,9 +7,9 @@ class Screen
   HEIGHT = 6
 
   OPS = {
-    %r{^rect (\d+)x(\d+)$} => -> (w, h) { [:rect, w.to_i, h.to_i] },
-    %r{^rotate row y=(\d+) by (\d+)$} => -> (y, c) { [:rot_row, y.to_i, c.to_i] },
-    %r{^rotate column x=(\d+) by (\d+)$} => -> (x, c) { [:rot_col, x.to_i, c.to_i] }
+    %r{^rect (\d+)x(\d+)$} => ->(w, h) { [:rect, w.to_i, h.to_i] },
+    %r{^rotate row y=(\d+) by (\d+)$} => ->(y, c) { [:rot_row, y.to_i, c.to_i] },
+    %r{^rotate column x=(\d+) by (\d+)$} => ->(x, c) { [:rot_col, x.to_i, c.to_i] }
   }.freeze
 
   def initialize

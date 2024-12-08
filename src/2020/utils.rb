@@ -3,7 +3,7 @@ module Utils
   class << self
     def crt(mods, remainders)
       max = mods.inject( :* )  # product of all moduli
-      series = remainders.zip(mods).map{ |r,m| (r * max * invmod(max/m, m) / m) }
+      series = remainders.zip(mods).map{ |r,m| (r * max * invmod(max / m, m) / m) }
       series.inject( :+ ) % max
     end
 
@@ -14,10 +14,10 @@ module Utils
       x, last_x, y, last_y = 0, 1, 1, 0
       while remainder != 0
         last_remainder, (quotient, remainder) = remainder, last_remainder.divmod(remainder)
-        x, last_x = last_x - quotient*x, x
-        y, last_y = last_y - quotient*y, y
+        x, last_x = last_x - quotient * x, x
+        y, last_y = last_y - quotient * y, y
       end
-      return last_remainder, last_x * (a < 0 ? -1 : 1)
+      [last_remainder, last_x * (a < 0 ? -1 : 1)]
     end
 
     def invmod(e, et)

@@ -6,8 +6,6 @@
 # Some parts modified with input from
 # https://www.redblobgames.com/pathfinding/a-star/implementation.html
 
-require 'set'
-
 class WeightedGraph
   def initialize(edges = Hash.new(0))
     @edges = edges

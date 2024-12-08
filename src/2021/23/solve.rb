@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 HALLWAY_LEGAL_INDICES = [0, 1, 3, 5, 7, 9, 10].to_set.freeze
 
 AMPHIPOD_MOVE_COSTS = {

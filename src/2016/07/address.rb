@@ -7,7 +7,7 @@ class Address
   def initialize(input)
     @raw = input
 
-    @supernets = @raw.scan(/[^\]][a-z0-9]+[^\[]/).select { |p| p[0] != '[' }
+    @supernets = @raw.scan(/[^\]][a-z0-9]+[^\[]/).reject { |p| p[0] == '[' }
     @hypernets = @raw.scan(/(?<=[\[])[a-z0-9]+(?=[\]])/)
   end
 

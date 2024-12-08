@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 numbers = ARGF.readline.split(',').map(&:to_i)
 boards = ARGF.read.split("\n\n").map { |b| b.strip.split("\n").map { _1.split.map(&:to_i) } }
 
@@ -28,5 +26,5 @@ end
 fb, fn, fm = winners.first
 lb, ln, lm = winners.last
 
-puts fb.flatten.select { |n| !fm.include? n }.sum * fn
-puts lb.flatten.select { |n| !lm.include? n }.sum * ln
+puts fb.flatten.reject { |n| fm.include? n }.sum * fn
+puts lb.flatten.reject { |n| lm.include? n }.sum * ln

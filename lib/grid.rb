@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 require 'matrix'
-require 'set'
-
-require 'pp'
 
 class Grid
   attr_reader :width

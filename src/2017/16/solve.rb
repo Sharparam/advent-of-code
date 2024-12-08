@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 PROGRAMS = (:a..:p).to_a
 
 def s(n) = PROGRAMS.unshift(*PROGRAMS.pop(n))

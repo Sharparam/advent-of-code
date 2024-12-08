@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 data = ARGF.readlines.map do |line|
   patterns, output = line.split(' | ').map(&:split)
   { patterns: patterns.map { _1.chars.sort.join }, output: output.map { _1.chars.sort.join } }

@@ -30,7 +30,7 @@ part2 = 0
       dist_total += dist
     end
 
-    part2 += 1 if dist_total < 10000
+    part2 += 1 if dist_total < 10_000
 
     next unless best_i
 

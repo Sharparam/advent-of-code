@@ -3,7 +3,7 @@
 
 # fucking what
 trib_cache = [0, 1, 1]
-trib = -> n {
+trib = ->n {
   trib_cache[n] ||= trib[n - 1] + trib[n - 2] + trib[n - 3]
 }
 

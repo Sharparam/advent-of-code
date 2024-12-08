@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 P1, P2 = ARGF.read.split("\n\n").map { _1.split("\n").drop 1 }.map { |d| d.map(&:to_i) }
 p1, p2 = P1.dup, P2.dup
 

@@ -33,7 +33,7 @@ class Door
   def next_hash
     g = gen
 
-    while !self.class.valid? g
+    until self.class.valid? g
       @counter += 1
       g = gen
     end

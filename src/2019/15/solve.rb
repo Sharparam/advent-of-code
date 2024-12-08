@@ -3,7 +3,6 @@
 
 require 'colorize'
 require 'matrix'
-require 'set'
 
 require_relative '../../intcode/cpu'
 

@@ -18,7 +18,7 @@ POWERS = (0..SIZE).map do |y|
   end.freeze
 end.freeze
 
-nums = (1..SIZE-2).to_a
+nums = (1..SIZE - 2).to_a
 coords = nums.product(nums)
 
 puts "Part 1: #{coords.max_by { |(x, y)| POWERS[y, 3].sum { |r| r[x, 3].sum } }.join ?,}"

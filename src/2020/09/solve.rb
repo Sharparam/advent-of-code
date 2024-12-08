@@ -6,7 +6,7 @@ NUMS = ARGF.readlines.map(&:to_i).freeze
 
 part1 = NUMS[SIZE..].find.with_index { |n, i|
   ri = i + SIZE
-  !NUMS[ri - SIZE...ri].combination(2).any? { _1 + _2 == n }
+  NUMS[ri - SIZE...ri].combination(2).none? { _1 + _2 == n }
 }.tap { puts _1 }
 
 puts (2..).lazy.map { |s|

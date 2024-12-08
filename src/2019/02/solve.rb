@@ -38,7 +38,7 @@ end
 part1 = run program, 12, 2
 puts "Part 1: #{part1[0]}"
 
-PART2_TARGET = 19690720
+PART2_TARGET = 19_690_720
 
 part2 = (0..99).to_a.repeated_permutation(2).find do |(noun, verb)|
   result = run program, noun, verb

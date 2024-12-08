@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 PATH = ARGV.first || 'input'
-SIZE = ARGV[1]&.to_i || 10007
+SIZE = ARGV[1]&.to_i || 10_007
 DEBUG = ENV['DEBUG']
 
 deck = (0...SIZE).to_a

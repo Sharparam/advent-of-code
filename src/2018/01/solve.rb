@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 freqs = File.readlines('input.txt').map(&:to_i)
 
 puts "Part 1: #{freqs.sum}"

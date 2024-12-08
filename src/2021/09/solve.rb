@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 map = Hash.new(10)
 ARGF.readlines.each_with_index do |l, r|
   l.strip().split('').map(&:to_i).each_with_index { map[[_2, r]] = _1 }

@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 PATH = ARGV.first || 'input'
 DEBUG = ENV['DEBUG']
@@ -41,7 +40,7 @@ end
 def biodiv(obj)
   case obj
   when Vector
-    2 ** (obj.y * WIDTH + obj.x)
+    2**(obj.y * WIDTH + obj.x)
   else
     obj.sum { |pos, tile| biodiv(pos) * tile }
   end

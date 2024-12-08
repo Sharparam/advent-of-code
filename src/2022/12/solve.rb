@@ -28,7 +28,7 @@ goal_x = cells[goal_y].find_index { _1 == ?E }
 start = Vector[start_x, start_y]
 goal = Vector[goal_x, goal_y]
 
-heights = { ?S => ?a.ord, ?E => ?z.ord }.tap { _1.default_proc = -> (_, k) { k.ord } }
+heights = { ?S => ?a.ord, ?E => ?z.ord }.tap { _1.default_proc = ->(_, k) { k.ord } }
 cells = cells.map { |l| l.map { heights[_1] } }
 
 grid = MyGrid.new(cells[0].size, cells.size)

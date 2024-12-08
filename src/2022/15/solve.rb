@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 def md(a, b)
   (a[0] - b[0]).abs + (a[1] - b[1]).abs

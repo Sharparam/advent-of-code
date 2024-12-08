@@ -12,7 +12,7 @@ end
 TICKETS = SECTIONS[2].lines.drop(1).map { _1.split(?,).map(&:to_i) }
 
 INVALID_VALUES = TICKETS.flatten.select do |v|
-  rules.all? { |_, r| !r.any? { _1.include? v } }
+  rules.all? { |_, r| r.none? { _1.include? v } }
 end
 
 puts INVALID_VALUES.sum

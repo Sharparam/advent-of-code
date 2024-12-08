@@ -9,8 +9,6 @@ def dist(a, b) = (a.x - b.x).abs + (a.y - b.y).abs
 
 antennas = Hash.new { _1[_2] = [] }
 
-# grid = {}
-
 lines = ARGF.readlines
 
 HEIGHT = lines.size
@@ -21,18 +19,17 @@ lines.each_with_index do |line, y|
   row.each_with_index do |col, x|
     next if col == ?.
     antennas[col.to_sym] << Vector[x, y]
-    # grid[Vector[x, y]] = col.to_sym
   end
 end
 
 antinodes = Set.new
-antinodes_2 = Set.new
+antinodes2 = Set.new
 
-antennas.each do |freq, nodes|
+antennas.each_value do |nodes|
   pairs = nodes.combination(2)
   pairs.each do |a, b|
-    antinodes_2.add a
-    antinodes_2.add b
+    antinodes2.add a
+    antinodes2.add b
     if a.x == b.x
       top, bottom = [a.y, b.y].minmax
       d_y = bottom - top
@@ -40,12 +37,12 @@ antennas.each do |freq, nodes|
       antinodes.add Vector[a.x, bottom + d_y] unless top + d_y >= HEIGHT
       y = top - d_y
       while y >= 0
-        antinodes_2.add Vector[a.x, y]
+        antinodes2.add Vector[a.x, y]
         y -= d_y
       end
       y = bottom + d_y
       while y < HEIGHT
-        antinodes_2.add Vector[a.x, y]
+        antinodes2.add Vector[a.x, y]
         y += d_y
       end
     elsif a.y == b.y
@@ -55,12 +52,12 @@ antennas.each do |freq, nodes|
       antinodes.add Vector[right + d_x, a.y] unless right + d_x >= WIDTH
       x = left - d_x
       while x >= 0
-        antinodes_2.add Vector[x, a.y]
+        antinodes2.add Vector[x, a.y]
         x -= d_x
       end
       x = right + d_x
       while x < WIDTH
-        antinodes_2.add Vector[x, a.y]
+        antinodes2.add Vector[x, a.y]
         x += d_x
       end
     else # diagonal
@@ -70,12 +67,12 @@ antennas.each do |freq, nodes|
         antinodes.add b + d unless b.x + d.x >= WIDTH || b.y + d.y >= HEIGHT
         n = a - d
         while n.x >= 0 && n.y >= 0
-          antinodes_2.add n
+          antinodes2.add n
           n -= d
         end
         n = b + d
         while n.x < WIDTH && n.y < HEIGHT
-          antinodes_2.add n
+          antinodes2.add n
           n += d
         end
       elsif a.x > b.x && a.y < b.y # a is top right
@@ -84,12 +81,12 @@ antennas.each do |freq, nodes|
         d = Vector[d.x, -d.y]
         n = a + d
         while n.x < WIDTH && n.y >= 0
-          antinodes_2.add n
+          antinodes2.add n
           n += d
         end
         n = b - d
         while n.x >= 0 && n.y < HEIGHT
-          antinodes_2.add n
+          antinodes2.add n
           n -= d
         end
       elsif a.x < b.x && a.y > b.y # a is bottom left
@@ -98,12 +95,12 @@ antennas.each do |freq, nodes|
         d = Vector[-d.x, d.y]
         n = a + d
         while n.x >= 0 && n.y < HEIGHT
-          antinodes_2.add n
+          antinodes2.add n
           n += d
         end
         n = b - d
         while n.x < WIDTH && n.x >= 0
-          antinodes_2.add n
+          antinodes2.add n
           n -= d
         end
       else # a is bottom right
@@ -111,12 +108,12 @@ antennas.each do |freq, nodes|
         antinodes.add b - d unless b.x - d.x < 0 || b.y - d.y < 0
         n = a + d
         while n.x < WIDTH && n.y < HEIGHT
-          antinodes_2.add n
+          antinodes2.add n
           n += d
         end
         n = b - d
         while n.x >= 0 && n.y >= 0
-          antinodes_2.add n
+          antinodes2.add n
           n -= d
         end
       end
@@ -124,19 +121,5 @@ antennas.each do |freq, nodes|
   end
 end
 
-# HEIGHT.times do |y|
-#   WIDTH.times do |x|
-#     pos = Vector[x, y]
-#     if antinodes.include? pos
-#       print '#'
-#     elsif grid.key? pos
-#       print grid[pos].to_s
-#     else
-#       print '.'
-#     end
-#   end
-#   puts
-# end
-
 puts antinodes.size
-puts antinodes_2.size
+puts antinodes2.size

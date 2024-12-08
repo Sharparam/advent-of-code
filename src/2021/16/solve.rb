@@ -68,7 +68,7 @@ def parse_packet(data, position, versions)
       # puts " DBG:l_bits=#{length_bits}"
       position += 15
       bits_read = 0
-      while bits_read < bit_length do
+      while bits_read < bit_length
         old_pos = position
         position, value = parse_packet(data, position, versions)
         bits_read += position - old_pos

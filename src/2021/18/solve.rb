@@ -64,7 +64,7 @@ class Pair
     1 + parent.depth
   end
 
-  def magnitude()
+  def magnitude
     left_mag = (left.is_a?(Pair) ? left.magnitude : left) * 3
     right_mag = (right.is_a?(Pair) ? right.magnitude : right) * 2
     left_mag + right_mag

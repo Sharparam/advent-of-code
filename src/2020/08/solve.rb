@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 PROGRAM = ARGF.readlines.map(&:split).map { [_1.to_sym, _2.to_i] }
 
 def test(program)

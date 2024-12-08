@@ -2,7 +2,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-LENGTH = (ARGV.size > 0 && ARGV.first[0] == 't') ? 35651584 : 272
+LENGTH = (ARGV.size > 0 && ARGV.first[0] == 't') ? 35_651_584 : 272
 
 input = STDIN.readline.strip.split('').map(&:to_i)
 

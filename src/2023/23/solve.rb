@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 def cantor(x, y)
   ((x + y) * (x + y + 1)) / 2 + y
 end
@@ -22,20 +20,20 @@ class Point
   def ==(other)
     hash == other.hash
   end
-  alias_method :eql?, :==
+  alias eql? ==
 
   def +(other)
     Point.new x + other.x, y + other.y
   end
 
-  def *(n)
-    Point.new x * n, y * n
+  def *(other)
+    Point.new x * other, y * other
   end
 
   def to_s
     "(#{x}, #{y})"
   end
-  alias_method :inspect, :to_s
+  alias inspect to_s
 end
 
 class Graph
@@ -51,11 +49,11 @@ class Graph
     @edges[source].delete(dest)
   end
 
-  def has_edge?(source, dest)
+  def edge?(source, dest)
     @edges.key?(source) && @edges[source].key?(dest)
   end
 
-  def has_source?(source)
+  def source?(source)
     @edges.key?(source)
   end
 
@@ -68,7 +66,7 @@ class Graph
   end
 
   def find_sources(dest)
-    @edges.flat_map { |s, h| h.keys.map { |d| [d, s] } }.select { |d, s| d == dest }.map(&:last)
+    @edges.flat_map { |s, h| h.keys.map { |d| [d, s] } }.select { |d, _s| d == dest }.map(&:last)
   end
 
   def debug
@@ -94,14 +92,12 @@ GOAL = Point[GRID[HEIGHT - 1].index(?.), HEIGHT - 1]
 
 def neighbors(pos)
   c = GRID[pos.y][pos.x]
-  if c == ?.
-    return DIRS.map { |d| pos + d }.reject { |p| p.x < 0 || p.x >= WIDTH || p.y < 0 || p.y >= HEIGHT || GRID[p.y][p.x] == ?# }
-  end
+  return DIRS.map { |d| pos + d }.reject { |p| p.x < 0 || p.x >= WIDTH || p.y < 0 || p.y >= HEIGHT || GRID[p.y][p.x] == ?# } if c == ?.
 
-  return [pos + SLOPES[c]].reject { |p| p.x < 0 || p.x >= HEIGHT || p.y < 0 || p.y >= HEIGHT || GRID[p.y][p.x] == ?# }
+  [pos + SLOPES[c]].reject { |p| p.x < 0 || p.x >= HEIGHT || p.y < 0 || p.y >= HEIGHT || GRID[p.y][p.x] == ?# }
 end
 
-def neighbors_2(pos)
+def neighbors2(pos)
   DIRS.map { |d| pos + d }.reject { |p| p.x < 0 || p.x >= WIDTH || p.y < 0 || p.y >= HEIGHT || GRID[p.y][p.x] == ?# }
 end
 
@@ -147,11 +143,11 @@ def bfs2(graph)
   max
 end
 
-def compress(debug = false, &neighbors)
+def compress(debug: false, &neighbors)
   queue = [[START, Set.new]]
   graph = Graph.new
 
-  inters =  Set.new
+  inters = Set.new
 
   until queue.empty?
     current, seen = queue.pop
@@ -200,7 +196,7 @@ end
 
 puts bfs(&method(:neighbors))
 
-graph = compress(&method(:neighbors_2))
+graph = compress(&method(:neighbors2))
 
 goal = GOAL.hash
 

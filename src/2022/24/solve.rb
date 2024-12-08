@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 grid = {}
 blizzards = []
@@ -103,7 +102,7 @@ def solve(grid, start, goal, b_i = 0)
   ]
   seen = {}
   last_report_steps = 0
-  while queue.any? do
+  while queue.any?
     pos, steps, blizzard_i = queue.shift
 
     if steps % 100 == 0 && last_report_steps != steps

@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 FOODS = ARGF.readlines.map do |f|
   f =~ /((?:\w+ ?)+)\(contains ((?:\w+(?:, )?)+)\)/
   [$1.split, $2.split(?,)].map { |v| v.map { _1.strip.to_sym } }

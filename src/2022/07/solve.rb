@@ -31,7 +31,7 @@ end
 
 files.each { |n, s| record_size directories, n, s }
 
-puts directories.map { _2 }.select { _1 <= 100000 }.sum
+puts directories.map { _2 }.select { _1 <= 100_000 }.sum
 
-min = directories[?/] - 40000000
+min = directories[?/] - 40_000_000
 puts directories.map { _2 }.sort.find { _1 >= min }

@@ -3,7 +3,7 @@
 
 workflows, parts = ARGF.read.split("\n\n")
 
-WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^\}]+)\}/).map { |id, body|
+WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^}]+)\}/).map { |id, body|
   rules = body.split ','
   default = rules.pop
   rules.map! { |rule|
@@ -11,7 +11,7 @@ WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^\}]+)\}/).map { |id, body|
     k, op, value = cond[0], cond[1].to_sym, cond[2..].to_i
     [k, op, value, dest]
   }
-  f = -> (part) {
+  f = ->(part) {
     matching = rules.find { |r| part[r[0]].send(r[1], r[2]) }
     return matching[3] unless matching.nil?
     default
@@ -20,20 +20,18 @@ WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^\}]+)\}/).map { |id, body|
 }]
 
 PARTS = parts.lines.map { |part|
-  Hash[part.scan(/(\w+)=(\d+)/).map { |k, v| [k, v.to_i] }]
+  part.scan(/(\w+)=(\d+)/).transform_values(&:to_i)
 }
 
 def valid?(part)
   id = 'in'
-  until id == 'A' || id == 'R'
-    id = WORKFLOWS[id][:f].call(part)
-  end
+  id = WORKFLOWS[id][:f].call(part) until id == 'A' || id == 'R'
   id == 'A'
 end
 
 puts PARTS.select { valid?(_1) }.sum { _1.values.sum }
 
-IDX = { 'x' => 0, 'm' => 1, 'a' => 2, 's' => 3 }
+IDX = { 'x' => 0, 'm' => 1, 'a' => 2, 's' => 3 }.freeze
 
 def split_ranges(ranges, key, op, value)
   return [ranges, nil] if op.nil?
@@ -45,11 +43,11 @@ def split_ranges(ranges, key, op, value)
 
     valid = ranges.map.with_index { |r, i|
       next r unless i == idx
-      (r.min ... value)
+      (r.min...value)
     }
     invalid = ranges.map.with_index { |r, i|
       next r unless i == idx
-      (value .. r.max)
+      (value..r.max)
     }
 
     return [valid, invalid]
@@ -60,11 +58,11 @@ def split_ranges(ranges, key, op, value)
 
   valid = ranges.map.with_index { |r, i|
     next r unless i == idx
-    ((value + 1) .. r.max)
+    ((value + 1)..r.max)
   }
   invalid = ranges.map.with_index { |r, i|
     next r unless i == idx
-    (r.min .. value)
+    (r.min..value)
   }
 
   [valid, invalid]

@@ -52,15 +52,15 @@ class Tile
     @grid.map { _1[x] }
   end
 
-  def rotate()
+  def rotate
     self.class.new @id, @grid.transpose.map(&:reverse)
   end
 
-  def flip_horizontal()
+  def flip_horizontal
     self.class.new @id, @grid.map(&:reverse)
   end
 
-  def flip_vertical()
+  def flip_vertical
     self.class.new @id, @grid.reverse
   end
 
@@ -211,7 +211,7 @@ current_row = map_rows[0]
 while corners_found < 4
   current_tile = current_row.first
   search_dir = :right
-  while current_row.size < width do
+  while current_row.size < width
     remaining_tiles = tiles.values - map_rows.flatten
     remaining_tiles.each do |tile|
       results = current_tile.test_all tile

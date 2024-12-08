@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 DELTAS = {
   U: Vector[0, 1],

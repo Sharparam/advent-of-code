@@ -9,7 +9,7 @@ class Vector
 end
 
 class Region
-  EROSION_MOD = 20183
+  EROSION_MOD = 20_183
 
   TYPE_MAP = {
     0 => :rocky,
@@ -56,9 +56,9 @@ class Region
 end
 
 class Cave
-  X_INDEX_MOD = 16807
+  X_INDEX_MOD = 16_807
 
-  Y_INDEX_MOD = 48271
+  Y_INDEX_MOD = 48_271
 
   attr_reader :depth
 

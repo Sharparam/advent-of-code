@@ -22,7 +22,7 @@ end
 
 puts solve(NUMS, 1)
 
-KEY = 811589153
+KEY = 811_589_153
 NUMS2 = NUMS.map { _1 * KEY }
 
 puts solve(NUMS2, 10)

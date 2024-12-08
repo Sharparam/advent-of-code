@@ -3,8 +3,8 @@
 
 require 'matrix'
 
-DIRS = [Vector[1, 0], Vector[0, 1], Vector[-1, 0], Vector[0, -1]]
-DIRMAP = { ?R => 0, ?D => 1, ?L => 2, ?U => 3 }
+DIRS = [Vector[1, 0], Vector[0, 1], Vector[-1, 0], Vector[0, -1]].freeze
+DIRMAP = { ?R => 0, ?D => 1, ?L => 2, ?U => 3 }.freeze
 
 def shoelace(vertices)
   vertices.each_cons(2).sum { |c, n|

@@ -8,10 +8,10 @@ moves = input.scan(/([RL])(\d+)/).map { |d, a| [d.downcase.to_sym, a.to_i] }
 
 class Point
   MOVEMENT = {
-    north: -> (steps) { [0, steps] },
-    east: -> (steps) { [steps, 0] },
-    south: -> (steps) { [0, -1 * steps] },
-    west: -> (steps) { [-1 * steps, 0] }
+    north: ->(steps) { [0, steps] },
+    east: ->(steps) { [steps, 0] },
+    south: ->(steps) { [0, -1 * steps] },
+    west: ->(steps) { [-1 * steps, 0] }
   }.freeze
 
   attr_reader :x, :y

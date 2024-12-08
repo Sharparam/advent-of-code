@@ -3,7 +3,6 @@
 
 require_relative '../../intcode/cpu'
 
-require 'set'
 require 'matrix'
 
 class Vector
@@ -45,7 +44,7 @@ def run(start_c)
   pos = Vector[0, 0]
   vel = Vector[0, 0]
 
-  while !cpu.halted?
+  until cpu.halted?
     cpu.input!(colors[pos])
     cpu.run!
     c = cpu.output[-2]

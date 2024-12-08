@@ -11,7 +11,7 @@ def check(a, b)
     return 1 if bv.nil?
 
     if av.is_a?(Enumerable) && !bv.is_a?(Enumerable)
-       bv = [bv]
+      bv = [bv]
     elsif !av.is_a?(Enumerable) && bv.is_a?(Enumerable)
       av = [av]
     end
@@ -26,7 +26,7 @@ def check(a, b)
     end
   end
 
-  return a.size <=> b.size
+  a.size <=> b.size
 end
 
 puts pairs.map.with_index.select { |p, i| check(p[0], p[1]) == -1 }.map { _2 + 1 }.sum

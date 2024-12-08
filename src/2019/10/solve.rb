@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
 require 'matrix'
 
 DEBUG = ENV['DEBUG']
@@ -29,7 +28,7 @@ def on_line?(a, b, point)
     return dx1 > 0 ? a.x <= point.x && point.x <= b.x : b.x <= point.x && point.x <= a.x
   end
 
-  return dy1 > 0 ? a.y <= point.y && point.y <= b.y : b.y <= point.y && point.y <= a.y
+  dy1 > 0 ? a.y <= point.y && point.y <= b.y : b.y <= point.y && point.y <= a.y
 end
 
 data = File.readlines(ARGV.first || 'input.txt')

@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 # using an external gem for pairing heap
 # I could use my own priority queue (in /lib/pqueue.rb), but it's quite a bit slower
@@ -31,7 +30,7 @@ class Point
 
   def self.[](x, y) = Point.new x, y
   def +(other) = Point.new x + other.x, y + other.y
-  def *(n) = Point.new x * n, y * n
+  def *(other) = Point.new x * other, y * other
   def ==(other) = hash == other.hash
   def eql?(other) = hash.eql? other.hash
 end
@@ -46,9 +45,9 @@ HEIGHT = GRID.keys.map(&:y).max + 1
 START = Point[0, 0]
 GOAL = Point[WIDTH - 1, HEIGHT - 1]
 
-DIRS = [0, 1, 2, 3]
-OPPOSITES = [1, 0, 3, 2]
-DIR_TO_V = [Point[1, 0], Point[-1, 0], Point[0, 1], Point[0, -1]]
+DIRS = [0, 1, 2, 3].freeze
+OPPOSITES = [1, 0, 3, 2].freeze
+DIR_TO_V = [Point[1, 0], Point[-1, 0], Point[0, 1], Point[0, -1]].freeze
 
 def neighbors(current, last_dir, min, max)
   valid_dirs = DIRS - [last_dir, OPPOSITES[last_dir]]
@@ -68,7 +67,7 @@ def solve(source = START, target = GOAL, &neighbors)
 
   seen = Set.new
 
-  while !queue.empty?
+  until queue.empty?
     current, last_dir, cost = queue.pop
     next unless seen.add? cantor(current.hash, last_dir)
     return cost if current == target

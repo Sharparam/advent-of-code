@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 GRID = ARGF.readlines(chomp: true).map(&:chars)
 HEIGHT, WIDTH = GRID.size, GRID[0].size
 

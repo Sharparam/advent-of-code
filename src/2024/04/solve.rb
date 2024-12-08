@@ -28,7 +28,7 @@ NEEDLES = [
   [
     [[0, 0], ?S], [[1, -1], ?A], [[2, -2], ?M], [[3, -3], ?X]
   ]
-]
+].freeze
 
 NEEDLES_2 = [
   [
@@ -51,13 +51,13 @@ NEEDLES_2 = [
     [[0, 0], ?S], [[2, 0], ?S],
     [[0, 2], ?M], [[2, 2], ?M]
   ]
-]
+].freeze
 
 HEIGHT = GRID.size
 WIDTH = GRID.first.size
 
 count = 0
-count_2 = 0
+count2 = 0
 
 HEIGHT.times.each do |row|
   WIDTH.times.each do |col|
@@ -70,7 +70,7 @@ HEIGHT.times.each do |row|
       end
     end
 
-    count_2 += NEEDLES_2.count do |needle|
+    count2 += NEEDLES_2.count do |needle|
       needle.all? do |(dx, dy), c|
         x = col + dx
         y = row + dy
@@ -82,4 +82,4 @@ HEIGHT.times.each do |row|
 end
 
 puts count
-puts count_2
+puts count2

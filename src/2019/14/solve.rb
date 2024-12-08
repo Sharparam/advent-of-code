@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 PATH = ARGV.first || 'input'
 FUEL = ARGV[1]&.to_i || 1
 

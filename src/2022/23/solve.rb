@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 class Vector; def to_s; "(#{self[0]}, #{self[1]})"; end; end
 

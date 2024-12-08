@@ -3,7 +3,6 @@
 
 require 'colorize'
 require 'matrix'
-require 'set'
 
 DEBUG = ENV['DEBUG']
 
@@ -170,7 +169,7 @@ class Maze
     pos = @start_pos unless pos
     return steps if pos == @finish_pos
 
-    others = surroundings(pos).select { |_, t| t != :wall }.reject do |p, t|
+    others = surroundings(pos).reject { |_, t| t == :wall }.reject do |p, t|
       p == previous_pos || ports.include?(t) || t == 'AA' || t == 'ZZ'
     end
 
@@ -205,7 +204,7 @@ class Maze
         if pos == @finish_pos && depth == 0
           finished.add steps
         elsif depth < 30
-          others = surroundings(pos).select { |_, t| t != :wall }.reject do |p, t|
+          others = surroundings(pos).reject { |_, t| t == :wall }.reject do |p, t|
             p == previous_pos || visited.include?([pos, p]) || visited.include?(t) || t == 'AA' || t == 'ZZ'
           end
           others.each do |target_pos, target_tile|

@@ -2,13 +2,13 @@
 # frozen_string_literal: true
 
 class Map
-  def initialize()
+  def initialize
     @entries = []
   end
 
   def add(dest, source, length)
-    source_range = (source ... source + length)
-    dest_range = (dest ... dest + length)
+    source_range = (source...source + length)
+    dest_range = (dest...dest + length)
     offset = dest - source
     @entries << { dst: dest_range, src: source_range, offset: offset }
   end
@@ -35,8 +35,8 @@ class Map
       break if src.min > max
       next if min > src.max || max < src.min
 
-      result << (min .. src.min - 1) if min < src.min
-      result << ([min, src.min].max + offset .. [max, src.max].min + offset)
+      result << (min..src.min - 1) if min < src.min
+      result << ([min, src.min].max + offset..[max, src.max].min + offset)
       min = [min, src.max + 1].max
     end
 

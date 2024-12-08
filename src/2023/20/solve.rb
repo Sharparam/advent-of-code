@@ -1,11 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-MODULES = {}
+MODULES = {} # rubocop:disable Style/MutableConstant
 
 class ComModule
-  attr_reader :id
-  attr_reader :destinations
+  attr_reader :id, :destinations
 
   def initialize(id, destinations)
     @id = id
@@ -83,7 +82,7 @@ conjunctions.each do |conjunction|
   conjunction.init_ids(sources.map(&:id))
 end
 
-rx_source = MODULES.select { |k, m| m.destinations.include?(:rx) }
+rx_source = MODULES.select { |_k, m| m.destinations.include?(:rx) }
 abort 'unsolveable if rx does not exist as a destination' if rx_source.empty?
 abort 'unsolveable if rx has more than 1 source' if rx_source.size > 1
 rx_source = rx_source.values[0]

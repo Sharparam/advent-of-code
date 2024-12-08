@@ -2,7 +2,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-HEIGHT = (ARGV.first == 't') ? 400000 : 40
+HEIGHT = (ARGV.first == 't') ? 400_000 : 40
 
 class Row
   def initialize(tiles)

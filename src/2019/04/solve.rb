@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 INPUT = ARGV.first || '356261-846303'
 
 MIN, MAX = INPUT.split '-'

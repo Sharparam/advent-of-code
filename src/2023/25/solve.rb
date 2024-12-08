@@ -11,7 +11,7 @@ lines = [
   'digraph {'
 ]
 
-components.keys.each { lines.push("  #{_1};") }
+components.each_key { lines.push("  #{_1};") }
 
 components.each do |k, v|
   v.each do |n|

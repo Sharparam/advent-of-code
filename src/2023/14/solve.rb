@@ -18,24 +18,24 @@ DIRECTIONS = {
   W: Vector[-1, 0],
   S: Vector[0, 1],
   E: Vector[1, 0]
-}
+}.freeze
 
 POSES = {
   N: YS.flat_map { |y| XS.map { |x| Vector[x, y] } },
   S: YS.reverse.flat_map { |y| XS.map { |x| Vector[x, y] } },
   E: YS.flat_map { |y| XS.reverse.map { |x| Vector[x, y] } }
-}
+}.freeze
 
 POSES[:W] = POSES[:N]
 
 STOPS = {
-  N: -> (v) { v[1] == 0 },
-  W: -> (v) { v[0] == 0 },
-  S: -> (v) { v[1] == HEIGHT - 1 },
-  E: -> (v) { v[0] == WIDTH - 1 }
-}
+  N: ->(v) { v[1] == 0 },
+  W: ->(v) { v[0] == 0 },
+  S: ->(v) { v[1] == HEIGHT - 1 },
+  E: ->(v) { v[0] == WIDTH - 1 }
+}.freeze
 
-def display()
+def display
   puts '=' * WIDTH
   (0...HEIGHT).each do |y|
     (0...WIDTH).each do |x|
@@ -46,7 +46,7 @@ def display()
   puts '=' * WIDTH
 end
 
-def load()
+def load
   $grid.sum { |k, v| v == ?O ? HEIGHT - k[1] : 0 }
 end
 
@@ -57,7 +57,7 @@ def tilt(dir)
   stop = STOPS[dir]
   order.each do |pos|
     next unless $grid[pos] == ?O
-    while !stop.(pos)
+    until stop.(pos)
       new = pos + delta
       break if $grid[new] == ?O || $grid[new] == ?#
       $grid[new] = ?O
@@ -65,17 +65,16 @@ def tilt(dir)
       pos = new
     end
   end
-  if $first
-    $first = false
-    puts load
-  end
+  return unless $first
+  $first = false
+  puts load
 end
 
-def cycle()
+def cycle
   %i[N W S E].each { tilt(_1) }
 end
 
-def id()
+def id
   $grid.select { _2 == ?O }.map(&:first).map { _1[0] + WIDTH * _1[1] }
 end
 
@@ -90,7 +89,7 @@ states = { id => { load: load, index: 0 } }
   else
     old = states[i_id]
     start_index = old[:index]
-    loads = Hash[states.map { |k, v| [v[:index], v[:load]] }]
+    loads = Hash[states.map { |_k, v| [v[:index], v[:load]] }]
     cycle_size = i - start_index
     cycle_steps = 1_000_000_000 - start_index
     cycle_index = cycle_steps % cycle_size

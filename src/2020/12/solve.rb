@@ -8,7 +8,7 @@ facing = 90
 MULS = { R: 1, L: -1, N: -1, S: 1, E: 1, W: -1 }
 VECS = [[0, -1], [1, 0], [0, 1], [-1, 0]]
 
-move = -> val {
+move = ->val {
   dx, dy = VECS[facing / 90]
   pos[0] += dx * val
   pos[1] += dy * val

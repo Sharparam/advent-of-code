@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 MAP = { '(' => ')', '[' => ']', '{' => '}', '<' => '>' }.freeze
-POINTS = { ')' => 3, ']' => 57, '}' => 1197, '>' => 25137 }.freeze
+POINTS = { ')' => 3, ']' => 57, '}' => 1197, '>' => 25_137 }.freeze
 SCORE = { ')' => 1, ']' => 2, '}' => 3, '>' => 4 }.freeze
 
 illegal = 0

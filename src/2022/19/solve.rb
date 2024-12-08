@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'set'
-
 RESOURCES = %i[ore clay obsidian geode].freeze
 TIME = 24
 
@@ -140,14 +138,14 @@ end
 
 BLUEPRINTS = ARGF.read.scan(/\d+/).map(&:to_i).each_slice(7).map { Blueprint.from_array(_1) }.freeze
 
-def part1()
+def part1
   BLUEPRINTS.sum do |blueprint|
     # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
     blueprint.solve() * blueprint.id
   end
 end
 
-def part2()
+def part2
   BLUEPRINTS.take(3).map do |blueprint|
     # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
     blueprint.solve(32)

@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'pp'
-
 MEMORY = Hash.new(0)
 MEMORY2 = Hash.new(0)
 

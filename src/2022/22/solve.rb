@@ -18,7 +18,7 @@ end.to_h.compact.freeze
 MOVES = PATH.scan(/\d+|R|L/).map { _1 == ?R ? :r : _1 == ?L ? :l : _1.to_i }.freeze
 
 class Vector
-  def x()
+  def x
     self[0]
   end
 
@@ -26,7 +26,7 @@ class Vector
     self[0] = v
   end
 
-  def y()
+  def y
     self[1]
   end
 
@@ -34,11 +34,11 @@ class Vector
     self[1] = v
   end
 
-  def r()
+  def r
     Vector[-self.y, self.x]
   end
 
-  def l()
+  def l
     Vector[self.y, -self.x]
   end
 

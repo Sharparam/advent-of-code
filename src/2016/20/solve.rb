@@ -2,7 +2,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-IP_MAX = 4294967295
+IP_MAX = 4_294_967_295
 
 ranges = STDIN.readlines.map { |line| Range.new(*line.split('-').map(&:to_i)) }
 

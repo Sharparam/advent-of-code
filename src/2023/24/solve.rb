@@ -5,10 +5,10 @@ require 'matrix'
 
 # 7 for example
 # 200000000000000 for input
-START = 200000000000000
+START = 200_000_000_000_000
 # 27 for example
 # 400000000000000 for input
-STOP = 400000000000000
+STOP = 400_000_000_000_000
 
 HAILSTONES = ARGF.readlines(chomp: true).map do |line|
   pos, vel = line.split('@').map { _1.split(',').map(&:to_i) }
@@ -61,18 +61,16 @@ HAILSTONES.combination(2).each do |a, b|
   c = collide(a, b)
   if c.nil?
     # puts "#{as} and #{bs} don't collide"
-  else
+  elsif c[0] >= START && c[0] <= STOP && c[1] >= START && c[1] <= STOP
     # puts "#{as} and #{bs} collide at (#{c[0]}, #{c[1]})"
-    if c[0] >= START && c[0] <= STOP && c[1] >= START && c[1] <= STOP
-      # puts "  collision is inside area"
-      valid_ax = (c[0] > a[:pos][0] && a[:vel][0] > 0) || (c[0] < a[:pos][0] && a[:vel][0] < 0)
-      valid_bx = (c[0] > b[:pos][0] && b[:vel][0] > 0) || (c[0] < b[:pos][0] && b[:vel][0] < 0)
-      valid_ay = (c[1] > a[:pos][1] && a[:vel][1] > 0) || (c[1] < a[:pos][1] && a[:vel][1] < 0)
-      valid_by = (c[1] > b[:pos][1] && b[:vel][1] > 0) || (c[1] < b[:pos][1] && b[:vel][1] < 0)
-      if valid_ax && valid_bx && valid_ay && valid_ax
-        # puts "    collision is in future, adding 1"
-        count += 1
-      end
+    # puts "  collision is inside area"
+    valid_ax = (c[0] > a[:pos][0] && a[:vel][0] > 0) || (c[0] < a[:pos][0] && a[:vel][0] < 0)
+    valid_bx = (c[0] > b[:pos][0] && b[:vel][0] > 0) || (c[0] < b[:pos][0] && b[:vel][0] < 0)
+    valid_ay = (c[1] > a[:pos][1] && a[:vel][1] > 0) || (c[1] < a[:pos][1] && a[:vel][1] < 0)
+    valid_by = (c[1] > b[:pos][1] && b[:vel][1] > 0) || (c[1] < b[:pos][1] && b[:vel][1] < 0)
+    if valid_ax && valid_bx && valid_ay && valid_by
+      # puts "    collision is in future, adding 1"
+      count += 1
     end
   end
 end

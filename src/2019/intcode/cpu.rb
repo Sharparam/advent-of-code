@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
-
 module Intcode
   class CPU
     OPS = {
@@ -91,7 +89,7 @@ module Intcode
     def run!
       @running = true
 
-      while @running do
+      while @running
         opcode = OPS[get_opcode]
         print '%4d: [%05d] %6s ' % [ @ip, read_mem(@ip), opcode.to_s.upcase ] if @debug
         result = send(opcode)
@@ -229,7 +227,7 @@ module Intcode
     end
 
     def get_mode(pos)
-      MODES[(read_mem(@ip) / (10 ** (pos + 1))) % 10]
+      MODES[(read_mem(@ip) / (10**(pos + 1))) % 10]
     end
 
     def get_addr(pos)

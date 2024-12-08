@@ -9,7 +9,7 @@ ARGF.readlines.each do |l|
   when /^noop/
     cycles.push x
   when /^addx (-?\d+)/
-    cycles += [x, x+= $1.to_i]
+    cycles += [x, x += $1.to_i]
   end
 end
 

@@ -2,7 +2,6 @@
 # frozen_string_literal: true
 
 require 'matrix'
-require 'set'
 
 cubes = ARGF.readlines.map { Vector[*_1.split(',').map(&:to_i)] }.to_set
 MIN = Vector[cubes.map { _1[0] }.min, cubes.map { _1[1] }.min, cubes.map { _1[2] }.min]
