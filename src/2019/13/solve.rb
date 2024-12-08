@@ -4,7 +4,7 @@
 require 'curses'
 require 'matrix'
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 class Vector
   def x; self[0]; end
@@ -122,7 +122,7 @@ class Game
   end
 end
 
-cpu = Intcode::CPU.new.print_output!(false).load!(PATH)
+cpu = AoC::Intcode::CPU.new.print_output!(false).load!(PATH)
 cpu2 = cpu.dup
 
 Curses.init_screen

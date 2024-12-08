@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 require 'matrix'
 
@@ -39,7 +39,7 @@ def run(_start_c)
     Vector[0, 0] => start_color
   }
 
-  cpu = Intcode::CPU.new.load!(PATH).print_output!(false)
+  cpu = AoC::Intcode::CPU.new.load!(PATH).print_output!(false)
 
   pos = Vector[0, 0]
   vel = Vector[0, 0]

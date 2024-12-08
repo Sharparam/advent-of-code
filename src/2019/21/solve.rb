@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 PATH = ARGV.first || 'input'
 DEBUG = ENV.fetch('DEBUG', nil)
@@ -17,7 +17,7 @@ script = <<~SCRIPT
   WALK
 SCRIPT
 
-cpu = Intcode::CPU.new.print_output!(false).load!(PATH).input!(script)
+cpu = AoC::Intcode::CPU.new.print_output!(false).load!(PATH).input!(script)
 
 cpu.run!
 

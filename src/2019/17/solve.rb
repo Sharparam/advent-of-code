@@ -4,7 +4,7 @@
 require 'colorize'
 require 'matrix'
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 class Vector
   def x; self[0]; end
@@ -109,7 +109,7 @@ class Map
   end
 end
 
-cpu = Intcode::CPU.new.print_output!(false).load!(PROGRAM)
+cpu = AoC::Intcode::CPU.new.print_output!(false).load!(PROGRAM)
 cpu2 = cpu.dup
 cpu2.memory[0] = 2
 

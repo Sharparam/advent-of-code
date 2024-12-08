@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 DEBUG = ENV.fetch('DEBUG', nil)
 
@@ -15,7 +15,7 @@ part2 = nil
 last_nat_y = nil
 
 computers = 50.times.map do |i|
-  Intcode::CPU.new.print_output!(false).load!(PATH).input!(i)
+  AoC::Intcode::CPU.new.print_output!(false).load!(PATH).input!(i)
 end
 
 until part2
@@ -30,7 +30,7 @@ until part2
   computers.each_with_index do |computer, address|
     queue = queues[address] ||= Queue.new
     if queue.empty?
-      computer.input! -1
+      computer.input!(-1)
     else
       packet = queue.deq
       computer.input! packet[0]

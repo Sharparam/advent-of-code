@@ -4,14 +4,14 @@
 require 'matrix'
 require 'pry'
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 DEBUG = ENV.fetch('DEBUG', nil)
 
 PATH = ARGV.first || 'input'
 
 def calc(x, y)
-  cpu = Intcode::CPU.new.print_output!(false).load!(PATH)
+  cpu = AoC::Intcode::CPU.new.print_output!(false).load!(PATH)
   cpu.input!(x)
   cpu.input!(y)
   cpu.run!

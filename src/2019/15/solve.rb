@@ -4,7 +4,7 @@
 require 'colorize'
 require 'matrix'
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 DEBUG = ENV.fetch('DEBUG', nil)
 
@@ -276,7 +276,7 @@ class Map
   end
 end
 
-base_cpu = Intcode::CPU.new.load!(PATH).print_output!(false)
+base_cpu = AoC::Intcode::CPU.new.load!(PATH).print_output!(false)
 
 bots = Set.new
 # cpus = Set.new

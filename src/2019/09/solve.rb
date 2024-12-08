@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 path = ARGV.first || 'input'
 solve = ARGV.last || path == 'input'
-cpu = Intcode::CPU.new
+cpu = AoC::Intcode::CPU.new
 cpu.load!(path)
 
 cpu.debug!(true) if ENV['DEBUG']

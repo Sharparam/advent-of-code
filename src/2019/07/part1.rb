@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../intcode/cpu'
+require_relative '../../../lib/aoc/intcode/cpu'
 
 PATH = ARGV.first || 'input.txt'
 
 phase_arrangements = [0, 1, 2, 3, 4].permutation(5)
 
 def run(phases)
-  cpu = Intcode::CPU.new.load!(PATH)
+  cpu = AoC::Intcode::CPU.new.load!(PATH)
   input = 0
   phases.each do |phase|
     cpu.reset!.input!(phase).input!(input).run!
