@@ -53,7 +53,7 @@ class Conjunction < ComModule
   end
 
   def label
-    mem = @memory.map { |k, v| "#{k}(#{v})" }.join ", "
+    mem = @memory.map { |k, v| "#{k}(#{v})" }.join ', '
     "&#{id}{#{mem}}"
   end
 
@@ -84,10 +84,10 @@ conjunctions.each do |conjunction|
 end
 
 rx_source = MODULES.select { |k, m| m.destinations.include?(:rx) }
-abort "unsolveable if rx does not exist as a destination" if rx_source.empty?
-abort "unsolveable if rx has more than 1 source" if rx_source.size > 1
+abort 'unsolveable if rx does not exist as a destination' if rx_source.empty?
+abort 'unsolveable if rx has more than 1 source' if rx_source.size > 1
 rx_source = rx_source.values[0]
-abort "unsolveable if rx source is not a conjunction" unless rx_source.is_a? Conjunction
+abort 'unsolveable if rx source is not a conjunction' unless rx_source.is_a? Conjunction
 rx_source_sources_count = MODULES.count { |_, v| v.destinations.include?(rx_source.id) }
 
 DEBUG = false

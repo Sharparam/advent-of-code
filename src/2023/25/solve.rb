@@ -8,7 +8,7 @@ components = ARGF.readlines(chomp: true).map do |line|
 end.to_h
 
 lines = [
-  "digraph {"
+  'digraph {'
 ]
 
 components.keys.each { lines.push("  #{_1};") }
@@ -19,10 +19,10 @@ components.each do |k, v|
   end
 end
 
-lines.push("}")
+lines.push('}')
 text = lines.join("\n")
 
-File.write "graph.dot", text, mode: 'w'
+File.write 'graph.dot', text, mode: 'w'
 
 # Plug the graph output into https://viz-js.com/
 # Select the "sfdp" renderer

@@ -14,7 +14,7 @@ def run(phases)
   input = 0
 
   while cpus.all? { |cpu| !cpu.halted? }
-    puts "Running"
+    puts 'Running'
     cpus.each do |cpu|
       cpu.input! input
       cpu.run!

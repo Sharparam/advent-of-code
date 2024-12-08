@@ -34,11 +34,11 @@ TURNS = {
 
 def display(map, visited)
   p visited
-  puts "=" * 40
+  puts '=' * 40
   HEIGHT.times do |y|
     WIDTH.times do |x|
       if visited.include?(Vector[y, x])
-        next print "X"
+        next print 'X'
       end
       tile = map[y][x]
       case tile
@@ -52,7 +52,7 @@ def display(map, visited)
     end
     puts
   end
-  puts "=" * 40
+  puts '=' * 40
 end
 
 def travel(map)

@@ -29,7 +29,7 @@ end
 
 puts "Part 1: #{part1}"
 
-puts "Part 2:"
+puts 'Part 2:'
 
 def print_pixel(pixel)
   print pixel == 0 ? ' ' : '█'

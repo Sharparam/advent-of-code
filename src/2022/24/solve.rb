@@ -129,7 +129,7 @@ def solve(grid, start, goal, b_i = 0)
     end
   end
 
-  abort "=== FAILED TO FIND PATH ==="
+  abort '=== FAILED TO FIND PATH ==='
 end
 
 part1, part1_bi = solve(grid, START, GOAL)
@@ -137,10 +137,10 @@ part1, part1_bi = solve(grid, START, GOAL)
 puts part1
 STDERR.puts "Part 1 BI: #{part1_bi}"
 
-STDERR.puts "Go back for snacks:"
+STDERR.puts 'Go back for snacks:'
 snacks, snacks_bi = solve(grid, GOAL, START, part1_bi)
 STDERR.puts "Got snacks at #{snacks} steps"
-STDERR.puts "Go back again:"
+STDERR.puts 'Go back again:'
 part2, part2_bi = solve(grid, START, GOAL, snacks_bi)
 STDERR.puts "Got back in #{part2} steps"
 puts part1 + snacks + part2

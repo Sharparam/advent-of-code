@@ -68,7 +68,7 @@ max_y = colors.keys.max_by { |p| p.y }.y
 
 puts "Grid for part 2 goes from (#{min_x}, #{min_y}) to (#{max_x}, #{max_y})"
 
-puts "Part 2:"
+puts 'Part 2:'
 (min_y..max_y).each do |y|
   (min_x..max_x).each do |x|
     print colors[Vector[x, y]] == WHITE ? '██' : '  '

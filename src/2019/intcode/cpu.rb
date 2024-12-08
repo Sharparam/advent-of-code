@@ -125,9 +125,9 @@ module Intcode
 
     def add
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       b = get_arg 2
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_addr 3
       puts if @debug
       @memory[addr] = a + b
@@ -135,9 +135,9 @@ module Intcode
 
     def mult
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       b = get_arg 2
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_addr 3
       puts if @debug
       @memory[addr] = a * b
@@ -146,7 +146,7 @@ module Intcode
     def read
       if @input.empty?
         @running = false
-        puts "(BLOCK)" if @debug
+        puts '(BLOCK)' if @debug
         return :block
       end
       val = @input.deq
@@ -164,7 +164,7 @@ module Intcode
 
     def jnz
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_arg 2
       puts if @debug
 
@@ -175,7 +175,7 @@ module Intcode
 
     def jz
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_arg 2
       puts if @debug
 
@@ -187,9 +187,9 @@ module Intcode
 
     def lt
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       b = get_arg 2
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_addr 3
       puts if @debug
 
@@ -198,9 +198,9 @@ module Intcode
 
     def eq
       a = get_arg 1
-      print ", " if @debug
+      print ', ' if @debug
       b = get_arg 2
-      print ", " if @debug
+      print ', ' if @debug
       addr = get_addr 3
       puts if @debug
 

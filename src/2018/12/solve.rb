@@ -3,10 +3,10 @@
 
 initial, rules = ARGF.read.split("\n\n")
 
-pots = initial.split(": ")[1].chars.map.with_index { |p, i| p == ?# ? i : nil }.compact
+pots = initial.split(': ')[1].chars.map.with_index { |p, i| p == ?# ? i : nil }.compact
 
 rules = rules.lines.map { |line|
-  current, result = line.split(" => ").map(&:chomp)
+  current, result = line.split(' => ').map(&:chomp)
   result = result == ?#
   state = current.chars.map.with_index { |c, i| [i - 2, c == ?#] }.to_h
   [state, result]

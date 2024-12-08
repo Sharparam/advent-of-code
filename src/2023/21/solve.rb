@@ -13,7 +13,7 @@ end
 
 HEIGHT = GRID.size
 WIDTH = GRID[0].size
-raise "Input must be square" unless HEIGHT == WIDTH
+raise 'Input must be square' unless HEIGHT == WIDTH
 SIZE = HEIGHT
 
 DIRS = [Vector[1, 0], Vector[-1, 0], Vector[0, 1], Vector[0, -1]]

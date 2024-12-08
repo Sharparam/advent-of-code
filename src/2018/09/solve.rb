@@ -6,12 +6,12 @@ DEBUG = false
 
 def print_circle(c, ci, p = '-')
   return unless DEBUG
-  printf "[%3s] ", p
+  printf '[%3s] ', p
   c.each_with_index do |m, i|
     if i == ci
-      printf "(%2d)", m
+      printf '(%2d)', m
     else
-      printf " %2d ", m
+      printf ' %2d ', m
     end
   end
   puts

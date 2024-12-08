@@ -13,7 +13,7 @@ begin
   Curses.curs_set 0
   Curses.clear
   Curses.setpos 0, 0
-  Curses.addstr "SCORE: 500"
+  Curses.addstr 'SCORE: 500'
   grid.each do |(y, x, char)|
     Curses.setpos y, x
     Curses.addch char

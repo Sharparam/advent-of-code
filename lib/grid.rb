@@ -39,14 +39,14 @@ class Grid
   end
 
   def draw(**opts)
-    puts "___" * width
+    puts '___' * width
     (0...height).each do |y|
       (0...width).each do |x|
         print draw_tile(Vector[x, y], opts)
       end
       puts
     end
-    puts "~~~" * width
+    puts '~~~' * width
   end
 
   protected

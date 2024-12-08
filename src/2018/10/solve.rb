@@ -43,7 +43,7 @@ end
 
 STARS.each(&:rollback!)
 
-puts "Part 1:"
+puts 'Part 1:'
 display
 
 puts "Part 2: #{time - 1}"

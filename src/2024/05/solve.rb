@@ -3,9 +3,9 @@
 
 orderings, updates = ARGF.read.split "\n\n"
 
-orderings = orderings.lines.map { _1.split("|").map(&:to_i) }
+orderings = orderings.lines.map { _1.split('|').map(&:to_i) }
 rules = orderings.reduce(Hash.new { _1[_2] = Set.new }) { |a, (l, r)| a[l].add(r); a }
-updates = updates.lines.map { _1.split(",").map(&:to_i) }
+updates = updates.lines.map { _1.split(',').map(&:to_i) }
 
 incorrect = []
 

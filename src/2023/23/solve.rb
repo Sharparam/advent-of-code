@@ -160,7 +160,7 @@ def compress(debug = false, &neighbors)
     cost = 0
     poses = neighbors.call(current).reject { |p| seen.include?(p) }
     if poses.empty?
-      puts "dead end, giving up" if debug
+      puts 'dead end, giving up' if debug
       next
     end
     last = current

@@ -164,7 +164,7 @@ def resolve(pos, direction)
       x, y = y - 100, 149
       next_direction = UP
     else
-      puts "=== UNHANDLED WRAP ==="
+      puts '=== UNHANDLED WRAP ==='
       puts "At (#{pos.x}, #{pos.y}) going (#{direction.x}, #{direction.y})"
       abort
     end

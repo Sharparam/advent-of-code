@@ -118,12 +118,12 @@ class Group
     str = "[#{@team} - #{@id}] #{@unit_count} units each with #{@hitpoints} hit points"
 
     unless weak.empty? && immune.empty?
-      str += " ("
+      str += ' ('
       strs = []
       strs << "weak to #{weak}" unless weak.empty?
       strs << "immune to #{immune}" unless immune.empty?
       str += strs.join '; '
-      str += ")"
+      str += ')'
     end
 
     "#{str} with an attack that does #{@attack} #{@element} damage at initiative #{@initiative}"
@@ -175,7 +175,7 @@ def fight(groups)
   #   binding.pry
   # end
 
-  abort " !!! STALEMATE !!!" unless damage_dealers > 0
+  abort ' !!! STALEMATE !!!' unless damage_dealers > 0
 
   puts
 

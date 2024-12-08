@@ -114,7 +114,7 @@ while i < ROUNDS
       cycle_size = i - previous_i
       height_diff = y - previous_height
 
-      STDERR.puts "=== CYCLE DETECTED ==="
+      STDERR.puts '=== CYCLE DETECTED ==='
       STDERR.puts "Current i: #{i}; Previous i: #{previous_i}; DIFF: #{cycle_size}"
       STDERR.puts "Current y: #{y}; Previous y: #{previous_height}; DIFF: #{height_diff}"
 

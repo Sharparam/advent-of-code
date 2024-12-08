@@ -216,7 +216,7 @@ while corners_found < 4
       results = current_tile.test_all tile
       if is_first
         valid = results.select { |dir, _| dir == :left || dir == :right }
-        abort "Found matches to left and right of a corner" if valid.size > 1
+        abort 'Found matches to left and right of a corner' if valid.size > 1
         dir, result = valid.first
         if result
           search_dir = dir

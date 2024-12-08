@@ -64,7 +64,7 @@ part2_human, opened2_human = solve(valves, {}, 26, :AA, 0, Set.new, Set.new)
 opened2_human.each { valves[_1][:rate] = 0 }
 part2_elephant, opened2_elephant = solve(valves, {}, 26, :AA, 0, Set.new, Set.new)
 
-STDERR.puts "PART 2:"
+STDERR.puts 'PART 2:'
 STDERR.puts "Human score: #{part2_human} (opened #{opened2_human})"
 STDERR.puts "Elephant score: #{part2_elephant} (opened #{opened2_elephant})"
 

@@ -36,14 +36,14 @@ STOPS = {
 }
 
 def display()
-  puts "=" * WIDTH
+  puts '=' * WIDTH
   (0...HEIGHT).each do |y|
     (0...WIDTH).each do |x|
       print $grid[Vector[x, y]]
     end
     puts
   end
-  puts "=" * WIDTH
+  puts '=' * WIDTH
 end
 
 def load()

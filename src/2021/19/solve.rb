@@ -110,7 +110,7 @@ loop do
     current = solution
     current_i = solution_i
   else
-    abort "Failed to find a match"
+    abort 'Failed to find a match'
   end
   debug ''
 end
