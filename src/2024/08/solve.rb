@@ -81,32 +81,30 @@ antennas.each do |freq, nodes|
       elsif a.x > b.x && a.y < b.y # a is top right
         antinodes.add Vector[a.x + d.x, a.y - d.y] unless a.x + d.x >= WIDTH || a.y - d.y < 0
         antinodes.add Vector[b.x - d.x, b.y + d.y] unless b.x - d.x < 0 || b.y + d.y >= HEIGHT
-        n_d = Vector[d.x, -d.y]
-        n = a + n_d
+        d = Vector[d.x, -d.y]
+        n = a + d
         while n.x < WIDTH && n.y >= 0
           antinodes_2.add n
-          n += n_d
+          n += d
         end
-        n_d = Vector[-d.x, d.y]
-        n = b + n_d
+        n = b - d
         while n.x >= 0 && n.y < HEIGHT
           antinodes_2.add n
-          n += n_d
+          n -= d
         end
       elsif a.x < b.x && a.y > b.y # a is bottom left
         antinodes.add Vector[a.x - d.x, a.y + d.y] unless a.x - d.x < 0 || a.y + d.y >= HEIGHT
         antinodes.add Vector[b.x + d.x, b.y - d.y] unless b.x + d.x >= WIDTH || b.y - d.y < 0
-        n_d = Vector[-d.x, d.y]
-        n = a + n_d
+        d = Vector[-d.x, d.y]
+        n = a + d
         while n.x >= 0 && n.y < HEIGHT
           antinodes_2.add n
-          n += n_d
+          n += d
         end
-        n_d = Vector[d.x, -d.y]
-        n = b + n_d
+        n = b - d
         while n.x < WIDTH && n.x >= 0
           antinodes_2.add n
-          n += n_d
+          n -= d
         end
       else # a is bottom right
         antinodes.add a + d unless a.x + d.x >= WIDTH || a.y + d.y >= HEIGHT
