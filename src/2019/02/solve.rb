@@ -45,4 +45,4 @@ part2 = (0..99).to_a.repeated_permutation(2).find do |(noun, verb)|
   result[0] == PART2_TARGET
 end
 
-puts "Part 2: #{100 * part2[0] + part2[1]}"
+puts "Part 2: #{(100 * part2[0]) + part2[1]}"

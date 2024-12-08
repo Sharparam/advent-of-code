@@ -16,7 +16,7 @@ end
 starts = nodes.keys.select { _1.to_s[-1] == ?A }.to_set
 goals = nodes.keys.select { _1.to_s[-1] == ?Z }.to_set
 
-cycles = starts.map { [_1, 0] }.to_h
+cycles = starts.to_h { [_1, 0] }
 
 starts.each do |start|
   current = start

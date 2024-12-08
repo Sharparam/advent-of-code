@@ -54,7 +54,7 @@ SHAPES = [
   ]
 ].freeze
 
-grid = (0..MAX_X).map { V[_1, 0] }.to_set
+grid = (0..MAX_X).to_set { V[_1, 0] }
 movement_index = 0
 
 checks = {}

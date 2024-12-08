@@ -4,7 +4,7 @@
 require_relative '../../../lib/astar'
 require_relative '../../../lib/grid'
 
-INPUT = ARGF.readlines.map(&:strip).map { _1.split('').map(&:to_i) }
+INPUT = ARGF.readlines.map(&:strip).map { _1.chars.map(&:to_i) }
 WIDTH = INPUT[0].size
 HEIGHT = INPUT.size
 START = Vector[0, 0]
@@ -20,7 +20,7 @@ INPUT.each_with_index do |row, y|
     grid.add_weight Vector[x, y], weight
     (1..4).each do |n|
       (0..4).each do |n2|
-        new_weight = (weight + n + n2 - 1) % 9 + 1
+        new_weight = ((weight + n + n2 - 1) % 9) + 1
         grid.add_weight Vector[x + (WIDTH * n), y + (HEIGHT * n2)], new_weight
         grid.add_weight Vector[x + (WIDTH * n2), y + (HEIGHT * n)], new_weight
       end

@@ -21,5 +21,5 @@ RESOLVES = {
 def score(t, u) = SCORES[OUTCOMES[[t, u]]] + (u.ord - 87)
 def resolve(t, c) = score(t, RESOLVES[t][c.ord - 89])
 
-puts LINES.sum { |l| score(*l.split(' ')) }
-puts LINES.sum { |l| resolve(*l.split(' ')) }
+puts LINES.sum { |l| score(*l.split) }
+puts LINES.sum { |l| resolve(*l.split) }

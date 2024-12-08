@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 def cantor(x, y)
-  ((x + y) * (x + y + 1)) / 2 + y
+  (((x + y) * (x + y + 1)) / 2) + y
 end
 
 class Point

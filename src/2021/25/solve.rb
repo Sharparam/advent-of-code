@@ -3,11 +3,11 @@
 
 require 'matrix'
 
-map = Hash[ARGF.readlines.map(&:chomp).flat_map.with_index do |line, y|
+map = ARGF.readlines.map(&:chomp).flat_map.with_index do |line, y|
   line.chars.map.with_index do |cell, x|
     [Vector[x, y], cell]
   end
-end]
+end.to_h
 
 WIDTH = map.keys.map { _1[0] }.max + 1
 HEIGHT = map.keys.map { _1[1] }.max + 1

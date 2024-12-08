@@ -65,7 +65,7 @@ pairs.each do |sensor, beacon|
 
   perims.each do |v|
     if others.all? { |o, d| md(o, v) > d }
-      puts v[0] * MAX + v[1]
+      puts (v[0] * MAX) + v[1]
       exit
     end
   end

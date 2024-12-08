@@ -4,7 +4,7 @@
 require 'matrix'
 require 'pry'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 def lcm(a, b, c); a.lcm(b).lcm(c); end
 

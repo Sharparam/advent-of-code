@@ -4,7 +4,7 @@
 require 'matrix'
 
 PATH = ARGV.first || 'input'
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 class Vector
   def x; self[0]; end
@@ -24,7 +24,7 @@ end
 WIDTH = width
 
 def adjacents(grid)
-  Hash[grid.map do |pos, _|
+  grid.to_h do |pos, _|
     [
       pos,
       [
@@ -34,13 +34,13 @@ def adjacents(grid)
         pos + Vector[-1, 0]
       ].sum { |other| grid[other] }
     ]
-  end]
+  end
 end
 
 def biodiv(obj)
   case obj
   when Vector
-    2**(obj.y * WIDTH + obj.x)
+    2**((obj.y * WIDTH) + obj.x)
   else
     obj.sum { |pos, tile| biodiv(pos) * tile }
   end

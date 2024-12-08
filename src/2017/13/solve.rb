@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-RANGES = Hash[ARGF.readlines.map { |l| l.split.map(&:to_i) }]
+RANGES = ARGF.readlines.to_h { |l| l.split.map(&:to_i) }
 MAX_DEPTH = RANGES.keys.max
 
 def walk(delay)
@@ -10,7 +10,7 @@ def walk(delay)
 
   (0..MAX_DEPTH).each do |depth|
     range = RANGES[depth]
-    next if range.nil? || (depth + delay) % (range * 2 - 2) != 0
+    next if range.nil? || (depth + delay) % ((range * 2) - 2) != 0
     severity += depth * range
     caught = true
   end

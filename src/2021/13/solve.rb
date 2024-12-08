@@ -12,7 +12,7 @@ def vis(grid)
 end
 
 def fold(grid, axis, pos)
-  grid.map { |k| k.dup.tap { _1[axis] = pos - (k[axis] - pos).abs } }.to_set
+  grid.to_set { |k| k.dup.tap { _1[axis] = pos - (k[axis] - pos).abs } }
 end
 
 puts fold(grid, *instructions[0]).size

@@ -4,7 +4,7 @@
 require 'colorize'
 require 'matrix'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 PATH = ARGV.first || 'input'
 
@@ -260,7 +260,7 @@ class Maze
       pos + TRANSFORMS[:east]
     ]
 
-    Hash[other_pos.map { |p| [p, @grid[p]] }]
+    other_pos.to_h { |p| [p, @grid[p]] }
   end
 
   def teleport?(pos)

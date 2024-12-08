@@ -30,7 +30,7 @@ counts = dests.each_with_object(Hash.new(0)) { _2[_1] += 1 }
 
 puts counts.count { _2.odd? }
 
-grid = Hash[counts.map { [_1, _2.even? ? :white : :black] }]
+grid = counts.to_h { [_1, _2.even? ? :white : :black] }
 grid.default = :white
 
 def minmax(grid)

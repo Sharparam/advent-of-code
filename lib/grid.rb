@@ -69,7 +69,7 @@ end
 
 class GridWithWeights < Grid
   def initialize(width, height, walls = nil)
-    super(width, height, walls)
+    super
     @weights = Hash.new(1)
   end
 

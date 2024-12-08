@@ -3,10 +3,10 @@
 
 RULE_TEXTS, MESSAGES = ARGF.read.split("\n\n").map { _1.split ?\n }
 
-rules = Hash[RULE_TEXTS.map do |rule|
+rules = RULE_TEXTS.to_h do |rule|
   idx, content = rule.split ': '
   [idx.to_i, content.delete(?")]
-end]
+end
 
 def build(rules, key)
   rule = rules[key].strip
@@ -29,9 +29,9 @@ def build(rules, key)
   end
 end
 
-BUILDERS = Hash[rules.map do |k, _|
+BUILDERS = rules.to_h do |k, _|
   [k, build(rules, k)]
-end]
+end
 
 part1_re = /^#{BUILDERS[0][BUILDERS]}$/
 

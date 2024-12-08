@@ -36,7 +36,7 @@ end
 
 (0...HEIGHT).each do |y|
   (0...WIDTH).each do |x|
-    pixel = part2[y * WIDTH + x]
+    pixel = part2[(y * WIDTH) + x]
     print_pixel pixel
   end
   puts

@@ -35,7 +35,7 @@ class InfGrid
 
   def wall?(pos)
     x, y = pos.x, pos.y
-    value = x * x + 3 * x + 2 * x * y + y + y * y + INPUT
+    value = (x * x) + (3 * x) + (2 * x * y) + y + (y * y) + INPUT
     value.to_s(2).chars.count(?1).odd?
   end
 end

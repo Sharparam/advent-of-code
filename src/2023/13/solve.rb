@@ -12,7 +12,7 @@ def diffs(pattern, m)
   (0...pattern.size - 1).each do |i|
     diffs = 0
     i.downto(0).each do |j|
-      o = 2 * i - j + 1
+      o = (2 * i) - j + 1
       break if o == pattern.size
       diffs += diff(pattern[j], pattern[o])
     end

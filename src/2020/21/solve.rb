@@ -10,9 +10,9 @@ ALL_INGREDIENTS = FOODS.flat_map(&:first)
 INGREDIENTS = ALL_INGREDIENTS.to_set
 ALLERGENS = FOODS.flat_map { _2 }.to_set
 
-ALLERGEN_INGREDIENTS = Hash[ALLERGENS.map do |a|
+ALLERGEN_INGREDIENTS = ALLERGENS.to_h do |a|
   [a, FOODS.select { _2.include? a }.map(&:first).reduce(:intersection)]
-end]
+end
 
 puts (ALL_INGREDIENTS - ALLERGEN_INGREDIENTS.values.flatten).size
 

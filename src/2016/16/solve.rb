@@ -3,7 +3,7 @@
 
 LENGTH = !ARGV.empty? && ARGV.first[0] == 't' ? 35_651_584 : 272
 
-input = $stdin.readline.strip.split('').map(&:to_i)
+input = $stdin.readline.strip.chars.map(&:to_i)
 
 def dragon_curve(data)
   len = data.size

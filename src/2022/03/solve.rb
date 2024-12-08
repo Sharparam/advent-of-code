@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-PRIOS = Hash[(?a..?z).to_a.concat((?A..?Z).to_a).map.with_index { |l, i| [l, i + 1] }]
+PRIOS = (?a..?z).to_a.concat((?A..?Z).to_a).map.with_index { |l, i| [l, i + 1] }.to_h
 
 contents = ARGF.readlines.map { |l| l.chomp.chars.map { |c| PRIOS[c] } }
 

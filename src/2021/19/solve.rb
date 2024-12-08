@@ -63,7 +63,7 @@ def manhattan(a, b)
 end
 
 maps = ARGF.read.strip.split("\n\n").map { |s| s.lines[1..].map { Vector[*_1.split(',').map(&:to_i)] } }
-maps_dict = Hash[maps.each_with_index.to_a.map(&:reverse)]
+maps_dict = maps.each_with_index.to_a.to_h(&:reverse)
 
 current = maps_dict[0]
 current_i = 0

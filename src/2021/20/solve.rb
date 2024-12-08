@@ -4,7 +4,7 @@
 require 'matrix'
 
 ALGORITHM = ARGF.readline.strip.chars.map { _1 == '#' ? 1 : 0 }
-IMAGE = Hash[ARGF.readlines[1..].flat_map.with_index { |r, y| r.strip.chars.map.with_index { |p, x| [Vector[x, y], p == '#' ? 1 : 0] } }].tap { _1.default = 0 }
+IMAGE = ARGF.readlines[1..].flat_map.with_index { |r, y| r.strip.chars.map.with_index { |p, x| [Vector[x, y], p == '#' ? 1 : 0] } }.to_h.tap { _1.default = 0 }
 
 SQUARE_DELTAS = [
   Vector[-1, -1], Vector[0, -1], Vector[1, -1],
@@ -33,7 +33,7 @@ end
 
 def enhance(image, step)
   xmin, xmax, ymin, ymax = bounds(image)
-  Hash[(xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { Vector[_1, _2] }.map { [_1, ALGORITHM[read(image, _1)]] }].tap { _1.default = default(step) }
+  (xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { Vector[_1, _2] }.to_h { [_1, ALGORITHM[read(image, _1)]] }.tap { _1.default = default(step) }
 end
 
 def vis(image)

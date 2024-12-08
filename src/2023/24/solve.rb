@@ -19,7 +19,7 @@ HAILSTONES = ARGF.readlines(chomp: true).map do |line|
   # b = y - mx
   # b = pos[1] - m * pos[0]
 
-  b = pos[1] - m * pos[0]
+  b = pos[1] - (m * pos[0])
 
   # puts "y = #{m} * x + #{b}"
 
@@ -48,7 +48,7 @@ def collide(a, b)
   # y = ma * ((bb - ba) / (ma - mb)) + ba
 
   x = (bb - ba) / (ma - mb)
-  y = ma * x + ba
+  y = (ma * x) + ba
 
   [x, y]
 end

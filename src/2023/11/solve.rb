@@ -20,7 +20,7 @@ def dist(a, b)
   ex = (x_min..x_max).count { EMPTY_X.include? _1 }
   ey = (y_min..y_max).count { EMPTY_Y.include? _1 }
   dist = (x1 - x2).abs + (y1 - y2).abs
-  [dist + ex + ey, dist + ex * 999_999 + ey * 999_999]
+  [dist + ex + ey, dist + (ex * 999_999) + (ey * 999_999)]
 end
 
 puts POSITIONS.combination(2).to_a.map { dist _1, _2 }.transpose.map(&:sum)

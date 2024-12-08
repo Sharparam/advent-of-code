@@ -12,7 +12,7 @@ MAP = {
 }.freeze
 
 def from_snafu(s)
-  s.chars.reduce(0) { |a, c| a * 5 + MAP[c] }
+  s.chars.reduce(0) { |a, c| (a * 5) + MAP[c] }
 end
 
 def to_snafu(d)

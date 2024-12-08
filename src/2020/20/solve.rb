@@ -174,14 +174,14 @@ class Tile
   end
 end
 
-tiles = Hash[ARGF.read.split("\n\n").map do |data|
+tiles = ARGF.read.split("\n\n").to_h do |data|
   lines = data.split("\n")
   id = lines[0].split[1].chop.to_i
   grid = lines.drop(1).map do |l|
     l.chars.map { _1 == '#' ? 1 : 0 }
   end
   [id, Tile.new(id, grid)]
-end]
+end
 
 match_count = Hash.new 0
 tiles.each_value do |tile|
@@ -285,6 +285,6 @@ map.arrangements.each do |arr|
   count = arr.count_shape MONSTER
   next if count == 0
   # part 2
-  puts arr.grid.flatten.sum - MONSTER.flatten.sum * count
+  puts arr.grid.flatten.sum - (MONSTER.flatten.sum * count)
   break
 end

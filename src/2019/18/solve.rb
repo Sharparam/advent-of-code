@@ -6,7 +6,7 @@ require 'matrix'
 
 require 'io/console'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 PATH = ARGV.first || 'input'
 
 INPUT_MAP = {
@@ -181,7 +181,7 @@ class Map
       pos + TRANSFORMS[:east]
     ]
 
-    Hash[other_pos.map { |p| [p, @grid[p]] }]
+    other_pos.to_h { |p| [p, @grid[p]] }
   end
 end
 

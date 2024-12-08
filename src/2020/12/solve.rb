@@ -17,7 +17,7 @@ move = ->(val) {
 moves.each do |type, val|
   case type
   when :R, :L
-    facing = (facing + MULS[type] * val) % 360
+    facing = (facing + (MULS[type] * val)) % 360
   when :F
     move[val]
   when :N, :S

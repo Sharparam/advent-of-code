@@ -21,7 +21,7 @@ OPCODES = {
 }.freeze
 
 input = File.readlines('input.txt')
-IP_REG = input.shift.split(' ').last.to_i
+IP_REG = input.shift.split.last.to_i
 PROGRAM = input.join.scan(/([a-z]+) (\d+) (\d+) (\d+)/).map { |op, a, b, c| [op.to_sym, a.to_i, b.to_i, c.to_i] }.freeze
 
 def run(regs)

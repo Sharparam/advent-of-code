@@ -3,7 +3,7 @@
 
 require 'matrix'
 
-cubes = ARGF.readlines.map { Vector[*_1.split(',').map(&:to_i)] }.to_set
+cubes = ARGF.readlines.to_set { Vector[*_1.split(',').map(&:to_i)] }
 MIN = Vector[cubes.map { _1[0] }.min, cubes.map { _1[1] }.min, cubes.map { _1[2] }.min]
 MAX = Vector[cubes.map { _1[0] }.max, cubes.map { _1[1] }.max, cubes.map { _1[2] }.max]
 

@@ -4,7 +4,7 @@
 require_relative '../../intcode/cpu'
 
 PATH = ARGV.first || 'input'
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 script = <<~SCRIPT
   NOT A J

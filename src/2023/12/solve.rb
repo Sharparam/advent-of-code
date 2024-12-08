@@ -4,7 +4,7 @@
 class NilClass; def empty?; true; end; def size; 0; end; end
 
 def valids(records, counts, row_size, cache = {}, skip_cache: false)
-  key = records.size + counts.size * row_size
+  key = records.size + (counts.size * row_size)
   return cache[key] if cache.key?(key) && !skip_cache
   return 1 if records.empty? && counts.none?
   return 0 if records.empty? && counts.any?
@@ -22,7 +22,7 @@ def valids(records, counts, row_size, cache = {}, skip_cache: false)
 end
 
 puts ARGF.readlines.each_with_index.reduce([0, 0]) { |a, (line, _i)|
-  records, counts = line.split ' '
+  records, counts = line.split
   counts = counts.split(',').map(&:to_i)
   records2, counts2 = ([records] * 5).join(??), counts * 5
   p1 = valids records, counts, records.size

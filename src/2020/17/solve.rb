@@ -3,9 +3,7 @@
 
 require 'matrix'
 
-NEIGHBOUR_DIFFS = Hash[
-  [3, 4].map { |s| [s, [-1, 0, 1].repeated_permutation(s).reject { _1.all?(&:zero?) }.map { Vector[*_1] }.to_a] }
-]
+NEIGHBOUR_DIFFS = [3, 4].to_h { |s| [s, [-1, 0, 1].repeated_permutation(s).reject { _1.all?(&:zero?) }.map { Vector[*_1] }.to_a] }
 
 class Vector
   def neighbours
@@ -38,8 +36,8 @@ LINES = ARGF.readlines.map(&:chomp)
 
 grids = [->(x, y) { Vector[x, y, 0] }, ->(x, y) { Vector[x, y, 0, 0] }].map do |f|
   LINES.flat_map.with_index do |line, y|
-    line.split('').map.with_index { |v, x| [f[x, y], v == ?#] }
-  end.select { _2 }.map(&:first).to_set
+    line.chars.map.with_index { |v, x| [f[x, y], v == ?#] }
+  end.select { _2 }.to_set(&:first)
 end
 
 grids.each do |grid|

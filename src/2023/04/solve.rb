@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-cards = Hash[ARGF.read.scan(/^[^\d]+(\d+): ([\d\ ]+) \| (.+)$/).map do
+cards = ARGF.read.scan(/^[^\d]+(\d+): ([\d\ ]+) \| (.+)$/).to_h do
   [_1.to_i, [_2.split.map(&:to_i), _3.split.map(&:to_i)]]
-end]
+end
 
 win_count = {}
 
@@ -13,7 +13,7 @@ puts cards.sum { |i, (w, n)|
   c == 0 ? 0 : 2**(c - 1)
 }
 
-total_count = Hash[win_count.keys.map { [_1, 1] }]
+total_count = win_count.keys.to_h { [_1, 1] }
 ids = cards.keys
 
 ids.each do |id|

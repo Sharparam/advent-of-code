@@ -8,7 +8,7 @@ require 'matrix'
 require 'pairing_heap' # gem install pairing_heap
 
 def cantor(x, y)
-  ((x + y) * (x + y + 1)) / 2 + y
+  (((x + y) * (x + y + 1)) / 2) + y
 end
 
 def cantor3(x, y, z)
@@ -35,9 +35,9 @@ class Point
   def eql?(other) = hash.eql? other.hash
 end
 
-GRID = Hash[ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
+GRID = ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
   line.chars.map.with_index { |c, x| [Point[x, y], c.to_i] }
-}].tap { _1.default = Float::INFINITY }
+}.to_h.tap { _1.default = Float::INFINITY }
 
 WIDTH = GRID.keys.map(&:x).max + 1
 HEIGHT = GRID.keys.map(&:y).max + 1
@@ -55,8 +55,8 @@ def neighbors(current, last_dir, min, max)
     v = DIR_TO_V[dir]
     (min..max).map { |m|
       cost = 0
-      m.times { |i| cost += GRID[current + v * (i + 1)] }
-      [current + v * m, dir, cost]
+      m.times { |i| cost += GRID[current + (v * (i + 1))] }
+      [current + (v * m), dir, cost]
     }
   }.reject { |p, _, _| p.x < 0 || p.x >= WIDTH || p.y < 0 || p.y >= HEIGHT }
 end

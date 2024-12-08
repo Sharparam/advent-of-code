@@ -5,7 +5,7 @@ require_relative '../10/part2'
 
 input = ARGV[1] || 'ffayrhll'
 
-grid = (0..127).map { |n| knot_hash("#{input}-#{n}").hex.to_s(2).rjust(128, '0').split('').map { |b| b == '1' ? '#' : '.' } }
+grid = (0..127).map { |n| knot_hash("#{input}-#{n}").hex.to_s(2).rjust(128, '0').chars.map { |b| b == '1' ? '#' : '.' } }
 
 puts grid.sum { |r| r.count '#' }
 

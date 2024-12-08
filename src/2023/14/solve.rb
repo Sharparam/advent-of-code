@@ -3,9 +3,9 @@
 
 require 'matrix'
 
-$grid = Hash[ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
+$grid = ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
   line.chars.map.with_index { |t, x| [Vector[x, y], t] }
-}]
+}.to_h
 
 WIDTH = $grid.keys.map { _1[0] }.max + 1
 HEIGHT = $grid.keys.map { _1[1] }.max + 1
@@ -75,7 +75,7 @@ def cycle
 end
 
 def id
-  $grid.select { _2 == ?O }.map(&:first).map { _1[0] + WIDTH * _1[1] }
+  $grid.select { _2 == ?O }.map(&:first).map { _1[0] + (WIDTH * _1[1]) }
 end
 
 states = { id => { load: load, index: 0 } }
@@ -89,7 +89,7 @@ states = { id => { load: load, index: 0 } }
   else
     old = states[i_id]
     start_index = old[:index]
-    loads = Hash[states.map { |_k, v| [v[:index], v[:load]] }]
+    loads = states.to_h { |_k, v| [v[:index], v[:load]] }
     cycle_size = i - start_index
     cycle_steps = 1_000_000_000 - start_index
     cycle_index = cycle_steps % cycle_size

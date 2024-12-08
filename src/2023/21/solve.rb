@@ -34,7 +34,7 @@ until values.size == 3
   n += 1
   poses = reachable(poses).uniq
   puts poses.size if n == 64
-  values.push poses.size if n == P2_STEPS % SIZE + SIZE * values.size
+  values.push poses.size if n == (P2_STEPS % SIZE) + (SIZE * values.size)
 end
 
 # because magic reasons tells us it's polynomial shitfuckery:
@@ -65,7 +65,7 @@ end
 # b = P(1) - a - c = values[1] - a - c
 
 C = values[0]
-A = (values[2] - 2 * values[1] + C) / 2
+A = (values[2] - (2 * values[1]) + C) / 2
 B = values[1] - A - C
 
 # Given that number of steps in part 2 apparently must end on an edge,
@@ -76,7 +76,7 @@ B = values[1] - A - C
 # i.e. if P2_STEPS would be 65: (65 - 131 / 2) / 131 == 0
 # Each amount of SIZE after that is one more grid, so grid index
 # is simply remaining steps divided by the SIZE
-X = (P2_STEPS - SIZE / 2) / SIZE
+X = (P2_STEPS - (SIZE / 2)) / SIZE
 
 # puts "Values: #{values}"
 # puts "X = #{X}"
@@ -84,7 +84,7 @@ X = (P2_STEPS - SIZE / 2) / SIZE
 # puts "B = #{B}"
 # puts "C = #{C}"
 
-puts A * X**2 + B * X + C
+puts (A * (X**2)) + (B * X) + C
 
 # With this, I'm going to put it officially:
 # AoC 2023 day 21 part 2 can suck Santa's lollipop.

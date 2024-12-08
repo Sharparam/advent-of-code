@@ -5,7 +5,7 @@ TEMPLATE = ARGF.readline.strip
 FIRST, LAST = [TEMPLATE[0], TEMPLATE[-1]]
 PAIRS = TEMPLATE.chars.each_cons(2).tally
 ARGF.readline
-_rules = Hash[ARGF.read.scan(/(..) -> (.)/).map { [_1.chars, _2] }].freeze
+_rules = ARGF.read.scan(/(..) -> (.)/).to_h { [_1.chars, _2] }.freeze
 
 def step(pairs)
   result = Hash.new(0)

@@ -11,7 +11,7 @@ ARGF.readlines.each do |line|
   }
 end
 
-HAS_FLOW = valves.reject { _2[:rate] == 0 }.map { |k, _| k }.to_set
+HAS_FLOW = valves.reject { _2[:rate] == 0 }.to_set { |k, _| k }
 
 def solve(valves, memory, mins, current, score, visited, opened)
   key = [mins, current, score]

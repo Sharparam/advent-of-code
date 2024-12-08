@@ -9,7 +9,7 @@ require_relative '../../../lib/grid'
 
 class MyGrid < GridWithWeights
   def neighbors(pos)
-    positions = super(pos)
+    positions = super
     positions.reject { |p| cost(pos, p) > 1 }
   end
 

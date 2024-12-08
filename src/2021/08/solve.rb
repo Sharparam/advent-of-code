@@ -31,7 +31,7 @@ def solve_entry(entry)
   candidates[0] = sixes.find { |pat| pat.chars.intersection(three).size == 4 }
   candidates[9] = sixes.find { |pat| pat.chars.intersection(three).size == 5 }
 
-  map = Hash[candidates.map { [_2, _1] }]
+  map = candidates.to_h { [_2, _1] }
   output.map { map[_1] }.join.to_i
 end
 

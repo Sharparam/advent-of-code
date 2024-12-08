@@ -19,7 +19,7 @@ class Cuboid
   def depth = (back - front + 1).abs
 
   def volume
-    width * depth * height - @removed.sum(&:volume)
+    (width * depth * height) - @removed.sum(&:volume)
   end
 
   def clamp(range)

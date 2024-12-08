@@ -46,11 +46,11 @@ class Keypad
 
   def translate_x(y)
     return @x if @layout[@y].size == @layout[y].size
-    @x - (@layout[@y].size - @layout[y].size) / 2
+    @x - ((@layout[@y].size - @layout[y].size) / 2)
   end
 end
 
-input = $stdin.readlines.map { |l| l.strip.split('').map { |d| d.downcase.to_sym } }
+input = $stdin.readlines.map { |l| l.strip.chars.map { |d| d.downcase.to_sym } }
 
 pad = Keypad.new [
   [1, 2, 3],

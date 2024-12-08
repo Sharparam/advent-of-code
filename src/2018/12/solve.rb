@@ -5,12 +5,12 @@ initial, $rules = ARGF.read.split("\n\n")
 
 pots = initial.split(': ')[1].chars.map.with_index { |p, i| p == ?# ? i : nil }.compact
 
-$rules = $rules.lines.map { |line|
+$rules = $rules.lines.to_h { |line|
   current, result = line.split(' => ').map(&:chomp)
   result = result == ?#
   state = current.chars.map.with_index { |c, i| [i - 2, c == ?#] }.to_h
   [state, result]
-}.to_h
+}
 
 def transform(pots)
   new_pots = []
@@ -46,7 +46,7 @@ _part2_pots = 50_000_000_000.times.reduce(pots) do |pots, i|
   end
   if delta_count == 3
     remaining = 50_000_000_000 - i - 1
-    final_result = new_sum + remaining * delta
+    final_result = new_sum + (remaining * delta)
     puts final_result
     exit
   end

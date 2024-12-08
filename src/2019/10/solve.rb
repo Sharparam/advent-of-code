@@ -3,7 +3,7 @@
 
 require 'matrix'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 class Vector
   def x
@@ -20,7 +20,7 @@ def on_line?(a, b, point)
   dyc = point.y - a.y
   dx1 = b.x - a.x
   dy1 = b.y - a.y
-  cross = dxc * dy1 - dyc * dx1
+  cross = (dxc * dy1) - (dyc * dx1)
 
   return false unless cross == 0
 
@@ -73,7 +73,7 @@ puts "Part 1: #{best_visible}"
 abort "Doesn't work for <200 reachable asteroids" if best_base.keys.size < 200
 
 part2_point = best_base[best_base.keys.sort.reverse[199]].first
-puts "Part 2: #{part2_point.x * 100 + part2_point.y}"
+puts "Part 2: #{(part2_point.x * 100) + part2_point.y}"
 
 if DEBUG
   require 'pry'

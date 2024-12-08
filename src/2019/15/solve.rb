@@ -6,7 +6,7 @@ require 'matrix'
 
 require_relative '../../intcode/cpu'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 class Vector
   def x; self[0]; end

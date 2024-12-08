@@ -67,7 +67,7 @@ class Room
   end
 end
 
-input = $stdin.readline.strip.split('')
+input = $stdin.readline.strip.chars
 
 room = Room.new input
 

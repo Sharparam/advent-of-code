@@ -7,7 +7,7 @@ require 'pry'
 
 PATH = ARGV.first || 'input'
 STEPS = ARGV[1]&.to_i || 200
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 WIDTH = 5
 HEIGHT = 5
 SIZE = WIDTH * HEIGHT
@@ -17,7 +17,7 @@ def makegrid
 end
 
 def makeind(x, y)
-  x + y * WIDTH
+  x + (y * WIDTH)
 end
 
 def drawgrid(grid)

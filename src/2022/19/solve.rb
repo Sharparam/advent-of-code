@@ -78,7 +78,7 @@ class Blueprint
 
     time_left -= 1
 
-    remaining_potential = production[:geode] * time_left + time_left * (time_left + 1) / 2
+    remaining_potential = (production[:geode] * time_left) + (time_left * (time_left + 1) / 2)
     if stock[:geode] + remaining_potential <= maxes[0]
       memory[cache_key] = 0
       return 0

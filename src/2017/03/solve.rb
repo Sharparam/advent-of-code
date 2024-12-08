@@ -6,7 +6,7 @@ require 'matrix'
 input = $stdin.readline.strip.to_i
 
 steps = (Math.sqrt(input).ceil / 2).floor
-offset = (input - (2 * steps - 1)**2) % (2 * steps)
+offset = (input - (((2 * steps) - 1)**2)) % (2 * steps)
 steps += (offset - steps).abs
 
 puts "Part 1: #{steps}"

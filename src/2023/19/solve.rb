@@ -3,7 +3,7 @@
 
 workflows, parts = ARGF.read.split("\n\n")
 
-WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^}]+)\}/).map { |id, body|
+WORKFLOWS = workflows.scan(/(\w+)\{([^}]+)\}/).to_h { |id, body|
   rules = body.split ','
   default = rules.pop
   rules.map! { |rule|
@@ -17,7 +17,7 @@ WORKFLOWS = Hash[workflows.scan(/(\w+)\{([^}]+)\}/).map { |id, body|
     default
   }
   [id, { rules: rules, default: default, f: f }]
-}]
+}
 
 PARTS = parts.lines.map { |part|
   part.scan(/(\w+)=(\d+)/).transform_values(&:to_i)

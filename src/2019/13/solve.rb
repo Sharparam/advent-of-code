@@ -11,7 +11,7 @@ class Vector
   def y; self[1]; end
 end
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 PATH = ARGV.first || 'input'
 

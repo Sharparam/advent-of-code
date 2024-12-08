@@ -8,13 +8,13 @@ SERIAL = ARGV[0]&.to_i || 7400
 
 def powerlevel(x, y)
   id = x + 10
-  (id * y + SERIAL) * id / 100 % 10 - 5
+  (((id * y) + SERIAL) * id / 100 % 10) - 5
 end
 
 POWERS = (0..SIZE).map do |y|
   (0..SIZE).map do |x|
     id = x + 10
-    (id * y + SERIAL) * id / 100 % 10 - 5
+    (((id * y) + SERIAL) * id / 100 % 10) - 5
   end.freeze
 end.freeze
 

@@ -2,7 +2,7 @@
 # frozen_string_literal: true
 
 MULTIPLIERS = [0, 1, 0, -1].freeze
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 def mult(index, out_index)
   MULTIPLIERS[((index + 1) / (out_index + 1)) % 4]

@@ -3,7 +3,7 @@
 
 require_relative '../../intcode/cpu'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 PATH = ARGV.first || 'input'
 

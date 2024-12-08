@@ -77,7 +77,7 @@ loop do
   blizzard_hashes.add new_hash
 end
 
-BLIZZARD_STATES = blizzard_states.map { |b| b.map { [_1[0], true] }.to_h }
+BLIZZARD_STATES = blizzard_states.map { |b| b.to_h { [_1[0], true] } }
 
 def valid_pos(_grid, blizzard_state, pos, start, goal)
   possible = []

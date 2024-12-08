@@ -95,7 +95,7 @@ MOVES.each do |move|
   end
 end
 
-puts (pos.y + 1) * 1000 + (pos.x + 1) * 4 + DIR_VALS[direction]
+puts ((pos.y + 1) * 1000) + ((pos.x + 1) * 4) + DIR_VALS[direction]
 
 pos = Vector[min_x, 0]
 direction = RIGHT
@@ -190,4 +190,4 @@ MOVES.each do |move|
   end
 end
 
-puts (pos.y + 1) * 1000 + (pos.x + 1) * 4 + DIR_VALS[direction]
+puts ((pos.y + 1) * 1000) + ((pos.x + 1) * 4) + DIR_VALS[direction]

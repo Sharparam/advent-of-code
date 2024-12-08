@@ -6,7 +6,7 @@ require 'pry'
 
 require_relative '../../intcode/cpu'
 
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 PATH = ARGV.first || 'input'
 
@@ -55,7 +55,7 @@ loop do
     previous_end_x = previous_line.last
 
     if current_start_x + 99 <= previous_end_x
-      puts "Part 2: #{(previous_end_x - 99) * 10_000 + (y - 99)}"
+      puts "Part 2: #{((previous_end_x - 99) * 10_000) + (y - 99)}"
       break
     end
   end

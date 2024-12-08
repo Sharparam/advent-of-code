@@ -16,7 +16,7 @@ def term_clear
 end
 
 PROGRAM = DATA.read.split(',').map(&:to_i)
-DEBUG = ENV['DEBUG']
+DEBUG = ENV.fetch('DEBUG', nil)
 
 OUTPUT_MAP = {
   '#'.ord => :scaffold,

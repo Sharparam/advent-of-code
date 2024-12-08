@@ -24,7 +24,7 @@ def rcombat(p1, p2)
   winner = 0
 
   while p1.any? && p2.any?
-    conf = [p1.hash, p2.hash].hash
+    conf = [p1, p2].hash
     if seen.include? conf
       winner = 1
       break

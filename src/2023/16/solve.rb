@@ -5,7 +5,7 @@ GRID = ARGF.readlines(chomp: true).map(&:chars)
 HEIGHT, WIDTH = GRID.size, GRID[0].size
 
 def cantor(x, y)
-  ((x + y) * (x + y + 1)) / 2 + y
+  (((x + y) * (x + y + 1)) / 2) + y
 end
 
 def solve(start)

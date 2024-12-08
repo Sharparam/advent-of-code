@@ -7,14 +7,14 @@ MEMORY2 = Hash.new(0)
 INPUT = ARGF.readlines
 
 def apply_mask(bits, mask)
-  bits = [0] * (mask.size - bits.size) + bits
+  bits = ([0] * (mask.size - bits.size)) + bits
   bits.map.with_index do |bit, index|
     mask[index] == ?X ? bit :  mask[index].to_i
   end
 end
 
 def apply_mask2(bits, mask)
-  bits = [0] * (mask.size - bits.size) + bits
+  bits = ([0] * (mask.size - bits.size)) + bits
   bits.map.with_index do |bit, index|
     mask[index] == ?X ? :X : (bit | mask[index].to_i)
   end
@@ -29,11 +29,11 @@ end
 INPUT.each do |line|
   case line
   when /^mask = ([01X]+)$/
-    $mask = $1.split('')
+    $mask = $1.chars
   when /^mem\[(\d+)\] = (\d+)$/
     index = $1.to_i
     value = $2.to_i
-    bits, bits2 = [value, index].map { _1.to_s(2).split('').map(&:to_i) }
+    bits, bits2 = [value, index].map { _1.to_s(2).chars.map(&:to_i) }
     masked = apply_mask bits, $mask
     masked2 = apply_mask2 bits2, $mask
     indices = gen(masked2)
