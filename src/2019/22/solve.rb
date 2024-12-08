@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 PATH = ARGV.first || 'input'
 SIZE = ARGV[1]&.to_i || 10007

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 MULTIPLIERS = [0, 1, 0, -1]
 DEBUG = ENV['DEBUG']

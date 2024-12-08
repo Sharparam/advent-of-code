@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 coords = Hash.new { |h, k| h[k] = [] }
 

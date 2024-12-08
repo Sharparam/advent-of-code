@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 coords = File.read('input.txt').scan(/(\d+), (\d+)/).map { |ns| ns.map(&:to_i) }
 

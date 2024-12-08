@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 program = File.read('input.txt').split(',').map(&:to_i)
 

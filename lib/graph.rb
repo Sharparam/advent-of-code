@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Implementations from https://github.com/msayson/weighted_graph
 # Licensed under the MIT License.
 # Copyright (c) 2017 Mark Sayson

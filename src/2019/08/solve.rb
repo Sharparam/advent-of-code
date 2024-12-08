@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 DEFAULT_WIDTH = 25
 DEFAULT_HEIGHT = 6

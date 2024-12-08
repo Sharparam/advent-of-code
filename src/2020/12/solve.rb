@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 moves = ARGF.read.scan(/([A-Z])(\d+)/).map { [_1.to_sym, _2.to_i] }
 

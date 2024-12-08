@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 def knot_hash(str)
   list = (0..255).to_a

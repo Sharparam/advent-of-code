@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 def angle(dx, dy)
   Math::PI + Math.atan2(-dx, -dy)

@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 d = $<.readlines.map(&:split)
 p d.count { |e| e.uniq == e }

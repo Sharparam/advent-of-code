@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 RULE_TEXTS, MESSAGES = ARGF.read.split("\n\n").map { _1.split ?\n }
 

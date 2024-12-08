@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 SECTIONS = ARGF.read.split "\n\n"
 

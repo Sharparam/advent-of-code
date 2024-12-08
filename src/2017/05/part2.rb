@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 offsets = STDIN.readlines.map(&:to_i)
 index = 0

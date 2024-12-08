@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 INPUT = ARGV[0] || '0,20,7,16,1,18,15'
 NUMS = INPUT.split(',').map(&:to_i)

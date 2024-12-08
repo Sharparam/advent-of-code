@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 class CPU
     def initialize; @r = Hash.new(0) end

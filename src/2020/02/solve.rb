@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 puts ARGF.readlines.reduce([0, 0]) { |a, e|
   e =~ /(\d+)-(\d+) (.): (.+)/

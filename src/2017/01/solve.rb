@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 input = STDIN.readline.strip.chars.map(&:to_i)
 part1 = input.each_cons(2).to_a.push([input[0], input[-1]]).map(&:uniq).reduce(0) { |a, e| a + (e.size == 2 ? 0 : e.first) }

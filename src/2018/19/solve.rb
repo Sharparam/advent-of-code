@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 OPCODES = {
   addr: -> (r, a, b, c) { r[c] = r[a] + r[b] },

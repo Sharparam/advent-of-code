@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
 DIV, v = 20201227, 1
 CARD, DOOR = ARGF.readlines.map(&:to_i)

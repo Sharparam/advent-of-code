@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-# frozen_strin_literal: true
+# frozen_string_literal: true
 
 require 'matrix'
 
