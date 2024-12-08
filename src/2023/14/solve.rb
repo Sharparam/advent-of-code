@@ -84,9 +84,7 @@ states = { id => { load: load, index: 0 } }
   cycle
   l = load
   i_id = id
-  if !states.key? i_id
-    states[i_id] = { load: l, index: i }
-  else
+  if states.key? i_id
     old = states[i_id]
     start_index = old[:index]
     loads = states.to_h { |_k, v| [v[:index], v[:load]] }
@@ -95,5 +93,7 @@ states = { id => { load: load, index: 0 } }
     cycle_index = cycle_steps % cycle_size
     puts loads[start_index + cycle_index]
     break
+  else
+    states[i_id] = { load: l, index: i }
   end
 end

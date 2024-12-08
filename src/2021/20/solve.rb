@@ -33,7 +33,7 @@ end
 
 def enhance(image, step)
   xmin, xmax, ymin, ymax = bounds(image)
-  (xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { Vector[_1, _2] }.to_h { [_1, ALGORITHM[read(image, _1)]] }.tap { _1.default = default(step) }
+  (xmin - 1..xmax + 1).to_a.product((ymin - 1..ymax + 1).to_a).map { Vector[_1, _2] }.to_h { [_1, ALGORITHM[read(image, _1)]] }.tap { _1.default = default(step) } # rubocop:disable Style/MapToHash
 end
 
 def vis(image)

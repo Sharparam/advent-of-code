@@ -54,8 +54,8 @@ input.select { |line| line.start_with? 'bot' }.each do |line|
   source, low_type, low_target, high_type, high_target = line.match(BOT_PATTERN).to_a[1..]
   source = source.to_i
 
-  low_target = OpenStruct.new type: low_type.to_sym, id: low_target.to_i
-  high_target = OpenStruct.new type: high_type.to_sym, id: high_target.to_i
+  low_target = OpenStruct.new type: low_type.to_sym, id: low_target.to_i # rubocop:disable Style/OpenStructUse
+  high_target = OpenStruct.new type: high_type.to_sym, id: high_target.to_i # rubocop:disable Style/OpenStructUse
 
   bots[source].low_target = low_target
   bots[source].high_target = high_target

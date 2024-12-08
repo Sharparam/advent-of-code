@@ -8,10 +8,10 @@ cave = {}
 ARGF.readlines.map { |l| l.split(' -> ').map { Vector[*_1.split(',').map(&:to_i)] } }.each do |coords|
   coords.each_cons(2) do |a, b|
     x1, y1, x2, y2 = a[0], a[1], b[0], b[1]
-    if (x1 <=> x2) != 0
-      ([x1, x2].min..[x1, x2].max).each { cave[Vector[_1, y1]] = :rock }
-    else
+    if (x1 <=> x2) == 0
       ([y1, y2].min..[y1, y2].max).each { cave[Vector[x1, _1]] = :rock }
+    else
+      ([x1, x2].min..[x1, x2].max).each { cave[Vector[_1, y1]] = :rock }
     end
   end
 end

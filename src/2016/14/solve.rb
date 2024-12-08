@@ -42,7 +42,7 @@ def check_match!(key, to_check, count)
 
   # puts "Found initial hash: #{key}"
 
-  to_check[count] = OpenStruct.new(
+  to_check[count] = OpenStruct.new( # rubocop:disable Style/OpenStructUse
     pattern: /(#{match[1]})\1\1\1\1/, key: key, finished: false
   )
 end

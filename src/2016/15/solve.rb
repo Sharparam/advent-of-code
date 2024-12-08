@@ -5,7 +5,7 @@ require 'ostruct'
 
 discs = $stdin.readlines.map do |line|
   size, start = line.strip.match(/(\d+) positions.+?position (\d+)/).to_a[1..2].map(&:to_i)
-  OpenStruct.new size: size, position: start
+  OpenStruct.new size: size, position: start # rubocop:disable Style/OpenStructUse
 end
 
 def test?(discs, start)
@@ -20,7 +20,7 @@ puts "(1) #{start}"
 
 start = -1
 
-discs.push OpenStruct.new size: 11, position: 0
+discs.push OpenStruct.new size: 11, position: 0 # rubocop:disable Style/OpenStructUse
 
 loop until test? discs, (start += 1)
 

@@ -37,7 +37,7 @@ class Blueprint
   end
 
   def solve(time_left = TIME, stock = Hash.new(0), production = Hash.new(0).tap { _1[:ore] = 1 }, maxes = { 0 => 0 }, memory = {})
-    cache_key = [time_left, stock.hash, production.hash].hash
+    cache_key = [time_left, stock, production].hash
     if memory.key?(cache_key)
       # STDERR.puts "=== CACHE HIT ==="
       return memory[cache_key]

@@ -95,7 +95,7 @@ class Group
     amount = calculate_damage attacker
     return [0, 0] if amount == 0
     would_kill = (amount / @hitpoints).floor
-    will_kill = would_kill > @unit_count ? @unit_count : would_kill
+    will_kill = [would_kill, @unit_count].min
     [amount, will_kill.tap { |c| @unit_count -= c }]
   end
 

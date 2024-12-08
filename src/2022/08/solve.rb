@@ -38,10 +38,10 @@ end
 result = (0..HEIGHT - 1).reduce([0, 0]) do |a, y|
   inter = (0..WIDTH - 1).reduce([0, 0]) do |i, x|
     s = score(x, y)
-    [i[0] + s[0], s[1] > i[1] ? s[1] : i[1]]
+    [i[0] + s[0], [s[1], i[1]].max]
   end
 
-  [a[0] + inter[0], inter[1] > a[1] ? inter[1] : a[1]]
+  [a[0] + inter[0], [inter[1], a[1]].max]
 end
 
 puts result[0]

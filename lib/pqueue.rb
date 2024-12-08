@@ -25,8 +25,8 @@ class PriorityQueue
     @elements.size - 1
   end
 
-  def each(&block)
-    @elements.drop(1).each(&block)
+  def each(&)
+    @elements.drop(1).each(&)
   end
 
   def empty?

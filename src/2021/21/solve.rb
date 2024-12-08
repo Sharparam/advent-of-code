@@ -31,7 +31,7 @@ player2 = PLAYER_2
   break if player_1_score >= 1000 || player_2_score >= 1000
 end
 
-puts (player_1_score > player_2_score ? player_2_score : player_1_score) * die_rolls
+puts [player_1_score, player_2_score].min * die_rolls
 
 OUTCOMES = [1, 2, 3].repeated_permutation(3).map(&:sum).tally
 CACHE = {} # rubocop:disable Style/MutableConstant

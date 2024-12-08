@@ -5,13 +5,13 @@ TEMPLATE = ARGF.readline.strip
 FIRST, LAST = [TEMPLATE[0], TEMPLATE[-1]]
 PAIRS = TEMPLATE.chars.each_cons(2).tally
 ARGF.readline
-_rules = ARGF.read.scan(/(..) -> (.)/).to_h { [_1.chars, _2] }.freeze
+RULES = ARGF.read.scan(/(..) -> (.)/).to_h { [_1.chars, _2] }.freeze
 
 def step(pairs)
   result = Hash.new(0)
   pairs.each do |pair, count|
-    if rules.key? pair
-      char = rules[pair]
+    if RULES.key? pair
+      char = RULES[pair]
       result[[pair[0], char]] += count
       result[[char, pair[1]]] += count
     else
@@ -31,5 +31,5 @@ def count(pairs)
   end
 end
 
-puts count(10.times.reduce(PAIRS) { step(_1) }).values.minmax.reverse.reduce(:-)
-puts count(40.times.reduce(PAIRS) { step(_1) }).values.minmax.reverse.reduce(:-)
+puts count(10.times.reduce(PAIRS) { step(_1) }).values.minmax.reverse.reduce(:-) # rubocop:disable Lint/UnexpectedBlockArity
+puts count(40.times.reduce(PAIRS) { step(_1) }).values.minmax.reverse.reduce(:-) # rubocop:disable Lint/UnexpectedBlockArity

@@ -6,7 +6,7 @@ require 'ostruct'
 data = {}
 
 $<.each_line do |l|
-  data[$1] = OpenStruct.new name: $1, weight: $2.to_i, nodes: [], children: $3.nil? ? nil : $3.split(', ') if l =~ /([a-z]+) \((\d+)\)(?: -> ([a-z, ]+))?/
+  data[$1] = OpenStruct.new name: $1, weight: $2.to_i, nodes: [], children: $3.nil? ? nil : $3.split(', ') if l =~ /([a-z]+) \((\d+)\)(?: -> ([a-z, ]+))?/ # rubocop:disable Style/OpenStructUse
 end
 
 while data.any? { |_name, node| node.children.nil? }
