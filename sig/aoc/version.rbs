@@ -1,0 +1,8 @@
+module AoC
+  module Version
+    MAJOR: Integer
+    MINOR: Integer
+    PATCH: Integer
+    FULL: String
+  end
+end

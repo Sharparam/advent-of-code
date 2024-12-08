@@ -1,0 +1,3 @@
+module AoC
+  VERSION: String
+end
