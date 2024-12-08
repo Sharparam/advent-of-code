@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# rubocop:disable all
 
 class Node
   attr_reader :value
@@ -10,7 +13,7 @@ class Node
 
   end
 
-  def ==(other); self <=> other == 0; end
+  def ==(other); (self <=> other) == 0; end
   def <(other); self <=> other < 0; end
   def <=(other); self <=> other <= 0; end
   def >(other); self <=> other > 0; end
@@ -28,9 +31,9 @@ end
 
 DEBUG = false
 
-(player_count, last_marble) = (ARGV.empty? ? DATA.read : ARGV.first).scan(/\d+/).map(&:to_i)
+(_player_count, _last_marble) = (ARGV.empty? ? DATA.read : ARGV.first).scan(/\d+/).map(&:to_i)
 
-btree = Node.new 0
+_btree = Node.new 0
 
 __END__
 423 players; last marble is worth 71944 points
