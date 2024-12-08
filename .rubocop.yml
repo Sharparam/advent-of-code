@@ -2,6 +2,7 @@ AllCops:
   TargetRubyVersion: 3.3
   ParserEngine: parser_prism
   DisplayStyleGuide: true
+  NewCops: enable
   Exclude:
     - 'src/**/golf*.rb'
 
@@ -11,14 +12,22 @@ Layout/EmptyLineAfterGuardClause:
   Enabled: false
 Layout/EmptyLineBetweenDefs:
   Enabled: false
+Layout/FirstHashElementIndentation:
+  Enabled: false
 Layout/LineLength:
   Enabled: false
 Layout/MultilineBlockLayout:
   Enabled: false
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Lint/AmbiguousBlockAssociation:
   Enabled: false
 Lint/AmbiguousOperator:
+  Enabled: false
+Lint/AmbiguousRegexpLiteral:
+  Enabled: false
+Lint/Debugger:
   Enabled: false
 Lint/ShadowingOuterLocalVariable:
   Enabled: false
@@ -26,6 +35,8 @@ Lint/ShadowingOuterLocalVariable:
 Metrics/AbcSize:
   Enabled: false
 Metrics/BlockLength:
+  Enabled: false
+Metrics/BlockNesting:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
@@ -54,6 +65,10 @@ Style/CharacterLiteral:
   Enabled: false
 Style/Documentation:
   Enabled: false
+Style/FormatString:
+  Enabled: false
+Style/FormatStringToken:
+  Enabled: false
 Style/GlobalVars:
   Enabled: false
 Style/Lambda:
@@ -66,13 +81,21 @@ Style/MultipleComparison:
   Enabled: false
 Style/NestedTernaryOperator:
   Enabled: false
+Style/NumberedParameters:
+  Enabled: false
+Style/NumberedParametersLimit:
+  Enabled: false
 Style/NumericPredicate:
   Enabled: false
 Style/ParallelAssignment:
   Enabled: false
 Style/PerlBackrefs:
   Enabled: false
+Style/RegexpLiteral:
+  Enabled: false
 Style/Semicolon:
+  Enabled: false
+Style/SingleLineMethods:
   Enabled: false
 Style/SpecialGlobalVars:
   Enabled: false

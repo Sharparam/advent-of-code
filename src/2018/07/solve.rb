@@ -46,7 +46,7 @@ File.read('input.txt').scan(/^Step ([A-Z]).+step ([A-Z])/) do |s|
   child.parents.add parent
 end
 
-alpha_nodes = nodes.sort_by { |(k, v)| k }.map(&:last)
+alpha_nodes = nodes.sort_by { |(k, _v)| k }.map(&:last)
 part1_nodes = []
 
 while alpha_nodes.any?
@@ -109,9 +109,7 @@ class Processor
         finish! worker.node
         worker.reset!
       end
-    end
 
-    @workers.each do |worker|
       next_node = get_next
       worker.set!(next_node, @time) if worker.done?(@time) && next_node
     end
@@ -119,7 +117,7 @@ class Processor
 
   private
 
-  def get_next
+  def get_next # rubocop:disable Naming/AccessorMethodName
     @todo.find { |n| n.parents.all? { |p| !@todo.include? p } && @workers.all? { |w| n != w.node } }
   end
 

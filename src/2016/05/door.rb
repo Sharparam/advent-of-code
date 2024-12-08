@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 require 'digest'
@@ -9,14 +8,12 @@ class Door
   end
 
   def password_simple
-    @pw_simple ||= generate_simple
+    @password_simple ||= generate_simple
   end
 
   def password_hard
-    @pw_hard ||= generate_hard
+    @password_hard ||= generate_hard
   end
-
-  private
 
   def self.valid?(str)
     str.start_with? '00000'
@@ -25,6 +22,8 @@ class Door
   def self.filled?(arr)
     (0..7).all? { |i| !arr[i].nil? }
   end
+
+  private
 
   def gen
     Digest::MD5.hexdigest "#{@id}#{@counter}"
@@ -47,53 +46,53 @@ class Door
     @counter = 0
     @hashes = []
 
-    @pw_simple = []
+    @password_simple = []
 
     8.times do
       g = next_hash
 
       @hashes << g
-      @pw_simple << g[5]
+      @password_simple << g[5]
 
-      puts "#{g}:#{@pw_simple.join}"
+      puts "#{g}:#{@password_simple.join}"
     end
 
-    @pw_simple = @pw_simple.join
+    @password_simple = @password_simple.join
   end
 
   def generate_hard
-    def to_i(char)
+    def to_i(char) # rubocop:disable Lint/NestedMethodDefinition
       Integer(char)
     rescue ArgumentError
       nil
     end
 
-    generate_simple unless @pw_simple
+    generate_simple unless @password_simple
 
-    @pw_hard = []
+    @password_hard = []
 
     # First look at the hashes we already have
     @hashes.each do |h|
       index = to_i h[5]
       next unless index && index >= 0 && index < 8
-      next if @pw_hard[index]
-      @pw_hard[index] = h[6]
-      puts "#{h}:#{@pw_hard.map { |c| c || '_' }.join}"
+      next if @password_hard[index]
+      @password_hard[index] = h[6]
+      puts "#{h}:#{@password_hard.map { |c| c || '_' }.join}"
     end
 
-    until self.class.filled? @pw_hard
+    until self.class.filled? @password_hard
       g = next_hash
 
       index = to_i g[5]
       next unless index && index >= 0 && index < 8
-      next if @pw_hard[index]
-      @pw_hard[index] = g[6]
+      next if @password_hard[index]
+      @password_hard[index] = g[6]
 
       @hashes << g
 
-      puts "#{g}:#{@pw_hard.map { |c| c || '_' }.join}"
+      puts "#{g}:#{@password_hard.map { |c| c || '_' }.join}"
     end
 
-    @pw_hard = @pw_hard.join
+    @password_hard = @password_hard.join
   end
 end

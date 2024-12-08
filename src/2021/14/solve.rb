@@ -5,7 +5,7 @@ TEMPLATE = ARGF.readline.strip
 FIRST, LAST = [TEMPLATE[0], TEMPLATE[-1]]
 PAIRS = TEMPLATE.chars.each_cons(2).tally
 ARGF.readline
-rules = Hash[ARGF.read.scan(/(..) -> (.)/).map { [_1.chars, _2] }].freeze
+_rules = Hash[ARGF.read.scan(/(..) -> (.)/).map { [_1.chars, _2] }].freeze
 
 def step(pairs)
   result = Hash.new(0)
@@ -22,13 +22,12 @@ def step(pairs)
 end
 
 def count(pairs)
-  pairs.map { |(a, b), n| [[a, n], [b, n]] }.flatten(1).reduce(Hash.new(0)) do |h, (c, n)|
+  pairs.map { |(a, b), n| [[a, n], [b, n]] }.flatten(1).each_with_object(Hash.new(0)) do |(c, n), h|
     h[c] += n
-    h
   end.tap do |h|
     h[FIRST] += 1
     h[LAST] += 1
-    h.keys.each { h[_1] /= 2 }
+    h.each_key { h[_1] /= 2 }
   end
 end
 

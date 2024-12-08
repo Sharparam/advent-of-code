@@ -1,13 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-DIRECTIONS = [:up, :right, :down, :left].freeze
+DIRECTIONS = %i[up right down left].freeze
 
 class Tile
-  attr_reader :id
-  attr_reader :grid
-  attr_reader :width
-  attr_reader :height
+  attr_reader :id, :grid, :width, :height
 
   def initialize(id, grid)
     @id = id
@@ -109,7 +106,7 @@ class Tile
   end
 
   def matches(other)
-    as = self.arrangements
+    as = arrangements
     bs = other.arrangements
     cs = as.product bs
     cs.flat_map do |a, b|
@@ -187,7 +184,7 @@ tiles = Hash[ARGF.read.split("\n\n").map do |data|
 end]
 
 match_count = Hash.new 0
-tiles.values.each do |tile|
+tiles.each_value do |tile|
   others = tiles.values - [tile]
   others.each do |other|
     match = tile.test other
@@ -265,9 +262,7 @@ while corners_found < 4
     end
     break
   end
-  unless found_next_row
-    abort "FAILED to find next row for tile #{current_tile.id}"
-  end
+  abort "FAILED to find next row for tile #{current_tile.id}" unless found_next_row
 end
 
 joined_rows = map_rows.map do |row|
@@ -282,7 +277,7 @@ MONSTER_ASCII = [
   '                  # ',
   '#    ##    ##    ###',
   ' #  #  #  #  #  #   '
-]
+].freeze
 
 MONSTER = MONSTER_ASCII.map { |l| l.chars.map { |c| c == '#' ? 1 : 0 } }
 

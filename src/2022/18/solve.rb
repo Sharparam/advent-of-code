@@ -14,7 +14,7 @@ ADJ = [
   Vector[0, -1, 0],
   Vector[0, 0, 1],
   Vector[0, 0, -1]
-]
+].freeze
 
 def adjacent(cube)
   ADJ.map { cube + _1 }
@@ -55,9 +55,7 @@ while air.any?
     end
   end
 
-  if !reached_outside
-    cubes.merge visited
-  end
+  cubes.merge visited unless reached_outside
 
   air -= visited.to_a
 end

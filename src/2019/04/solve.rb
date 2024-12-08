@@ -36,12 +36,9 @@ values.each do |value|
     previous_s = s
   end
 
-  if has_double && valid
-    valid_count += 1
-    if exacts_set.any?
-      part2_count += 1
-    end
-  end
+  next unless has_double && valid
+  valid_count += 1
+  part2_count += 1 if exacts_set.any?
 end
 
 puts "Part 1: #{valid_count}"

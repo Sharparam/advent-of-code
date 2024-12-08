@@ -37,13 +37,13 @@ end
 def step(map)
   moved = 0
   easts = map.select { _2 == '>' && wrapget(map, _1 + Vector[1, 0]) == '.' }
-  easts.each do |pos, type|
+  easts.each_key do |pos|
     map[pos] = '.'
     wrapset(map, pos + Vector[1, 0], '>')
     moved += 1
   end
   souths = map.select { _2 == 'v' && wrapget(map, _1 + Vector[0, 1]) == '.' }
-  souths.each do |pos, type|
+  souths.each_key do |pos|
     map[pos] = '.'
     wrapset(map, pos + Vector[0, 1], 'v')
     moved += 1

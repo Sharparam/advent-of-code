@@ -6,14 +6,12 @@ require 'matrix'
 class Nanobot
   include Comparable
 
-  @@id = 0
+  @@id = 0 # rubocop:disable Style/ClassVars
 
-  attr_reader :position
-
-  attr_reader :range
+  attr_reader :position, :range
 
   def initialize(x, y, z, range)
-    @id = @@id += 1
+    @id = @@id += 1 # rubocop:disable Style/ClassVars
     @position = Vector[x.to_i, y.to_i, z.to_i]
     @range = range.to_i
   end
@@ -39,9 +37,7 @@ class Nanobot
   end
 end
 
-def count_in_range(bots, position)
-
-end
+def count_in_range(bots, position); end
 
 bots = File.read('input.txt').scan(/(-?\d+).+?(-?\d+).+?(-?\d+).+?(\d+)/).map { |x, y, z, r| Nanobot.new x, y, z, r }
 

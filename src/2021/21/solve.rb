@@ -10,8 +10,8 @@ player_2_score = 0
 die = 0
 die_rolls = 0
 
-player_1 = PLAYER_1
-player_2 = PLAYER_2
+player1 = PLAYER_1
+player2 = PLAYER_2
 
 (0..).each do |n|
   die_value = die + 1
@@ -22,11 +22,11 @@ player_2 = PLAYER_2
   die = (die + 1) % 100
   die_rolls += 3
   if n.even?
-    player_1 = (player_1 + die_value) % 10
-    player_1_score += player_1 + 1
+    player1 = (player1 + die_value) % 10
+    player_1_score += player1 + 1
   else
-    player_2 = (player_2 + die_value) % 10
-    player_2_score += player_2 + 1
+    player2 = (player2 + die_value) % 10
+    player_2_score += player2 + 1
   end
   break if player_1_score >= 1000 || player_2_score >= 1000
 end
@@ -34,9 +34,9 @@ end
 puts (player_1_score > player_2_score ? player_2_score : player_1_score) * die_rolls
 
 OUTCOMES = [1, 2, 3].repeated_permutation(3).map(&:sum).tally
-CACHE = {}
+CACHE = {} # rubocop:disable Style/MutableConstant
 
-def dirac(flag = true, p1 = 0, p2 = 0, p1_score = 0, p2_score = 0)
+def dirac(flag = true, p1 = 0, p2 = 0, p1_score = 0, p2_score = 0) # rubocop:disable Style/OptionalBooleanParameter
   cache_key = [flag, p1, p2, p1_score, p2_score]
   return CACHE[cache_key] if CACHE.key? cache_key
 

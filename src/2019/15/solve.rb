@@ -22,7 +22,7 @@ def term_setpos(x, y)
 end
 
 PATH = 'input'
-DRAW = ARGV.size > 0
+DRAW = !ARGV.empty?
 
 ORIGIN = Vector[0, 0]
 
@@ -31,20 +31,20 @@ DIRECTIONS = {
   south: 2,
   west: 3,
   east: 4
-}
+}.freeze
 
 TRANSFORMS = {
   north: Vector[0, -1],
   south: Vector[0, 1],
   west: Vector[-1, 0],
   east: Vector[1, 0]
-}
+}.freeze
 
 STATUSES = {
   0 => :wall,
   1 => :empty,
   2 => :oxygen
-}
+}.freeze
 
 TILES = {
   wall: '#',
@@ -52,7 +52,7 @@ TILES = {
   empty: '.',
   droid: 'D',
   unknown: ' '
-}
+}.freeze
 
 SIMPLE_TILES = {
   origin: '██'.magenta,
@@ -64,11 +64,11 @@ SIMPLE_TILES = {
   deadpath: '██'.yellow,
   path: '██'.light_black,
   unknown: '██'
-}
+}.freeze
 
-grid = Hash.new :unknown
+# grid = Hash.new :unknown
 
-def set_status(text)
+def set_status(text) # rubocop:disable Naming/AccessorMethodName
   Curses.setpos 0, 0
   Curses.clrtoeol
   Curses.addstr text
@@ -111,9 +111,7 @@ end
 Bounds = Struct.new :top, :bottom, :left, :right, :offset
 
 class Map
-  attr_reader :oxygen_position
-  attr_reader :oxygen_distance
-  attr_reader :fill_time
+  attr_reader :oxygen_position, :oxygen_distance, :fill_time
 
   def initialize(base_cpu)
     @base_cpu = base_cpu
@@ -127,7 +125,7 @@ class Map
     new_bots = []
     deleted_bots = []
     @bots.each do |bot|
-      DIRECTIONS.keys.each do |direction|
+      DIRECTIONS.each_key do |direction|
         clone = bot.dup
         status = clone.move! direction
 
@@ -222,7 +220,7 @@ class Map
   end
 
   def done?
-    @bots.size == 0
+    @bots.empty?
   end
 
   def calc_oxygen_position
@@ -233,7 +231,7 @@ class Map
     @grid.count { |_, v| v == :path } + 1
   end
 
-  def draw_simple(only_if_debug = true)
+  def draw_simple(only_if_debug: true)
     return unless DRAW
     return if only_if_debug && !DEBUG
     term_clear
@@ -281,15 +279,13 @@ end
 base_cpu = Intcode::CPU.new.load!(PATH).print_output!(false)
 
 bots = Set.new
-cpus = Set.new
+# cpus = Set.new
 
 bots.add Bot.new base_cpu.dup
 
 map = Map.new base_cpu
 
-until map.done?
-  map.step!
-end
+map.step! until map.done?
 
 map.process!
 map.draw_simple(false)

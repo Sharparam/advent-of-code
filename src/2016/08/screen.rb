@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 class Screen
@@ -44,7 +43,7 @@ class Screen
 
   def process(instruction)
     op = OPS.find { |k, _| instruction =~ k }
-    params = op.last.call *instruction.match(op.first).to_a[1..-1]
+    params = op.last.call *instruction.match(op.first).to_a[1..]
     send(*params)
   end
 

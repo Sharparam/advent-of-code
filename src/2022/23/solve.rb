@@ -54,30 +54,27 @@ def step(grid, check_offset)
     others = around(elf)
     count = others.count { grid.include? _1 }
 
-    if count != 0
-      CHECKS.size.times do |c_n|
-        check_i = (check_offset + c_n) % CHECKS.size
-        checks = CHECKS[check_i]
-        check_pos = checks.map { elf + _1 }
-        check_count = check_pos.count { grid.include? _1 }
-        if check_count == 0
-          check_dir = CHECK_DIRS[check_i]
-          new_pos = elf + check_dir
-          targets[elf] = new_pos
-          target_counts[new_pos] += 1
-          break
-        end
-      end
+    next unless count != 0
+    CHECKS.size.times do |c_n|
+      check_i = (check_offset + c_n) % CHECKS.size
+      checks = CHECKS[check_i]
+      check_pos = checks.map { elf + _1 }
+      check_count = check_pos.count { grid.include? _1 }
+      next unless check_count == 0
+      check_dir = CHECK_DIRS[check_i]
+      new_pos = elf + check_dir
+      targets[elf] = new_pos
+      target_counts[new_pos] += 1
+      break
     end
   end
 
   moves = 0
   targets.each do |o, n|
-    if target_counts[n] == 1
-      grid.delete o
-      grid.add n
-      moves += 1 if o != n
-    end
+    next unless target_counts[n] == 1
+    grid.delete o
+    grid.add n
+    moves += 1 if o != n
   end
 
   moves
@@ -85,7 +82,7 @@ end
 
 check_offset = 0
 
-10.times do |n|
+10.times do
   step(grid, check_offset)
 
   check_offset = (check_offset + 1) % CHECKS.size

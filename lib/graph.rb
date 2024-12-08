@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Implementations from https://github.com/msayson/weighted_graph
 # Licensed under the MIT License.
 # Copyright (c) 2017 Mark Sayson
@@ -47,9 +48,7 @@ class WeightedGraph
 
   def neighbors(source)
     adjacent = []
-    if @edges.key?(source)
-      adjacent = @edges[source].map { |dst, _weight| dst }
-    end
+    adjacent = @edges[source].map { |dst, _weight| dst } if @edges.key?(source)
     Set.new(adjacent)
   end
 end

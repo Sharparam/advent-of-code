@@ -52,7 +52,7 @@ SHAPES = [
     V[0, 1], V[1, 1],
     V[0, 0], V[1, 0]
   ]
-]
+].freeze
 
 grid = (0..MAX_X).map { V[_1, 0] }.to_set
 movement_index = 0
@@ -69,8 +69,8 @@ found_cycle = false
 while i < ROUNDS
   s_i = i % SHAPES.size
   shape = SHAPES[s_i]
-  shape_height = shape.map { _1[1] }.max + 1
-  shape_width = shape.map { _1[0] }.max + 1
+  # shape_height = shape.map { _1[1] }.max + 1
+  # shape_width = shape.map { _1[0] }.max + 1
   highest_y = grid.map { _1[1] }.max # || 0
 
   shape_start = V[LEFT_START, highest_y + 4]
@@ -82,9 +82,7 @@ while i < ROUNDS
     movement = MOVEMENTS[m_i]
     movement_index += 1
     new_shape = shape.map { _1 + movement }
-    unless new_shape.any? { grid.include?(_1) || _1[0] < 0 || _1[0] > MAX_X }
-      shape = new_shape
-    end
+    shape = new_shape unless new_shape.any? { grid.include?(_1) || _1[0] < 0 || _1[0] > MAX_X }
 
     new_shape = shape.map { _1 + PUSH_DOWN }
 
@@ -113,21 +111,21 @@ while i < ROUNDS
       cycle_size = i - previous_i
       height_diff = y - previous_height
 
-      STDERR.puts '=== CYCLE DETECTED ==='
-      STDERR.puts "Current i: #{i}; Previous i: #{previous_i}; DIFF: #{cycle_size}"
-      STDERR.puts "Current y: #{y}; Previous y: #{previous_height}; DIFF: #{height_diff}"
+      warn '=== CYCLE DETECTED ==='
+      warn "Current i: #{i}; Previous i: #{previous_i}; DIFF: #{cycle_size}"
+      warn "Current y: #{y}; Previous y: #{previous_height}; DIFF: #{height_diff}"
 
       remaining_i = ROUNDS - i
       remaining_cycles = remaining_i / cycle_size
 
-      STDERR.puts "Remaining rocks: #{remaining_i}; Remaining cycles: #{remaining_cycles}"
+      warn "Remaining rocks: #{remaining_i}; Remaining cycles: #{remaining_cycles}"
 
       add_i = cycle_size * remaining_cycles
       add_height = remaining_cycles * height_diff
       i += add_i
       part2_diff = add_height
 
-      STDERR.puts "New i is #{i}"
+      warn "New i is #{i}"
     else
       checks[hash] = { height: y, i: i }
     end

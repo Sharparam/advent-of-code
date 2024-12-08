@@ -9,7 +9,7 @@ MAP = {
   '0' => 0,
   '-' => -1,
   '=' => -2
-}
+}.freeze
 
 def from_snafu(s)
   s.chars.reduce(0) { |a, c| a * 5 + MAP[c] }
@@ -20,19 +20,20 @@ def to_snafu(d)
 
   while d > 0
     rem = d % 5
-    if rem == 0
+    case rem
+    when 0
       r.unshift '0'
       d /= 5
-    elsif rem == 1
+    when 1
       r.unshift '1'
       d = (d - 1) / 5
-    elsif rem == 2
+    when 2
       r.unshift '2'
       d = (d - 2) / 5
-    elsif rem == 3
+    when 3
       r.unshift '='
       d = (d + 2) / 5
-    elsif rem == 4
+    when 4
       r.unshift '-'
       d = (d + 1) / 5
     end

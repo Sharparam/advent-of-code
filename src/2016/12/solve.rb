@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 class CPU
@@ -15,14 +14,14 @@ class CPU
     @pc = 0
   end
 
-  def self.is_number?(arg)
+  def self.number?(arg)
     arg =~ /^\d+$/
   end
 
   def step!
     return false if @pc == @instructions.size
     instruction = @instructions[@pc]
-    #puts '%2d %10s [%s]' % [@pc, instruction.join(' '), dump_regs.join(' ')]
+    # puts '%2d %10s [%s]' % [@pc, instruction.join(' '), dump_regs.join(' ')]
     send(*instruction)
     @pc += 1
     true
@@ -37,7 +36,7 @@ class CPU
   end
 
   def cpy(source, destination)
-    if self.class.is_number? source
+    if self.class.number? source # rubocop:disable Style/ConditionalAssignment
       self[destination.to_sym] = source
     else
       self[destination.to_sym] = self[source.to_sym]
@@ -53,7 +52,7 @@ class CPU
   end
 
   def jnz(register, target)
-    value = self.class.is_number?(register) ? register : self[register.to_sym]
+    value = self.class.number?(register) ? register : self[register.to_sym]
     return if value == 0
     @pc += target.to_i - 1
   end
@@ -61,11 +60,11 @@ class CPU
   private
 
   def dump_regs
-    @regs.map { |r, v| '%3d' % [v] }
+    @regs.map { |_r, v| '%3d' % [v] }
   end
 end
 
-instructions = STDIN.readlines.map { |line| line.strip.split }
+instructions = $stdin.readlines.map { |line| line.strip.split }
 
 cpu = CPU.new instructions
 
@@ -73,7 +72,7 @@ while cpu.step!; end
 
 puts "(1): #{cpu[:a]}"
 
-cpu = CPU.new instructions.unshift ['cpy', '1', 'c']
+cpu = CPU.new instructions.unshift %w[cpy 1 c]
 
 while cpu.step!; end
 

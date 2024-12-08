@@ -9,7 +9,7 @@ TILES = {
   ' ' => nil,
   '.' => :open,
   '#' => :wall
-}
+}.freeze
 
 GRID = MAP.lines.map(&:chomp).flat_map.with_index do |line, y|
   line.chars.map.with_index { |c, x| [Vector[x, y], TILES[c]] }
@@ -35,11 +35,11 @@ class Vector
   end
 
   def r
-    Vector[-self.y, self.x]
+    Vector[-y, x]
   end
 
   def l
-    Vector[self.y, -self.x]
+    Vector[y, -x]
   end
 
   def to_s
@@ -74,16 +74,16 @@ MOVES.each do |move|
 
       if GRID[next_pos].nil?
         if direction.x > 0 # moving right
-          next_x = GRID.keys.select { _1.y == pos.y }.map { _1.x }.min
+          next_x = GRID.keys.select { _1.y == pos.y }.map(&:x).min
           next_pos.x = next_x
         elsif direction.x < 0 # moving left
-          next_x = GRID.keys.select { _1.y == pos.y }.map { _1.x }.max
+          next_x = GRID.keys.select { _1.y == pos.y }.map(&:x).max
           next_pos.x = next_x
         elsif direction.y > 0 # moving down
-          next_y = GRID.keys.select { _1.x == pos.x }.map { _1.y }.min
+          next_y = GRID.keys.select { _1.x == pos.x }.map(&:y).min
           next_pos.y = next_y
         elsif direction.y < 0 # moving up
-          next_y = GRID.keys.select { _1.x == pos.x }.map { _1.y }.max
+          next_y = GRID.keys.select { _1.x == pos.x }.map(&:y).max
           next_pos.y = next_y
         end
       end

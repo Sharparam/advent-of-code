@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
-LENGTH = (ARGV.size > 0 && ARGV.first[0] == 't') ? 35_651_584 : 272
+LENGTH = !ARGV.empty? && ARGV.first[0] == 't' ? 35_651_584 : 272
 
-input = STDIN.readline.strip.split('').map(&:to_i)
+input = $stdin.readline.strip.split('').map(&:to_i)
 
 def dragon_curve(data)
   len = data.size
@@ -21,6 +20,6 @@ input = input.first(LENGTH)
 
 check = checksum input
 
-check = checksum check while check.size % 2 == 0
+check = checksum check while check.size.even?
 
 puts check.join

@@ -3,7 +3,7 @@
 
 map = Hash.new(10)
 ARGF.readlines.each_with_index do |l, r|
-  l.strip().split('').map(&:to_i).each_with_index { map[[_2, r]] = _1 }
+  l.strip.split('').map(&:to_i).each_with_index { map[[_2, r]] = _1 }
 end
 
 def around(pos)

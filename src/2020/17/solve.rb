@@ -28,8 +28,8 @@ def step(grid)
   counts.each do |pos, active, count|
     if active
       grid.delete pos unless count == 2 || count == 3
-    else
-      grid.add pos if count == 3
+    elsif count == 3
+      grid.add pos
     end
   end
 end

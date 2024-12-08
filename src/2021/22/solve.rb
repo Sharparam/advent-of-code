@@ -10,7 +10,7 @@ ARGF.each_line do |line|
   op, ranges = line.split
   next if ranges.nil? || ranges == ''
   op = op == 'on'
-  xrange, yrange, zrange = ranges.scan(/\-?\d+\.\.\-?\d+/).map { eval(_1) }
+  xrange, yrange, zrange = ranges.scan(/-?\d+\.\.-?\d+/).map { eval(_1) }
   xrange.each do |x|
     next if x < -50 || x > 50
     yrange.each do |y|

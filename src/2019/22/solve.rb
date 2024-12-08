@@ -13,7 +13,7 @@ File.readlines(PATH).each do |instruction|
     deck.reverse!
   when /cut (-?\d+)/
     n = $1.to_i
-    deck = deck[n..-1] + deck[0..n - 1]
+    deck = deck[n..] + deck[0..n - 1]
   when /deal with increment (\d+)/
     inc = $1.to_i
     t = []

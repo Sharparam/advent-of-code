@@ -1,14 +1,13 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 require_relative 'room'
 
-rooms = STDIN.readlines.map do |line|
+rooms = $stdin.readlines.map do |line|
   Room.new line
 end
 
-rooms = rooms.select { |r| r.real? }
+rooms = rooms.select(&:real?)
 
 puts "(1) #{rooms.reduce(0) { |a, e| a + e.id }}"
 

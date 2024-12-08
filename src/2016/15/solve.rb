@@ -1,10 +1,9 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 require 'ostruct'
 
-discs = STDIN.readlines.map do |line|
+discs = $stdin.readlines.map do |line|
   size, start = line.strip.match(/(\d+) positions.+?position (\d+)/).to_a[1..2].map(&:to_i)
   OpenStruct.new size: size, position: start
 end

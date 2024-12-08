@@ -13,28 +13,28 @@ INPUT_MAP = {
   '#' => :wall,
   '.' => :open,
   '@' => :current
-}
+}.freeze
 
 OUTPUT_MAP = {
-  :wall => '██',
-  :open => '  ',
-  :current => '██'.green,
-  :dead => '██'.red
-}
+  wall: '██',
+  open: '  ',
+  current: '██'.green,
+  dead: '██'.red
+}.freeze
 
 TRANSFORMS = {
   north: Vector[0, -1],
   south: Vector[0, 1],
   west: Vector[-1, 0],
   east: Vector[1, 0]
-}
+}.freeze
 
 TRANSFORM_MAP = {
   'd' => :east,
   'a' => :west,
   'w' => :north,
   's' => :south
-}
+}.freeze
 
 def term_clear; print "\e[H"; end
 
@@ -45,19 +45,19 @@ end
 
 class String
   def lower?
-    return false if self.size != 1
+    return false if size != 1
     self =~ /[[:lower:]]/
   end
 
   def upper?
-    return false if self.size != 1
+    return false if size != 1
     self =~ /[[:upper:]]/
   end
 end
 
 module Enumerable
   def tally
-    Hash.new(0).tap { |h| self.each { |v| h[v] += 1 } }
+    Hash.new(0).tap { |h| each { |v| h[v] += 1 } }
   end
 end
 
@@ -105,7 +105,7 @@ class Map
       end
     end
 
-    @grid.keys.each do |pos|
+    @grid.each_key do |pos|
       @grid[pos] = :wall if @grid[pos] == :dead
     end
   end
@@ -123,21 +123,19 @@ class Map
     return if new_tile.is_a?(String) && new_tile.upper?
     @current_pos = new_pos
 
-    if new_tile.is_a?(String) && new_tile.lower?
-      collect_key! new_tile
-    end
+    collect_key! new_tile if new_tile.is_a?(String) && new_tile.lower?
 
     process!
   end
 
   def draw
-    #term_clear unless DEBUG
+    # term_clear unless DEBUG
     buffer = ''
     (0..@bottom).each do |y|
       (0..@right).each do |x|
         tile = @grid[Vector[x, y]]
         pos = Vector[x, y]
-        if @current_pos == pos
+        if @current_pos == pos # rubocop:disable Style/ConditionalAssignment
           buffer += OUTPUT_MAP[:current]
         elsif OUTPUT_MAP[tile]
           buffer += OUTPUT_MAP[tile]
@@ -159,7 +157,7 @@ class Map
     @grid[pos] = :dead
     others = surroundings pos
 
-    others.keys.each do |other_pos|
+    others.each_key do |other_pos|
       fill_deadends! other_pos if deadend?(other_pos) && @grid[other_pos] != :dead
     end
   end
@@ -183,7 +181,7 @@ class Map
       pos + TRANSFORMS[:east]
     ]
 
-    Hash[ other_pos.map { |p| [p, @grid[p]] } ]
+    Hash[other_pos.map { |p| [p, @grid[p]] }]
   end
 end
 
@@ -191,12 +189,12 @@ map = Map.from_file PATH
 
 map.draw
 
-#while (input = STDIN.getch) != 'q'
-#  char = input[0].downcase
-#  direction = TRANSFORM_MAP[char]
-#  map.move! direction
-#  map.draw
-#end
+# while (input = STDIN.getch) != 'q'
+#   char = input[0].downcase
+#   direction = TRANSFORM_MAP[char]
+#   map.move! direction
+#   map.draw
+# end
 
 if DEBUG
   require 'pry'

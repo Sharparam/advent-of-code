@@ -17,11 +17,10 @@ File.readlines('input.txt').map do |l|
   end
 end
 
-puts "Part 1: #{coords.count { |k, v| v.size > 1 }}"
+puts "Part 1: #{coords.count { |_k, v| v.size > 1 }}"
 
-counts = coords.values.reduce(Hash.new(0)) do |h, e|
-  e.each { |i| h[i] = e.size unless h[i] > e.size };
-  h
+counts = coords.values.each_with_object(Hash.new(0)) do |e, h|
+  e.each { |i| h[i] = e.size unless h[i] > e.size }
 end
 
-puts "Part 2: #{counts.find { |k, v| v == 1 }.first}"
+puts "Part 2: #{counts.find { |_k, v| v == 1 }.first}"

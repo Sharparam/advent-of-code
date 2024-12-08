@@ -7,9 +7,7 @@ FUEL = ARGV[1]&.to_i || 1
 Recipe = Struct.new :requires, :produces
 
 class Node
-  attr_reader :label
-  attr_reader :parents
-  attr_reader :children
+  attr_reader :label, :parents, :children
 
   def initialize(label)
     @label = label
@@ -46,7 +44,7 @@ class Node
     @children.each do |child|
       required = child.required
       recipe = @recipes[child.label]
-      batches = (required.to_f / recipe.produces.to_f).ceil
+      batches = (required.to_f / recipe.produces).ceil
       @required += batches * recipe.requires
     end
 
@@ -70,7 +68,7 @@ lines.each do |line|
   parsed = line.scan(/(\d+)\s+(\w+)/).map do |(a, b)|
     label = b.to_sym
     node = nodes[label] ||= Node.new label
-    [ a.to_i, node ]
+    [a.to_i, node]
   end
 
   current = parsed.pop

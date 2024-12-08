@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
-input = STDIN.readline
+input = $stdin.readline
 
 moves = input.scan(/([RL])(\d+)/).map { |d, a| [d.downcase.to_sym, a.to_i] }
 
@@ -14,9 +13,7 @@ class Point
     west: ->(steps) { [-1 * steps, 0] }
   }.freeze
 
-  attr_reader :x, :y
-
-  attr_reader :twice
+  attr_reader :x, :y, :twice
 
   def initialize
     @x = 0
@@ -36,7 +33,7 @@ class Point
 
   def move(steps)
     dx, dy = MOVEMENT[orientation].call(steps)
-    #puts "#{dx}, #{dy}"
+    # puts "#{dx}, #{dy}"
     current = [@x, @y]
     target = [@x + dx, @y + dy]
 
@@ -48,12 +45,12 @@ class Point
 
   def iterate_horizontal(current, target)
     # Exclude our current position from checks
-    current = current + (current < target ? 1 : -1)
+    current += (current < target ? 1 : -1)
     # Swap values to make range work if we're walking to the left
     current, target = target, current if current > target
     (current..target).each do |x|
       if @visited.include? [x, @y]
-        @twice = [x, @y] unless @twice
+        @twice ||= [x, @y]
       else
         @visited << [x, @y]
       end
@@ -62,12 +59,12 @@ class Point
 
   def iterate_vertical(current, target)
     # Exclude our current position from checks
-    current = current + (current < target ? 1 : -1)
+    current += (current < target ? 1 : -1)
     # Swap values to make range work if we're walking down
     current, target = target, current if current > target
     (current..target).each do |y|
       if @visited.include? [@x, y]
-        @twice = [@x, y] unless @twice
+        @twice ||= [@x, y]
       else
         @visited << [@x, y]
       end
@@ -86,7 +83,7 @@ end
 destination = Point.new
 
 moves.each do |move|
-  #puts "Move: #{move[0]} then #{move[1]} steps"
+  # puts "Move: #{move[0]} then #{move[1]} steps"
   destination.turn move[0]
   destination.move move[1]
 end

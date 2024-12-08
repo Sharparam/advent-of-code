@@ -10,17 +10,15 @@ lastminute = 0
 
 entries = File.readlines('input.txt').map do |line|
   time, data = line.split '] '
-  [DateTime.parse(time[1..-1]), data]
-end.sort_by { |e| e.first }
+  [DateTime.parse(time[1..]), data]
+end.sort_by(&:first)
 
 entries.each do |array|
   minute = array.first.minute
 
   case array.last
   when /^Guard \#(\d+) begins shift$/
-    if id != 0 && !awake && lastminute < 60
-      (lastminute...60).each { |m| guards[id][m] += 1 }
-    end
+    (lastminute...60).each { |m| guards[id][m] += 1 } if id != 0 && !awake && lastminute < 60
 
     id = $1.to_i
     lastminute = 0
@@ -37,11 +35,11 @@ entries.each do |array|
 end
 
 result_id = 0
-result_minute = guards.sort { |a, b| b.last.values.sum <=> a.last.values.sum }.first.tap { |a|
+result_minute = guards.min { |a, b| b.last.values.sum <=> a.last.values.sum }.tap { |a|
   result_id = a.first
-}.last.sort { |a, b| b.last <=> a.last }.first.first
+}.last.min { |a, b| b.last <=> a.last }.first
 
 puts "Part 1: #{result_id * result_minute}"
 
-p2_guard = guards.sort { |a, b| b.last.values.max <=> a.last.values.max }.first
-puts "Part 2: #{p2_guard.first * p2_guard.last.sort { |a, b| b.last <=> a.last }.first.first}"
+p2_guard = guards.min { |a, b| b.last.values.max <=> a.last.values.max }
+puts "Part 2: #{p2_guard.first * p2_guard.last.min { |a, b| b.last <=> a.last }.first}"

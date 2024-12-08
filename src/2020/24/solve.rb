@@ -4,13 +4,13 @@
 require 'matrix'
 
 DELTAS = {
-  nw: ->c { c[1].even? ? Vector[-1, -1] : Vector[0, -1] },
-  ne: ->c { c[1].even? ? Vector[0, -1] : Vector[1, -1] },
-  se: ->c { c[1].even? ? Vector[0, 1] : Vector[1, 1] },
-  sw: ->c { c[1].even? ? Vector[-1, 1] : Vector[0, 1] },
-  e: ->_ { Vector[1, 0] },
-  w: ->_ { Vector[-1, 0] }
-}
+  nw: ->(c) { c[1].even? ? Vector[-1, -1] : Vector[0, -1] },
+  ne: ->(c) { c[1].even? ? Vector[0, -1] : Vector[1, -1] },
+  se: ->(c) { c[1].even? ? Vector[0, 1] : Vector[1, 1] },
+  sw: ->(c) { c[1].even? ? Vector[-1, 1] : Vector[0, 1] },
+  e: ->(_) { Vector[1, 0] },
+  w: ->(_) { Vector[-1, 0] }
+}.freeze
 
 def adjacent(pos)
   DELTAS.map { pos + _2[pos] }
@@ -48,9 +48,7 @@ def step(grid)
       pos = Vector[x, y]
       current = grid[pos]
       black = adjacent(pos).count { grid[_1] == :black }
-      if (current == :black && (black == 0 || black > 2)) || (current == :white && black == 2)
-        toflip << pos
-      end
+      toflip << pos if (current == :black && (black == 0 || black > 2)) || (current == :white && black == 2)
     end
   end
   toflip.each { grid[_1] = grid[_1] == :white ? :black : :white }

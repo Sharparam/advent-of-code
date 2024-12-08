@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-components = ARGF.readlines(chomp: true).map do |line|
+components = ARGF.readlines(chomp: true).to_h do |line|
   left, right = line.split ':'
   rights = right.split
   [left, rights]
-end.to_h
+end
 
 lines = [
   'digraph {'

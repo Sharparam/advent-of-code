@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 module Utils
   class << self
     def crt(mods, remainders)
-      max = mods.inject( :* )  # product of all moduli
-      series = remainders.zip(mods).map{ |r,m| (r * max * invmod(max / m, m) / m) }
-      series.inject( :+ ) % max
+      max = mods.inject(:*) # product of all moduli
+      series = remainders.zip(mods).map { |r, m| (r * max * invmod(max / m, m) / m) }
+      series.inject(:+) % max
     end
 
     private
@@ -22,9 +23,7 @@ module Utils
 
     def invmod(e, et)
       g, x = extended_gcd(e, et)
-      if g != 1
-        raise 'Multiplicative inverse modulo does not exist!'
-      end
+      raise 'Multiplicative inverse modulo does not exist!' if g != 1
       x % et
     end
   end
@@ -36,7 +35,7 @@ module Enumerable
   end
 
   def median
-    return self[size / 2] if size % 2 != 0
+    return self[size / 2] if size.odd?
     (self[size / 2 - 1] + self[size / 2]) / 2.0
   end
 end

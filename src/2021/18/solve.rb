@@ -15,22 +15,21 @@ class Pair
       @left.parent = self
       @left.side = :left
     end
-    if @right.is_a?(Pair)
-      @right.parent = self
-      @right.side = :right
-    end
+    return unless @right.is_a?(Pair)
+    @right.parent = self
+    @right.side = :right
   end
 
   def self.from_array(array, parent = nil, side = :root)
     pair = Pair.new(parent, nil, nil, side)
 
-    if array[0].is_a? Numeric
+    if array[0].is_a? Numeric # rubocop:disable Style/ConditionalAssignment
       pair.left = array[0]
     else
       pair.left = from_array(array[0], pair, :left)
     end
 
-    if array[1].is_a? Numeric
+    if array[1].is_a? Numeric # rubocop:disable Style/ConditionalAssignment
       pair.right = array[1]
     else
       pair.right = from_array(array[1], pair, :right)
@@ -83,12 +82,10 @@ class Pair
       else
         @left.add_ancestor_left(value, self, :right)
       end
+    elsif @right.is_a?(Numeric)
+      @right += value
     else
-      if @right.is_a?(Numeric)
-        @right += value
-      else
-        @right.add_ancestor_left(value, self, :right)
-      end
+      @right.add_ancestor_left(value, self, :right)
     end
   end
 
@@ -105,12 +102,10 @@ class Pair
       else
         @right.add_ancestor_right(value, self, :left)
       end
+    elsif @left.is_a?(Numeric)
+      @left += value
     else
-      if @left.is_a?(Numeric)
-        @left += value
-      else
-        @left.add_ancestor_right(value, self, :left)
-      end
+      @left.add_ancestor_right(value, self, :left)
     end
   end
 
@@ -122,7 +117,7 @@ class Pair
   end
 
   def to_s
-    "[#{left.to_s}, #{right.to_s}]"
+    "[#{left}, #{right}]"
   end
 
   def inspect

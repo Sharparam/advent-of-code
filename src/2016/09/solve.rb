@@ -1,24 +1,21 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
-input = STDIN.readline.strip
+input = $stdin.readline.strip
 
 def solve(input)
   i_size = input.size
 
-  if !input.include? '('
-    return [i_size, i_size]
-  end
+  return [i_size, i_size] unless input.include? '('
 
-  part_1 = 0
-  part_2 = 0
+  part1 = 0
+  part2 = 0
   index = 0
 
   while index < i_size
     if input[index] != '('
-      part_1 += 1
-      part_2 += 1
+      part1 += 1
+      part2 += 1
       index += 1
       next
     end
@@ -33,12 +30,12 @@ def solve(input)
 
     _, d_length = solve(input[m_end + 1..data_end])
 
-    part_1 += count * repeat
-    part_2 += d_length * repeat
+    part1 += count * repeat
+    part2 += d_length * repeat
     index = data_end
   end
 
-  [part_1, part_2]
+  [part1, part2]
 end
 
-solve(input).each.with_index { |r, i| puts "(#{i + 1}) #{r}" }
+solve(input).each_with_index { |r, i| puts "(#{i + 1}) #{r}" }

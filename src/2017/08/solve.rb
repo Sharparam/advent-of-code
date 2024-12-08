@@ -7,6 +7,7 @@ class CPU
   def dec(v) -v end
   def run(text) eval text end
   def method_missing(s, *a) (@r[s] += a[0].to_i).tap { |v| @h = v if @h.nil? || @h < v } end
+  def respond_to_missing?(s, *) s =~ /^[a-z]$/ end
 end
 
 cpu = CPU.new

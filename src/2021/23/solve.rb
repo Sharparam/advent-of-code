@@ -32,8 +32,7 @@ ROOM_HALLWAY_INDEX = {
 }.freeze
 
 class Room
-  attr_reader :full_size
-  attr_reader :room_index
+  attr_reader :full_size, :room_index
 
   def initialize(full_size, room_index, amphipods = nil)
     @full_size = full_size
@@ -163,7 +162,7 @@ class State
       next unless can_amphipod_reach_room? amphipod, hallway_index
       next unless target_room.can_enter? amphipod
       cost = target_room.enter_cost amphipod, hallway_index
-      new_state = self.dup
+      new_state = dup
       new_state.cost += cost
       new_state.hallway.delete hallway_index
       new_state.rooms[target_room_index].unshift! amphipod
@@ -181,7 +180,7 @@ class State
       next if target_hallway_indices.empty?
       target_hallway_indices.each do |target_hallway_index|
         cost = room.exit_cost target_hallway_index
-        new_state = self.dup
+        new_state = dup
         new_state.cost += cost
         new_state.hallway[target_hallway_index] = amphipod
         new_state.rooms[room_index].shift!

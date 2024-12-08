@@ -6,8 +6,7 @@ require 'pry'
 RE = /^  [^\d]+([^\n]+).+?: ([^\n]+).+?(\d+).+?(\d+).+?(\d+)/im
 
 class Monkey
-  attr_reader :true_target, :false_target, :inspect_count
-  attr_reader :divisor
+  attr_reader :true_target, :false_target, :inspect_count, :divisor
 
   def initialize(items, op, divisor, true_target, false_target)
     @items = items
@@ -16,7 +15,7 @@ class Monkey
     @false_target = false_target
     @inspect_count = 0
 
-    instance_eval <<~OP
+    instance_eval <<~OP # rubocop:disable Style/EvalWithLocation
       def op(old)
         #{op.sub('new = ', '')}
       end
@@ -32,7 +31,7 @@ class Monkey
   end
 
   def self.from_strings(strs)
-    strs.split("\n\n").map { self.from_string _1 }
+    strs.split("\n\n").map { from_string _1 }
   end
 
   def test(worry)

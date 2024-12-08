@@ -41,7 +41,7 @@ first.each do |op|
 
   vel = make_vel dir
 
-  steps.times do |n|
+  steps.times do |_n|
     pos += vel
     visited.first.add pos
   end
@@ -56,13 +56,11 @@ second.each do |op|
 
   vel = make_vel dir
 
-  steps.times do |n|
+  steps.times do |_n|
     second_steps += 1
     pos += vel
     visited.last.add pos
-    if visited.first.include?(pos) && !intersections.key?(pos)
-      intersections[pos] = { second_steps: second_steps }
-    end
+    intersections[pos] = { second_steps: second_steps } if visited.first.include?(pos) && !intersections.key?(pos)
   end
 end
 
@@ -75,7 +73,7 @@ first.each do |op|
 
   vel = make_vel dir
 
-  steps.times do |n|
+  steps.times do |_n|
     first_steps += 1
     pos += vel
     if visited.last.include? pos

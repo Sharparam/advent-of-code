@@ -40,13 +40,12 @@ until part2
     computer.output.each_slice(3) do |(target, x, y)|
       (queues[target] ||= Queue.new).enq [x, y]
       any_sent = true
-      if target == 255
-        unless part1
-          puts "Part 1: #{y}"
-          part1 = true
-        end
-        current_nat = [x, y]
+      next unless target == 255
+      unless part1
+        puts "Part 1: #{y}"
+        part1 = true
       end
+      current_nat = [x, y]
     end
     computer.clear_output!
   end

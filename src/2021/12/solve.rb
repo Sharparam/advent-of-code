@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-MAZE = {}
+MAZE = {} # rubocop:disable Style/MutableConstant
 ARGF.readlines.map { _1.strip.split('-') }.each do |a, b|
   MAZE[a] ||= []
   MAZE[a] << b

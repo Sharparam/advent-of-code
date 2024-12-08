@@ -11,7 +11,7 @@ FANCIES = {
   '7': '┐',
   F: '┌',
   '.': '·'
-}
+}.freeze
 
 def display(grid)
   height = grid.keys.map { _1[1] }.max + 1

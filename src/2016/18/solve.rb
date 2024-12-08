@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
-HEIGHT = (ARGV.first == 't') ? 400_000 : 40
+HEIGHT = ARGV.first == 't' ? 400_000 : 40
 
 class Row
   def initialize(tiles)
@@ -31,7 +30,7 @@ class Row
   end
 
   def count_safe
-    @tiles.reduce(0) { |a, e| a += (e ? 0 : 1) }
+    @tiles.reduce(0) { |a, e| a + (e ? 0 : 1) }
   end
 
   def to_s
@@ -52,15 +51,15 @@ class Room
     previous = @rows.last
     data = previous.width.times.map do |index|
       (previous.left?(index) && previous.center?(index) && !previous.right?(index)) ||
-      (!previous.left?(index) && previous.center?(index) && previous.right?(index)) ||
-      (previous.left?(index) && !previous.center?(index) && !previous.right?(index)) ||
-      (!previous.left?(index) && !previous.center?(index) && previous.right?(index))
+        (!previous.left?(index) && previous.center?(index) && previous.right?(index)) ||
+        (previous.left?(index) && !previous.center?(index) && !previous.right?(index)) ||
+        (!previous.left?(index) && !previous.center?(index) && previous.right?(index))
     end
     @rows << Row.new(data)
   end
 
   def count_safe
-    @rows.reduce(0) { |a, e| a += e.count_safe }
+    @rows.reduce(0) { |a, e| a + e.count_safe }
   end
 
   def to_s
@@ -68,7 +67,7 @@ class Room
   end
 end
 
-input = STDIN.readline.strip.split('')
+input = $stdin.readline.strip.split('')
 
 room = Room.new input
 

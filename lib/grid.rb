@@ -1,9 +1,9 @@
 # frozen_string_literal: true
+
 require 'matrix'
 
 class Grid
-  attr_reader :width
-  attr_reader :height
+  attr_reader :width, :height
 
   def initialize(width, height, walls = nil)
     @width = width
@@ -32,7 +32,7 @@ class Grid
   def neighbors(pos)
     x, y = pos.to_a
     adjacent = [[x + 1, y], [x - 1, y], [x, y - 1], [x, y + 1]].map { Vector[*_1] }
-    adjacent.reverse! if (x + y) % 2 == 0
+    adjacent.reverse! if (x + y).even?
     adjacent.select { in_bounds?(_1) && passable?(_1) }
   end
 
@@ -77,7 +77,7 @@ class GridWithWeights < Grid
     @weights[pos] = weight
   end
 
-  def cost(source, destination)
+  def cost(_source, destination)
     @weights[destination]
   end
 

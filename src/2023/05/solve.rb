@@ -60,9 +60,9 @@ ARGF.read.lines(chomp: true).each do |line|
   end
 end
 
-maps.each { _1.sort! }
+maps.each(&:sort!)
 
 puts seeds.map { |s| maps.reduce(s) { _2.map _1 } }.min
 
 ranges = seeds.each_slice(2).map { (_1...(_1 + _2)) }
-puts maps.reduce(ranges) { |a, e| a.flat_map { e.map_range _1 } }.sort_by(&:min)[0].min
+puts maps.reduce(ranges) { |a, e| a.flat_map { e.map_range _1 } }.min_by(&:min).min

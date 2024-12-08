@@ -26,9 +26,8 @@ input_part1, input_part2 = File.read('input.txt').split("\n\n\n").map(&:strip)
 
 part2 = []
 
-part1 = input_part1
-.split("\n\n")
-.map { |b| b.lines.map { |l| l.scan(/\d+/).map(&:to_i) } }.count do |(regs, code, regs_after)|
+part1 = input_part1.split("\n\n")
+  .map { |b| b.lines.map { |l| l.scan(/\d+/).map(&:to_i) } }.count do |(regs, code, regs_after)|
   op, a, b, c = code
   matching_ops = OPCODES.keys.select do |key|
     r = regs.dup

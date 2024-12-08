@@ -8,7 +8,7 @@ def md(a, b)
 end
 
 def wmd(a, b)
-  ax, ay = a[0], a[1]
+  ax, _ay = a[0], a[1]
   d = md(a, b)
   x_min, x_max, y_min, y_max = a[0] - d, a[0] + d, a[1] - d, a[1] + d
 
@@ -29,9 +29,7 @@ Y = 2_000_000
 pairs.each do |s, b|
   cols = wmd(s, b).to_a
   cols.each do |c|
-    if (c[0][1]..c[1][1]).include?(Y)
-      invalid.add(c[0][0]) unless beacons.include?(Vector[c[0][0], Y])
-    end
+    invalid.add(c[0][0]) if (c[0][1]..c[1][1]).include?(Y) && !beacons.include?(Vector[c[0][0], Y])
   end
 end
 
@@ -48,7 +46,7 @@ def perimiter(s, b)
 
   ((s[0] - d)..(s[0] + d)).each do |x|
     y_step = steps[x - left]
-    if !y_step.nil?
+    unless y_step.nil?
       result.push Vector[x, s[1] + y_step]
       result.push Vector[x, s[1] - y_step]
     end

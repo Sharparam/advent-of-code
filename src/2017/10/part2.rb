@@ -19,7 +19,7 @@ def knot_hash(str)
         stop %= list.size
         reversed = list.slice!(index, length).push(*list.slice!(0..stop)).reverse
         list.push(*reversed[0..end_index - index])
-        list.unshift(*reversed[end_index - index + 1..-1])
+        list.unshift(*reversed[end_index - index + 1..])
       end
 
       index = (index + length + skip) % list.size

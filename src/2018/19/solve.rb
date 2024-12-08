@@ -43,7 +43,7 @@ puts "Part 1: #{run([0] * 6)[0]}"
 
 # Part 2 cannot be solved like this, takes too long to run
 exit
-puts "Part 2: #{run(([0] * 6).tap { |r| r[0] = 1 })[0]}"
+puts "Part 2: #{run(([0] * 6).tap { |r| r[0] = 1 })[0]}" # rubocop:disable Lint/UnreachableCode
 
 require 'pry'
 binding.pry

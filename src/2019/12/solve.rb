@@ -16,8 +16,7 @@ class Vector
 end
 
 class Moon
-  attr_reader :position
-  attr_reader :velocity
+  attr_reader :position, :velocity
 
   def initialize(position)
     @position = position
@@ -25,7 +24,7 @@ class Moon
   end
 
   def self.parse(line)
-    Moon.new Vector[*line.scan(/\-?\d+/).map(&:to_i)]
+    Moon.new Vector[*line.scan(/-?\d+/).map(&:to_i)]
   end
 
   def potential_energy
@@ -84,10 +83,9 @@ class Moon
 end
 
 class Simulation
-  attr_reader :step
-  attr_reader :moons
+  attr_reader :step, :moons
 
-  def initialize(moons, debug = false)
+  def initialize(moons, debug: false)
     @step = 0
     @moons = moons
     @debug = debug
@@ -158,11 +156,10 @@ class Simulation
       puts "Dupe in Y found after #{@step} steps"
     end
 
-    if z_exists && !@duped_z
-      @duped_z = true
-      @z_dupe_step = @step
-      puts "Dupe in Z found after #{@step} steps"
-    end
+    return unless z_exists && !@duped_z
+    @duped_z = true
+    @z_dupe_step = @step
+    puts "Dupe in Z found after #{@step} steps"
   end
 end
 
@@ -178,13 +175,8 @@ loop do
   puts "\nAfter #{step} steps" if DEBUG
   simulation.display if DEBUG
 
-  if simulation.step == STEPS
-    puts "Part 1: #{simulation.total_energy}"
-  end
-
-  if simulation.dupe_found?
-    puts "Part 2: #{simulation.dupe_at}"
-  end
+  puts "Part 1: #{simulation.total_energy}" if simulation.step == STEPS
+  puts "Part 2: #{simulation.dupe_at}" if simulation.dupe_found?
 
   break if simulation.step >= STEPS && simulation.dupe_found?
 end

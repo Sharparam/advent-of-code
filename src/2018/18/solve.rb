@@ -50,7 +50,7 @@ end
 
 def transform(grid)
   grid.map.with_index do |line, y|
-    line.map.with_index { |cell, x| new_type grid, x, y }
+    line.map.with_index { |_cell, x| new_type grid, x, y }
   end
 end
 
@@ -62,7 +62,7 @@ end
 
 count = ARGV.first&.to_i || 10
 
-count.times do |m|
+count.times do |_m|
   grid = transform grid
   puts resource_value grid
 end

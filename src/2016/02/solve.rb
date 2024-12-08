@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 class Keypad
   MOVEMENT = {
-    u: -> () { [ 0, -1] },
-    d: -> () { [ 0,  1] },
-    l: -> () { [-1,  0] },
-    r: -> () { [ 1,  0] }
+    u: -> { [0, -1] },
+    d: -> { [0,  1] },
+    l: -> { [-1, 0] },
+    r: -> { [1, 0] }
   }.freeze
 
   attr_reader :x, :y
@@ -51,13 +50,13 @@ class Keypad
   end
 end
 
-input = STDIN.readlines.map { |l| l.strip.split('').map { |d| d.downcase.to_sym } }
+input = $stdin.readlines.map { |l| l.strip.split('').map { |d| d.downcase.to_sym } }
 
 pad = Keypad.new [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-  ]
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]
 
 code = []
 
@@ -68,6 +67,7 @@ end
 
 puts "(1) #{code.map { |d| d.to_s(16) }.join}"
 
+# rubocop:disable Layout/FirstArrayElementIndentation, Layout/ArrayAlignment
 pad = Keypad.new [
             [0x1],
        [0x2, 0x3, 0x4],
@@ -75,6 +75,7 @@ pad = Keypad.new [
        [0xA, 0xB, 0xC],
             [0xD]
 ]
+# rubocop:enable Layout/FirstArrayElementIndentation, Layout/ArrayAlignment
 
 code = []
 

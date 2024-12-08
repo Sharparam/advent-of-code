@@ -29,8 +29,8 @@ def check(a, b)
   a.size <=> b.size
 end
 
-puts pairs.map.with_index.select { |p, i| check(p[0], p[1]) == -1 }.map { _2 + 1 }.sum
+puts pairs.map.with_index.select { |p, _i| check(p[0], p[1]) == -1 }.map { _2 + 1 }.sum
 
-packets = (pairs.flatten(1) + [ [[2]], [[6]] ]).sort { check _1, _2 }
+packets = (pairs.flatten(1) + [[[2]], [[6]]]).sort { check _1, _2 }
 
 puts (packets.find_index([[2]]) + 1) * (packets.find_index([[6]]) + 1)

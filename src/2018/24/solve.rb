@@ -3,7 +3,7 @@
 
 require 'pry'
 
-TEAMS = [ :immune_system, :infection ].freeze
+TEAMS = %i[immune_system infection].freeze
 
 def enemy_of(item)
   return enemy_of item.team if item.respond_to? :team
@@ -16,7 +16,7 @@ class Group
   LINE_REGEX = %r{^
     (?<units>\d+).+?(?<hitpoints>\d+).+?
     (?:\((?<modifications>(?:
-      (weak|immune)\s+to\s+(?:\w+,\s*)*\w+
+      (?:weak|immune)\s+to\s+(?:\w+,\s*)*\w+
       (?:;\s*)?
     )+)\))?
     \s*with.+?
@@ -26,15 +26,7 @@ class Group
 
   MODS_REGEX = /^\s*(?<type>weak|immune) to (?<elements>(?:\w+, )*\w+)\s*$/
 
-  attr_reader :id
-
-  attr_reader :team
-
-  attr_reader :unit_count
-
-  attr_reader :element
-
-  attr_reader :initiative
+  attr_reader :id, :team, :unit_count, :element, :initiative
 
   def initialize(id, team, unit_count, hitpoints, weaknesses, immunities, attack, element, initiative)
     @id = id
@@ -135,7 +127,7 @@ groups = []
 team = nil
 id = 0
 
-boost = ARGV&.first&.to_i || 0
+boost = ARGV&.first.to_i
 
 File.readlines('input.txt').each do |line|
   if line =~ /immune system/i
@@ -160,10 +152,10 @@ def fight(groups)
   groups.sort.each.reject(&:defeated?).each do |group|
     enemy = enemy_of group
     enemies = groups.select { |g| g.team == enemy && !g.defeated? && !targets.values.include?(g.id) }
-    damage_arr = enemies.map { |e| [e, e.calculate_damage(group)] }.sort_by { |a| a.last }.reverse
+    damage_arr = enemies.map { |e| [e, e.calculate_damage(group)] }.sort_by(&:last).reverse
     next if damage_arr.empty?
     top_damage = damage_arr.first.last
-    top_targets = damage_arr.select { |a| a.last == top_damage }.sort_by { |a| a.first }
+    top_targets = damage_arr.select { |a| a.last == top_damage }.sort_by(&:first)
     target = top_targets.first
     next if target.last == 0 || targets.values.include?(target.first.id)
     puts "#{group.team} group #{group.id} would deal defending group #{target.first.id} #{target.last} damage"
@@ -184,7 +176,7 @@ def fight(groups)
     next unless targets[group.id] && !group.defeated?
     defender_id = targets[group.id]
     defender = groups.find { |g| g.id == defender_id }
-    dealt, kills = defender.damage! group
+    _dealt, kills = defender.damage! group
     puts "#{group.team} group #{group.id} attacks defending group #{defender.id}, killing #{kills} units"
     puts " -=/!\\=- defending group #{defender.id} died -=/!\\=-" if defender.defeated?
   end
@@ -194,9 +186,7 @@ def count_alive_teams(groups)
   groups.reject(&:defeated?).map(&:team).uniq.size
 end
 
-while count_alive_teams(groups) > 1
-  fight(groups)
-end
+fight(groups) while count_alive_teams(groups) > 1
 
 def get_alive_units(groups)
   alive = groups.reject(&:defeated?)

@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-TYPES = { ?L => :empty, ?. => :floor, ?# => :occupied }
+TYPES = { ?L => :empty, ?. => :floor, ?# => :occupied }.freeze
 SEATS = ARGF.readlines.map { |l| l.chomp.chars.map { TYPES[_1] } }
 
 def count_occupied(grid, x, y)
@@ -20,7 +20,7 @@ def locate(grid, x, y, dir)
   locate grid, x + dir[0], y + dir[1], dir
 end
 
-def count_occupied_2(grid, x, y)
+def count_occupied2(grid, x, y)
   (y - 1..y + 1).flat_map { |y1|
     (x - 1..x + 1).map { |x1| [x1, y1] }
   }.reject { |x1, y1|
@@ -60,4 +60,4 @@ def solve(threshold, &counter)
 end
 
 solve 4, &method(:count_occupied)
-solve 5, &method(:count_occupied_2)
+solve 5, &method(:count_occupied2)

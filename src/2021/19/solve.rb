@@ -8,7 +8,7 @@ DEBUG = false
 
 def debug(msg = nil, &block)
   return unless DEBUG
-  STDERR.puts msg if msg
+  warn msg if msg
   block.call if block_given?
 end
 
@@ -28,30 +28,30 @@ end
 V = Vector
 
 TRANSFORMS = [
-  ->p { V[ p.z,  p.y, -p.x] },
-  ->p { V[-p.y,  p.z, -p.x] },
-  ->p { V[-p.z, -p.y, -p.x] },
-  ->p { V[ p.y, -p.z, -p.x] },
-  ->p { V[ p.z,  p.x,  p.y] },
-  ->p { V[-p.x,  p.z,  p.y] },
-  ->p { V[-p.z, -p.x,  p.y] },
-  ->p { V[ p.x, -p.z,  p.y] },
-  ->p { V[ p.y,  p.x, -p.z] },
-  ->p { V[-p.x,  p.y, -p.z] },
-  ->p { V[-p.y, -p.x, -p.z] },
-  ->p { V[ p.x, -p.y, -p.z] },
-  ->p { V[ p.y,  p.z,  p.x] },
-  ->p { V[-p.z,  p.y,  p.x] },
-  ->p { V[-p.y, -p.z,  p.x] },
-  ->p { V[ p.z, -p.y,  p.x] },
-  ->p { V[ p.x,  p.z, -p.y] },
-  ->p { V[-p.z,  p.x, -p.y] },
-  ->p { V[-p.x, -p.z, -p.y] },
-  ->p { V[ p.z, -p.x, -p.y] },
-  ->p { V[ p.x,  p.y,  p.z] },
-  ->p { V[-p.y,  p.x,  p.z] },
-  ->p { V[-p.x, -p.y,  p.z] },
-  ->p { V[ p.y, -p.x,  p.z] }
+  ->(p) { V[p.z, p.y, -p.x] },
+  ->(p) { V[-p.y,  p.z, -p.x] },
+  ->(p) { V[-p.z, -p.y, -p.x] },
+  ->(p) { V[p.y, -p.z, -p.x] },
+  ->(p) { V[p.z,  p.x,  p.y] },
+  ->(p) { V[-p.x,  p.z,  p.y] },
+  ->(p) { V[-p.z, -p.x,  p.y] },
+  ->(p) { V[p.x, -p.z,  p.y] },
+  ->(p) { V[p.y,  p.x, -p.z] },
+  ->(p) { V[-p.x,  p.y, -p.z] },
+  ->(p) { V[-p.y, -p.x, -p.z] },
+  ->(p) { V[p.x, -p.y, -p.z] },
+  ->(p) { V[p.y,  p.z,  p.x] },
+  ->(p) { V[-p.z,  p.y,  p.x] },
+  ->(p) { V[-p.y, -p.z,  p.x] },
+  ->(p) { V[p.z, -p.y,  p.x] },
+  ->(p) { V[p.x,  p.z, -p.y] },
+  ->(p) { V[-p.z,  p.x, -p.y] },
+  ->(p) { V[-p.x, -p.z, -p.y] },
+  ->(p) { V[p.z, -p.x, -p.y] },
+  ->(p) { V[p.x,  p.y,  p.z] },
+  ->(p) { V[-p.y,  p.x,  p.z] },
+  ->(p) { V[-p.x, -p.y,  p.z] },
+  ->(p) { V[p.y, -p.x, p.z] }
 ].freeze
 
 def rotate(map)

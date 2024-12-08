@@ -15,7 +15,7 @@ HEIGHT = lines.size
 
 lines.each_with_index do |line, y|
   row = line.chomp.chars
-  WIDTH ||= row.size
+  WIDTH ||= row.size # rubocop:disable Lint/OrAssignmentToConstant
   row.each_with_index do |col, x|
     next if col == ?.
     antennas[col.to_sym] << Vector[x, y]

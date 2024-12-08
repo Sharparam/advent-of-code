@@ -11,13 +11,13 @@ end]
 def build(rules, key)
   rule = rules[key].strip
 
-  return ->_ { rule } if rule =~ /^[^\d]$/
+  return ->(_) { rule } if rule =~ /^[^\d]$/
 
-  ->d do
+  ->(d) do
     result = ['(']
 
     rule.split.each do |item|
-      if item == '|'
+      if item == '|' # rubocop:disable Style/ConditionalAssignment
         result << '|'
       else
         result << d[item.to_i][d]
@@ -37,8 +37,8 @@ part1_re = /^#{BUILDERS[0][BUILDERS]}$/
 
 puts MESSAGES.count { part1_re === _1 }
 
-BUILDERS[8] = ->d { "((#{d[42][d]})+)" }
-BUILDERS[11] = ->d { "(?<r11>#{d[42][d]}\\g<r11>*#{d[31][d]})" }
+BUILDERS[8] = ->(d) { "((#{d[42][d]})+)" }
+BUILDERS[11] = ->(d) { "(?<r11>#{d[42][d]}\\g<r11>*#{d[31][d]})" }
 
 part2_re = /^#{BUILDERS[0][BUILDERS]}$/
 puts MESSAGES.count { part2_re === _1 }

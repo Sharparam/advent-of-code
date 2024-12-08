@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-MULTIPLIERS = [0, 1, 0, -1]
+MULTIPLIERS = [0, 1, 0, -1].freeze
 DEBUG = ENV['DEBUG']
 
 def mult(index, out_index)
@@ -17,13 +17,13 @@ def phase(data)
 end
 
 arg = ARGV.first
-iterations = 100
+# iterations = 100
 
-case arg
+case arg # rubocop:disable Style/ConditionalAssignment
 when nil
   input = DATA.read
 when '--'
-  input = STDIN.readline
+  input = $stdin.readline
 else
   input = File.read(arg)
 end
@@ -52,7 +52,7 @@ def solve2(data, iterations, offset)
   root_start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
   iterations.times do |i|
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC)
-    partial_sum = data[offset..-1].sum
+    partial_sum = data[offset..].sum
     (offset...data.size).to_a.each do |e|
       number = partial_sum
       partial_sum -= data[e]
@@ -70,7 +70,7 @@ end
 part2_offset = data2.take(7).join.to_i
 puts "Part 2 has #{data2.size} digits"
 puts "Offset for part 2: #{part2_offset}"
-part2 = solve2 data2, 100, part2_offset
+_part2 = solve2 data2, 100, part2_offset
 puts "Part 2: #{data2.drop(part2_offset).take(8).join}"
 
 return unless DEBUG

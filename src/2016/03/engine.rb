@@ -1,9 +1,8 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 # Function courtesy of http://stackoverflow.com/a/3852809
 def invert(arr, values)
-  counts = values.inject(Hash.new(0)) { |h, v| h[v] += 1; h }
+  counts = values.each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
   arr.reject { |e| counts[e] -= 1 unless counts[e].zero? }
 end
 

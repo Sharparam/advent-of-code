@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require_relative 'pqueue'
 
 INF = Float::INFINITY
@@ -29,12 +30,11 @@ module AStar
         break if current == goal
         graph.neighbors(current).each do |vertex|
           new_cost = cost_so_far[current] + graph.cost(current, vertex)
-          if !cost_so_far.key?(vertex) || new_cost < cost_so_far[vertex]
-            cost_so_far[vertex] = new_cost
-            priority = new_cost + heuristic.call(vertex, goal)
-            frontier.enqueue vertex, priority
-            came_from[vertex] = current
-          end
+          next unless !cost_so_far.key?(vertex) || new_cost < cost_so_far[vertex]
+          cost_so_far[vertex] = new_cost
+          priority = new_cost + heuristic.call(vertex, goal)
+          frontier.enqueue vertex, priority
+          came_from[vertex] = current
         end
       end
 

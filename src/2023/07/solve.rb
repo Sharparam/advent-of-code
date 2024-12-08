@@ -13,9 +13,9 @@ TYPE_VALUES = {
   two: 3,
   one: 2,
   high: 1
-}
+}.freeze
 
-def type(hand, part2 = false)
+def type(hand, part2: false)
   hand = hand.chars if hand.is_a?(String)
   if part2 && hand.include?('J')
     return NON_J.map { |c| type(hand.map { _1 == 'J' ? c : _1 }, false) }.max_by { TYPE_VALUES[_1] }
@@ -30,12 +30,12 @@ def type(hand, part2 = false)
   :one
 end
 
-def strength(item, part2 = false)
+def strength(item, part2: false)
   return CARD_VALUES[item] if item.is_a?(String) && item.size == 1
   TYPE_VALUES[type(item, part2)]
 end
 
-def compare(a, b, part2 = false)
+def compare(a, b, part2: false)
   a_s, b_s = strength(a, part2), strength(b, part2)
   return b_s <=> a_s if a_s != b_s
 

@@ -1,4 +1,3 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 class Address
@@ -8,7 +7,7 @@ class Address
     @raw = input
 
     @supernets = @raw.scan(/[^\]][a-z0-9]+[^\[]/).reject { |p| p[0] == '[' }
-    @hypernets = @raw.scan(/(?<=[\[])[a-z0-9]+(?=[\]])/)
+    @hypernets = @raw.scan(/(?<=\[)[a-z0-9]+(?=\])/)
   end
 
   def tls?

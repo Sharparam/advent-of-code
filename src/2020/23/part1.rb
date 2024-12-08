@@ -7,7 +7,7 @@ def debug(str)
   puts str if DEBUG
 end
 
-input = (ARGV[0] || '792845136')
+input = ARGV[0] || '792845136'
 
 cups = input.chars.map(&:to_i)
 current = cups.first
@@ -48,7 +48,7 @@ end
 debug '-' * 9
 
 one_i = cups.index 1
-after = cups[one_i + 1..-1]
+after = cups[one_i + 1..]
 before = cups[0...one_i]
 combined = after + before
 

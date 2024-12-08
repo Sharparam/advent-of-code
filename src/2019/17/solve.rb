@@ -27,7 +27,7 @@ OUTPUT_MAP = {
   '<'.ord => :robot_west,
   '>'.ord => :robot_east,
   'X'.ord => :robot_tumble
-}
+}.freeze
 
 INPUT_MAP = {
   a: 'A'.ord,
@@ -39,25 +39,24 @@ INPUT_MAP = {
   right: 'R'.ord,
   yes: 'y'.ord,
   no: 'n'.ord
-}
+}.freeze
 
 TRANSFORMS = {
   north: Vector[0, -1],
   south: Vector[0, 1],
   west: Vector[-1, 0],
   east: Vector[1, 0]
-}
+}.freeze
 
 class Map
-  attr_reader :cpu
-  attr_reader :grid
+  attr_reader :cpu, :grid
 
   def initialize(cpu)
     @cpu = cpu
     @grid = Hash.new :open
   end
 
-  def set_routine(routine, continuous = false)
+  def set_routine(routine, continuous: false)
     routine[:main].chars.map(&:ord).each { |v| @cpu.input! v }
     input :newline
     routine[:a].chars.map(&:ord).each { |v| @cpu.input! v }
@@ -81,7 +80,7 @@ class Map
     x = 0
     y = 0
     @cpu.output.each do |value|
-      pos = Vector[x, y]
+      # pos = Vector[x, y]
       tile = OUTPUT_MAP[value]
       if tile == :newline
         x = 0

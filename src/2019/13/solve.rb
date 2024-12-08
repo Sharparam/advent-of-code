@@ -21,7 +21,7 @@ TILE_TYPES = {
   2 => :block,
   3 => :paddle,
   4 => :ball
-}
+}.freeze
 
 # TILE_SPRITES = {
 #   empty: ' ',
@@ -37,16 +37,15 @@ TILE_SPRITES = {
   block: 'O',
   paddle: '-',
   ball: '*'
-}
+}.freeze
 
-grid = {}
-bounds = Struct.new(:top, :bottom, :left, :right).new(0, 0, 0, 0)
+# grid = {}
+# bounds = Struct.new(:top, :bottom, :left, :right).new(0, 0, 0, 0)
 
 class Game
-  attr_reader :grid
-  attr_reader :score
+  attr_reader :grid, :score
 
-  def initialize(cpu, play = false)
+  def initialize(cpu, play: false)
     @cpu = cpu
     @bounds = Struct.new(:top, :bottom, :left, :right).new(0, 0, 0, 0)
     @grid = Hash.new :empty
@@ -62,9 +61,7 @@ class Game
 
     return unless @play
 
-    while count(:block) > 0
-      step!
-    end
+    step! while count(:block) > 0
   end
 
   def step!
@@ -116,8 +113,8 @@ class Game
     end
 
     Curses.refresh
-    #sleep 0.5
-    #Curses.getch
+    # sleep 0.5
+    # Curses.getch
   end
 
   def count(type)

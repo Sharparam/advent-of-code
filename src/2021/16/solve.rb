@@ -20,10 +20,10 @@ MODES = {
 }.freeze
 
 OPS = {
-  sum: -> { _1.sum },
+  sum: lambda(&:sum),
   product: -> { _1.reduce :* },
-  min: -> { _1.min },
-  max: -> { _1.max },
+  min: lambda(&:min),
+  max: lambda(&:max),
   gt: -> { _1.reduce(:>) ? 1 : 0 },
   lt: -> { _1.reduce(:<) ? 1 : 0 },
   eq: -> { _1.reduce(:==) ? 1 : 0 }

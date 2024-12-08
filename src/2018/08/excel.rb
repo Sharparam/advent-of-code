@@ -5,13 +5,13 @@
 
 LETTERS = ('A'..'Z').to_a.freeze
 
-def to_excel n
+def to_excel(n)
   return LETTERS[n] if n < LETTERS.size
   q, r = n.divmod LETTERS.size
   to_excel(q - 1) + LETTERS[r]
 end
 
-def pe n; printf("%4d == %4s\n", n, to_excel(n)); end
+def pe(n); printf("%4d == %4s\n", n, to_excel(n)); end
 
 pe 0
 pe 1

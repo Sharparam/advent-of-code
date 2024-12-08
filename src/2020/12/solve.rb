@@ -5,10 +5,10 @@ moves = ARGF.read.scan(/([A-Z])(\d+)/).map { [_1.to_sym, _2.to_i] }
 
 pos = [0, 0]
 facing = 90
-MULS = { R: 1, L: -1, N: -1, S: 1, E: 1, W: -1 }
-VECS = [[0, -1], [1, 0], [0, 1], [-1, 0]]
+MULS = { R: 1, L: -1, N: -1, S: 1, E: 1, W: -1 }.freeze
+VECS = [[0, -1], [1, 0], [0, 1], [-1, 0]].freeze
 
-move = ->val {
+move = ->(val) {
   dx, dy = VECS[facing / 90]
   pos[0] += dx * val
   pos[1] += dy * val

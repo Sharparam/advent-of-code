@@ -70,7 +70,7 @@ loop do
   new_blizzards = advance_blizzards(blizzard_states[-1])
   new_hash = new_blizzards.hash
   if blizzard_hashes.include? new_hash
-    STDERR.puts "BLIZZARD CYCLE FOUND at #{blizzards.size} blizzards"
+    warn "BLIZZARD CYCLE FOUND at #{blizzards.size} blizzards"
     break
   end
   blizzard_states.push new_blizzards
@@ -79,7 +79,7 @@ end
 
 BLIZZARD_STATES = blizzard_states.map { |b| b.map { [_1[0], true] }.to_h }
 
-def valid_pos(grid, blizzard_state, pos, start, goal)
+def valid_pos(_grid, blizzard_state, pos, start, goal)
   possible = []
 
   DIRECTIONS.each do |dir|
@@ -106,12 +106,12 @@ def solve(grid, start, goal, b_i = 0)
     pos, steps, blizzard_i = queue.shift
 
     if steps % 100 == 0 && last_report_steps != steps
-      STDERR.puts "Steps: #{steps}"
+      warn "Steps: #{steps}"
       last_report_steps = steps
     end
 
     if pos == goal
-      STDERR.puts "Found solution at #{steps} steps"
+      warn "Found solution at #{steps} steps"
       return [steps, blizzard_i]
     end
 
@@ -134,12 +134,12 @@ end
 part1, part1_bi = solve(grid, START, GOAL)
 
 puts part1
-STDERR.puts "Part 1 BI: #{part1_bi}"
+warn "Part 1 BI: #{part1_bi}"
 
-STDERR.puts 'Go back for snacks:'
+warn 'Go back for snacks:'
 snacks, snacks_bi = solve(grid, GOAL, START, part1_bi)
-STDERR.puts "Got snacks at #{snacks} steps"
-STDERR.puts 'Go back again:'
-part2, part2_bi = solve(grid, START, GOAL, snacks_bi)
-STDERR.puts "Got back in #{part2} steps"
+warn "Got snacks at #{snacks} steps"
+warn 'Go back again:'
+part2, _part2_bi = solve(grid, START, GOAL, snacks_bi)
+warn "Got back in #{part2} steps"
 puts part1 + snacks + part2

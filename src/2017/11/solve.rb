@@ -26,7 +26,7 @@ DIRECTIONS = {
   s: Vector[0, -1, 1],
   sw: Vector[-1, 0, 1],
   nw: Vector[-1, 1, 0]
-}
+}.freeze
 
 ORIGIN = Vector[0, 0, 0]
 

@@ -33,11 +33,9 @@ module Intcode
       2 => :relative
     }.freeze
 
-    attr_reader :memory
-    attr_reader :output
-    attr_reader :input
+    attr_reader :memory, :output, :input
 
-    def initialize(program = nil, print_output = true, debug = false, memory = nil, ip = 0, rb = 0)
+    def initialize(program = nil, print_output = true, debug = false, memory = nil, ip = 0, rb = 0) # rubocop:disable Style/OptionalBooleanParameter
       @ip = ip
       @input = Queue.new
       @output = []
@@ -55,7 +53,7 @@ module Intcode
     end
 
     def load!(file)
-      if file.is_a? Array
+      if file.is_a? Array # rubocop:disable Style/ConditionalAssignment
         @program = file
       else
         @program = File.read(file).split(',').map(&:to_i)
@@ -91,7 +89,7 @@ module Intcode
 
       while @running
         opcode = OPS[get_opcode]
-        print '%4d: [%05d] %6s ' % [ @ip, read_mem(@ip), opcode.to_s.upcase ] if @debug
+        print '%4d: [%05d] %6s ' % [@ip, read_mem(@ip), opcode.to_s.upcase] if @debug
         result = send(opcode)
         @ip += 1 + ARG_COUNTS[opcode] unless result == :jumped || result == :block
       end
@@ -191,7 +189,7 @@ module Intcode
       addr = get_addr 3
       puts if @debug
 
-      @memory[addr] = (a < b) ? 1 : 0
+      @memory[addr] = a < b ? 1 : 0
     end
 
     def eq
@@ -202,7 +200,7 @@ module Intcode
       addr = get_addr 3
       puts if @debug
 
-      @memory[addr] = (a == b) ? 1 : 0
+      @memory[addr] = a == b ? 1 : 0
     end
 
     def modrel
@@ -222,7 +220,7 @@ module Intcode
       @memory[addr] || 0
     end
 
-    def get_opcode
+    def get_opcode # rubocop:disable Naming/AccessorMethodName
       read_mem(@ip) % 100
     end
 
@@ -240,9 +238,7 @@ module Intcode
         mode = :addr
       end
 
-      if mode == :addr
-        print "##{val}" if @debug
-      end
+      print "##{val}" if mode == :addr && @debug
 
       val
     end

@@ -12,7 +12,7 @@ y_adds = adds.map(&:last)
 divs = input.map(&:split).select { _1[0] == 'div' }.map { _1.last.to_i }
 results = []
 
-find = ->w, i, zz, path {
+find = ->(w, i, zz, path) {
   if i == 14
     results << path.join[0...14].to_i
     return
@@ -23,12 +23,12 @@ find = ->w, i, zz, path {
   if div == 26
     return if w - dx != zz.last
     next_zz = zz[0...-1]
-    9.downto 1 do |next_w|
+    9.downto 1 do |next_w| # rubocop:disable Style/IdenticalConditionalBranches
       find[next_w, i + 1, next_zz, [*path, next_w]]
     end
   else
     next_zz = [*zz, w + dy]
-    9.downto 1 do |next_w|
+    9.downto 1 do |next_w| # rubocop:disable Style/IdenticalConditionalBranches
       find[next_w, i + 1, next_zz, [*path, next_w]]
     end
   end

@@ -3,7 +3,7 @@
 
 # fucking what
 trib_cache = [0, 1, 1]
-trib = ->n {
+trib = ->(n) {
   trib_cache[n] ||= trib[n - 1] + trib[n - 2] + trib[n - 3]
 }
 
@@ -21,5 +21,5 @@ end
 puts diffs[1] * diffs[3]
 
 puts ([0] + adapters + [DEVICE]).each_cons(2).reduce([1]) { |a, (f, l)|
-  (l - f == 1) ? a.tap { a[a.size - 1] += 1 } : a << 1
+  l - f == 1 ? a.tap { a[a.size - 1] += 1 } : a << 1
 }.map(&trib).reduce(:*)

@@ -1,8 +1,7 @@
-# encoding: utf-8
 # frozen_string_literal: true
 
 class Room
-  PATTERN = /^([a-z\-]+)-(\d+)\[([a-z]+)\]$/
+  PATTERN = /^([a-z-]+)-(\d+)\[([a-z]+)\]$/
 
   ALPHABET_SIZE = 26
 
@@ -20,7 +19,7 @@ class Room
   end
 
   def real?
-    counts = @name.scan(/[a-z]/).reduce(Hash.new(0)) { |h, v| h[v] += 1; h }
+    counts = @name.scan(/[a-z]/).each_with_object(Hash.new(0)) { |v, h| h[v] += 1 }
 
     groups = counts.values.sort.reverse.uniq.map do |count|
       counts.keys.select { |k| counts[k] == count }
@@ -29,7 +28,7 @@ class Room
     compare = groups.first
     compare_index = 0
 
-    @checksum.chars.each.with_index do |c, i|
+    @checksum.chars.each.with_index do |c, _i|
       compare.concat(groups[compare_index += 1]) if compare.empty?
       return false unless compare.include? c
       compare.delete c

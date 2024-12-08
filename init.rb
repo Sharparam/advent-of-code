@@ -50,7 +50,7 @@ uri = URI(input_url)
 
 if dry_run
   puts "DRYRUN DL: #{uri}"
-  open(filename, 'w') { |f| f.write 'DRYRUN DOWNLOAD CONTENT' }
+  open(filename, 'w') { |f| f.write 'DRYRUN DOWNLOAD CONTENT' } # rubocop:disable Security/Open
 else
   Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
     puts "Performing GET request to #{uri}" if verbose
@@ -62,7 +62,7 @@ else
     puts "Response: #{response.code} #{response.message}" if verbose
     abort "Request failed (#{response.code} #{response.message})" unless response.code == '200'
     puts "Writing response to #{filename}"
-    open(filename, 'w') { |f| f.write response.body }
+    open(filename, 'w') { |f| f.write response.body } # rubocop:disable Security/Open
   end
 end
 

@@ -62,7 +62,7 @@ points.each do |point|
   end
 end
 
-best_base = bases.max_by { |(k, v)| v.keys.size }
+best_base = bases.max_by { |(_k, v)| v.keys.size }
 best_point = best_base.first
 best_visible = best_base.last.keys.size
 best_base = bases[best_base.first]

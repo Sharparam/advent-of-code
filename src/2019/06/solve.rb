@@ -4,8 +4,7 @@
 CENTER = :COM
 
 class Node
-  attr_reader :value
-  attr_reader :children
+  attr_reader :value, :children
   attr_accessor :parent
 
   def initialize(value, parent = nil)

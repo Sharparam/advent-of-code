@@ -19,7 +19,7 @@ end
 Y_MAX = cave.keys.map { _1[1] }.max
 Y_MAX_2 = Y_MAX + 2
 
-part_1 = false
+part1 = false
 
 loop do
   pos = Vector[500, 0]
@@ -34,9 +34,9 @@ loop do
 
     pos = new_pos
 
-    if pos[1] > Y_MAX && !part_1
+    if pos[1] > Y_MAX && !part1
       puts cave.values.count(:sand)
-      part_1 = true
+      part1 = true
     end
   end
 

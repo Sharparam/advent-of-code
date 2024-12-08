@@ -29,11 +29,7 @@ class Region
     narrow: '|'
   }.freeze
 
-  attr_reader :position
-
-  attr_reader :geological_index
-
-  attr_reader :erosion_level
+  attr_reader :position, :geological_index, :erosion_level
 
   def initialize(pos, geo_index, depth, is_origin: false, is_target: false)
     @position = pos
@@ -80,7 +76,7 @@ class Cave
   def display(start, stop)
     (start.y..stop.y).each do |y|
       (start.x..stop.x).each do |x|
-        print self[x, y].to_s
+        print self[x, y]
       end
       puts
     end

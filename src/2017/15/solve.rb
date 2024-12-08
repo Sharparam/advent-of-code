@@ -21,7 +21,7 @@ puts matches
 a, b = A_START, B_START
 matches = 0
 
-5_000_000.times do |i|
+5_000_000.times do |_i|
   a = (a * A_FACTOR) % DIVISOR
   b = (b * B_FACTOR) % DIVISOR
   a = (a * A_FACTOR) % DIVISOR until a % 4 == 0

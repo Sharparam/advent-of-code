@@ -72,8 +72,8 @@ def adjacents(grids)
         if x == 2 && y == 2
           adj[makeind(x, y)] = '?'
         else
-          has_up = grids.key? level - 1
-          has_down = grids.key? level + 1
+          _has_up = grids.key? level - 1
+          _has_down = grids.key? level + 1
           up = grids[level - 1]
           down = grids[level + 1]
           top = grid[makeind(x, y - 1)] || 0
@@ -132,21 +132,10 @@ def step(grids)
       up[makeind(2, 3)] = 1 if bottom_count == 1 || bottom_count == 2
     elsif level == max_level
       down = grids[max_level + 1]
-      if grid[makeind(2, 1)] == 1
-        (0...WIDTH).each { |x| down[makeind(x, 0)] = 1 }
-      end
-
-      if grid[makeind(1, 2)] == 1
-        (0...HEIGHT).each { |y| down[makeind(0, y)] = 1 }
-      end
-
-      if grid[makeind(3, 2)] == 1
-        (0...HEIGHT).each { |y| down[makeind(4, y)] = 1 }
-      end
-
-      if grid[makeind(2, 3)] == 1
-        (0...WIDTH).each { |x| down[makeind(x, 4)] = 1 }
-      end
+      (0...WIDTH).each { |x| down[makeind(x, 0)] = 1 } if grid[makeind(2, 1)] == 1
+      (0...HEIGHT).each { |y| down[makeind(0, y)] = 1 } if grid[makeind(1, 2)] == 1
+      (0...HEIGHT).each { |y| down[makeind(4, y)] = 1 } if grid[makeind(3, 2)] == 1
+      (0...WIDTH).each { |x| down[makeind(x, 4)] = 1 } if grid[makeind(2, 3)] == 1
     end
 
     (0...WIDTH).each do |x|
@@ -166,11 +155,10 @@ def step(grids)
       end
     end
 
-    if DEBUG
-      puts "Depth #{level}:"
-      draw grid, adj
-      puts
-    end
+    next unless DEBUG
+    puts "Depth #{level}:"
+    draw grid, adj
+    puts
   end
 end
 

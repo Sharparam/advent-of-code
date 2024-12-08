@@ -8,13 +8,13 @@ DELTAS = {
   D: Vector[0, -1],
   L: Vector[-1, 0],
   R: Vector[1, 0]
-}
+}.freeze
 
 MOVES = ARGF.readlines.map(&:split).map { |d, n| [d.to_sym, n.to_i] }
 
 head = Vector[0, 0]
 tails = 9.times.map { Vector[0, 0] }
-visits = 9.times.map { Set[Vector[0, 0]]}
+visits = 9.times.map { Set[Vector[0, 0]] }
 
 def cursed(h, t)
   hx, hy = h[0], h[1]

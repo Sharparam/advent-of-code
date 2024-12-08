@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-initial, rules = ARGF.read.split("\n\n")
+initial, $rules = ARGF.read.split("\n\n")
 
 pots = initial.split(': ')[1].chars.map.with_index { |p, i| p == ?# ? i : nil }.compact
 
-rules = rules.lines.map { |line|
+$rules = $rules.lines.map { |line|
   current, result = line.split(' => ').map(&:chomp)
   result = result == ?#
   state = current.chars.map.with_index { |c, i| [i - 2, c == ?#] }.to_h
@@ -18,14 +18,14 @@ def transform(pots)
   min_i -= 2
   max_i += 2
   (min_i..max_i).each do |i|
-    rule = rules.find { |s, r| s.all? { |d, c| pots.include?(i + d) == c } }
+    rule = $rules.find { |s, _r| s.all? { |d, c| pots.include?(i + d) == c } }
     new_pots.push(i) if (rule && rule[1]) || pots[i] == true
   end
 
   new_pots
 end
 
-final_pots = 20.times.reduce(pots) do |pots, i|
+final_pots = 20.times.reduce(pots) do |pots, _i|
   transform(pots)
 end
 
@@ -34,7 +34,7 @@ puts final_pots.sum
 delta = nil
 delta_count = 0
 
-part2_pots = 50_000_000_000.times.reduce(pots) do |pots, i|
+_part2_pots = 50_000_000_000.times.reduce(pots) do |pots, i|
   old_sum = pots.sum
   new_pots = transform(pots)
   new_sum = new_pots.sum

@@ -5,7 +5,7 @@ POSITIONS = ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
   line.chars.map.with_index { [_1, _2] }.select { |c, _| c == ?# }.map { [_2, y] }
 }
 
-XS, YS = POSITIONS.map { [_1[0], _1[1]] }.transpose.map { _1.to_set }
+XS, YS = POSITIONS.map { [_1[0], _1[1]] }.transpose.map(&:to_set)
 
 WIDTH = XS.max + 1
 HEIGHT = YS.max + 1

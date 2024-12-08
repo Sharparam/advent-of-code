@@ -47,7 +47,7 @@ def shortest(pos, path)
   return nil if move_to.empty? # dead end
   move_to.map do |p, d|
     shortest(p, path + [d])
-  end.compact.min_by { _1.size }
+  end.compact.min_by(&:size)
 end
 
 def longest(pos, path)
@@ -56,7 +56,7 @@ def longest(pos, path)
   return nil if move_to.empty? # dead end
   move_to.map do |p, d|
     longest(p, path + [d])
-  end.compact.max_by { _1.size }
+  end.compact.max_by(&:size)
 end
 
 puts shortest(START, []).join

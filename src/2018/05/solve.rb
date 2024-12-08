@@ -15,7 +15,7 @@ def react(os)
     end
   end
 
-  res[1..-1]
+  res[1..]
 end
 
 part1 = react ords
@@ -23,5 +23,5 @@ puts "Part 1: #{part1.size}"
 
 exit
 
-part2 = (?a.ord..?z.ord).map { |l| react(part1.reject { |e| e == l || e == l + 32 }).size }.min
+part2 = (?a.ord..?z.ord).map { |l| react(part1.reject { |e| e == l || e == l + 32 }).size }.min # rubocop:disable Lint/UnreachableCode
 puts "Part 2: #{part2}"

@@ -18,7 +18,7 @@ class Blueprint
   end
 
   def self.from_array(nums)
-    self.new nums[0], {
+    new nums[0], {
       ore: {
         ore: nums[1]
       },
@@ -85,7 +85,7 @@ class Blueprint
     end
 
     if make_geode
-      new_prod = production.dup.tap { _1[:geode] += 1}
+      new_prod = production.dup.tap { _1[:geode] += 1 }
       new_stock = stock.dup.tap do |h|
         h[:ore] -= @costs[:geode][:ore]
         h[:obsidian] -= @costs[:geode][:obsidian]
@@ -98,7 +98,7 @@ class Blueprint
     max = 0
 
     if make_ore
-      new_prod = production.dup.tap { _1[:ore] += 1}
+      new_prod = production.dup.tap { _1[:ore] += 1 }
       new_stock = stock.dup.tap do |h|
         h[:ore] -= @costs[:ore][:ore]
       end
@@ -107,7 +107,7 @@ class Blueprint
     end
 
     if make_clay
-      new_prod = production.dup.tap { _1[:clay] += 1}
+      new_prod = production.dup.tap { _1[:clay] += 1 }
       new_stock = stock.dup.tap do |h|
         h[:ore] -= @costs[:clay][:ore]
       end
@@ -116,7 +116,7 @@ class Blueprint
     end
 
     if make_obsidian
-      new_prod = production.dup.tap { _1[:obsidian] += 1}
+      new_prod = production.dup.tap { _1[:obsidian] += 1 }
       new_stock = stock.dup.tap do |h|
         h[:ore] -= @costs[:obsidian][:ore]
         h[:clay] -= @costs[:obsidian][:clay]
@@ -132,7 +132,7 @@ class Blueprint
   end
 
   def print_stock(stock)
-    STDERR.puts "  STOCK: #{stock[:ore]} ore, #{stock[:clay]} clay, #{stock[:obsidian]} obsidian, #{stock[:geode]} geode"
+    warn "  STOCK: #{stock[:ore]} ore, #{stock[:clay]} clay, #{stock[:obsidian]} obsidian, #{stock[:geode]} geode"
   end
 end
 
@@ -141,7 +141,7 @@ BLUEPRINTS = ARGF.read.scan(/\d+/).map(&:to_i).each_slice(7).map { Blueprint.fro
 def part1
   BLUEPRINTS.sum do |blueprint|
     # STDERR.puts "=== TESTING BLUEPRINT #{blueprint.id}"
-    blueprint.solve() * blueprint.id
+    blueprint.solve * blueprint.id
   end
 end
 
@@ -152,5 +152,5 @@ def part2
   end.reduce(:*)
 end
 
-puts part1()
-puts part2()
+puts part1
+puts part2

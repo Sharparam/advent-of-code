@@ -17,7 +17,7 @@ class Star
   def rollback!; @pos -= @vel; end
 end
 
-STARS = File.readlines('input.txt').map { |l| l.scan /-?\d+/ }.map { |a| Star.new *(a.map(&:to_i)) }.freeze
+STARS = File.readlines('input.txt').map { |l| l.scan /-?\d+/ }.map { |a| Star.new *a.map(&:to_i) }.freeze
 
 def mm_x; STARS.map(&:x).minmax; end
 def mm_y; STARS.map(&:y).minmax; end

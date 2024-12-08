@@ -43,7 +43,7 @@ class LinkedList
     nxt = node.next
     node.next = from
     n = node
-    while n = n.next
+    while (n = n.next)
       @min = n if n.value < @min.value
       @max = n if n.value > @max.value
       @value_node_map[n.value] = n
@@ -87,7 +87,7 @@ class Node
   end
 end
 
-input = (ARGV[0] || '792845136')
+input = ARGV[0] || '792845136'
 
 cups = LinkedList.new
 

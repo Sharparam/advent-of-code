@@ -12,7 +12,7 @@ INPUT_MAP = {
   '#' => :wall,
   ' ' => :empty,
   '.' => :open
-}
+}.freeze
 
 OUTPUT_MAP = {
   wall: '██'.white,
@@ -20,14 +20,14 @@ OUTPUT_MAP = {
   empty: '  '.black,
   dead: '██'.red,
   current: '██'.green
-}
+}.freeze
 
 TRANSFORMS = {
   north: Vector[0, -1],
   south: Vector[0, 1],
   west: Vector[-1, 0],
   east: Vector[1, 0]
-}
+}.freeze
 
 class Vector
   def x; self[0]; end
@@ -36,7 +36,7 @@ end
 
 module Enumerable
   def tally
-    Hash.new(0).tap { |h| self.each { |v| h[v] += 1 } }
+    Hash.new(0).tap { |h| each { |v| h[v] += 1 } }
   end
 end
 
@@ -123,7 +123,7 @@ class Maze
         points = @teleporters[tile]
         unless points.include? pos
           others_here = surroundings pos
-          open_pos, _ = others_here.find { |(_, tile)| tile == :open }
+          open_pos, = others_here.find { |(_, tile)| tile == :open }
           points << open_pos
 
           is_outer_x = open_pos.x <= (@min_x + 2) || open_pos.x >= (@max_x - 2)
@@ -149,7 +149,7 @@ class Maze
         pos = Vector[x, y]
         tile = @grid[pos]
         sprite = OUTPUT_MAP[tile] || tile
-        if pos == current_pos
+        if pos == current_pos # rubocop:disable Style/ConditionalAssignment
           buffer += OUTPUT_MAP[:current]
         elsif tile == 'AA'
           buffer += sprite.black.on_blue
@@ -166,7 +166,7 @@ class Maze
   end
 
   def shortest_path(pos = nil, previous_pos = nil, steps = 0, ports = Set.new)
-    pos = @start_pos unless pos
+    pos ||= @start_pos
     return steps if pos == @finish_pos
 
     others = surroundings(pos).reject { |_, t| t == :wall }.reject do |p, t|
@@ -198,7 +198,7 @@ class Maze
       pos, depth, steps, visited, previous_pos = q.deq
       draw pos if DEBUG
       puts "Solutions: #{finished}" if DEBUG
-      tile = @grid[pos]
+      _tile = @grid[pos]
 
       if finished.empty? || steps < finished.min
         if pos == @finish_pos && depth == 0
@@ -237,7 +237,7 @@ class Maze
     @grid[pos] = :dead
     others = surroundings pos
 
-    others.keys.each do |other_pos|
+    others.each_key do |other_pos|
       fill_deadends! other_pos if deadend?(other_pos) && @grid[other_pos] != :dead
     end
   end
@@ -260,7 +260,7 @@ class Maze
       pos + TRANSFORMS[:east]
     ]
 
-    Hash[ other_pos.map { |p| [p, @grid[p]] } ]
+    Hash[other_pos.map { |p| [p, @grid[p]] }]
   end
 
   def teleport?(pos)

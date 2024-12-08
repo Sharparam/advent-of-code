@@ -8,7 +8,7 @@ class Vector
   def y = self[1]
 
   def around?(start, stop)
-    (self.x >= start.x - 1 && self.x <= stop.x + 1) && (self.y >= start.y - 1 && self.y <= start.y + 1)
+    (x >= start.x - 1 && x <= stop.x + 1) && (y >= start.y - 1 && y <= start.y + 1)
   end
 
   def to_s = "(#{x}, #{y})"
@@ -42,9 +42,7 @@ end
 part1 = 0
 
 $numbers.each do |number|
-  if symbols.any? { |symbol| symbol[:pos].around?(number[:start], number[:stop]) }
-    part1 += number[:value]
-  end
+  part1 += number[:value] if symbols.any? { |symbol| symbol[:pos].around?(number[:start], number[:stop]) }
 end
 
 puts part1
@@ -55,9 +53,7 @@ part2 = 0
 
 gears.each do |gear|
   nums = $numbers.select { |n| gear[:pos].around?(n[:start], n[:stop]) }
-  if nums.size == 2
-    part2 += nums[0][:value] * nums[1][:value]
-  end
+  part2 += nums[0][:value] * nums[1][:value] if nums.size == 2
 end
 
 puts part2

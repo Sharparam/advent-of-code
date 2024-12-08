@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-SIZE = 25.freeze
+SIZE = 25
 NUMS = ARGF.readlines.map(&:to_i).freeze
 
 part1 = NUMS[SIZE..].find.with_index { |n, i|

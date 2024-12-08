@@ -13,7 +13,7 @@ end
 
 puts IDS.map { [_1, solve(_1)] }.min_by { _2 }.then { _1 * (_2 - EARLIEST) }
 
-OFFSETS = Hash[SCHEDULE.map.with_index { [_1.to_i, _2] }.reject { _1[0].zero? } ]
+OFFSETS = Hash[SCHEDULE.map.with_index { [_1.to_i, _2] }.reject { _1[0].zero? }]
 
 def solve2
   current = 0
@@ -28,5 +28,5 @@ end
 puts solve2
 
 # VERIFY solve2:
-#require_relative '../utils'
-#p Utils.crt(OFFSETS.keys, OFFSETS.map { -_2 % _1 })
+# require_relative '../utils'
+# p Utils.crt(OFFSETS.keys, OFFSETS.map { -_2 % _1 })

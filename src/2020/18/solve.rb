@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 class Integer
-  def - _; self * _ end
-  def / _; self + _ end
-  def & _; self + _ end
+  def -(other); self * other end
+  def /(other); self + other end
+  def &(other); self + other end
 end
 
-puts eval (ARGF.read.gsub(?*,?-).split(?\n) * ?&).tap{puts eval _1}.gsub ?+,?/
+puts eval (ARGF.read.gsub(?*, ?-).split(?\n) * ?&).tap { puts eval _1 }.gsub ?+, ?/

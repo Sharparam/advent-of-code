@@ -14,7 +14,7 @@ loop do
   puts output
   cpu.clear_output!
   break unless output =~ /Command\?/i
-  input = STDIN.readline
+  input = $stdin.readline
   break if input =~ /exit/
   cpu.input! input
 end

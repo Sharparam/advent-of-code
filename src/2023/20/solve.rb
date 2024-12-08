@@ -26,7 +26,7 @@ end
 
 class FlipFlop < ComModule
   def initialize(id, destinations)
-    super(id, destinations)
+    super
     @state = false
   end
 
@@ -43,7 +43,7 @@ end
 
 class Conjunction < ComModule
   def initialize(id, destinations)
-    super(id, destinations)
+    super
     @memory = Hash.new false
   end
 
@@ -58,7 +58,7 @@ class Conjunction < ComModule
 
   def receive(pulse, source)
     @memory[source] = pulse
-    new_pulse = @memory.values.all?(true) ? false : true
+    new_pulse = !@memory.values.all?(true)
     destinations.map { [id, _1, new_pulse] }
   end
 end

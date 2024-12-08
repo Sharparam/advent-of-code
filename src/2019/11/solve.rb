@@ -32,9 +32,9 @@ DIRS = {
     Vector[-1, 0] => Vector[0, -1],
     Vector[0, -1] => Vector[1, 0]
   }
-}
+}.freeze
 
-def run(start_c)
+def run(_start_c)
   colors = {
     Vector[0, 0] => start_color
   }
@@ -61,10 +61,10 @@ puts "Part 1: #{run(BLACK).size}"
 
 colors = run WHITE
 
-min_x = colors.keys.min_by { |p| p.x }.x
-max_x = colors.keys.max_by { |p| p.x }.x
-min_y = colors.keys.min_by { |p| p.y }.y
-max_y = colors.keys.max_by { |p| p.y }.y
+min_x = colors.keys.min_by(&:x).x
+max_x = colors.keys.max_by(&:x).x
+min_y = colors.keys.min_by(&:y).y
+max_y = colors.keys.max_by(&:y).y
 
 puts "Grid for part 2 goes from (#{min_x}, #{min_y}) to (#{max_x}, #{max_y})"
 

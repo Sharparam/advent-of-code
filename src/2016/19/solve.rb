@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-# encoding: utf-8
 # frozen_string_literal: true
 
 class Elf
@@ -26,7 +25,7 @@ def make_elves(count)
   elves
 end
 
-elves = make_elves STDIN.readline.strip.to_i
+elves = make_elves $stdin.readline.strip.to_i
 
 SIZE = elves.size
 
@@ -47,7 +46,7 @@ mid = elves[SIZE / 2]
 SIZE.times do |i|
   mid.delete!
   mid = mid.next
-  mid = mid.next if (SIZE - i) % 2 == 1
+  mid = mid.next if (SIZE - i).odd?
   start = start.next
 end
 

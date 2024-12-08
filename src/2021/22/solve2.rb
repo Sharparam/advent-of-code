@@ -38,8 +38,8 @@ class Cuboid
 
   def intersects?(other)
     top >= other.bottom && bottom <= other.top &&
-    right >= other.left && left <= other.right &&
-    back >= other.front && front <= other.back
+      right >= other.left && left <= other.right &&
+      back >= other.front && front <= other.back
   end
 
   def intersection(other)

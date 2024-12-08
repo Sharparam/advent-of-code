@@ -33,7 +33,7 @@ end
 
 while indices_valid_for.any? { _2.size > 1 }
   singles = indices_valid_for.select { _2.size == 1 }.map { |_, f| f[0] }
-  indices_valid_for.select { _2.size > 1 }.each do |_, v|
+  indices_valid_for.select { _2.size > 1 }.each_value do |v|
     v.reject! { singles.include? _1 }
   end
 end

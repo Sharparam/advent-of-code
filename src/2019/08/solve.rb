@@ -22,9 +22,7 @@ part2 = [2] * LAYER_SIZE
 
 layers.each do |layer|
   layer.each_with_index do |d, i|
-    if part2[i] == 2 && d != 2
-      part2[i] = d
-    end
+    part2[i] = d if part2[i] == 2 && d != 2
   end
 end
 

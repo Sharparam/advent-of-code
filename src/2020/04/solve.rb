@@ -12,10 +12,10 @@ end
 puts passports.count { |p| fields.all?(&p.method(:key?)) }
 
 validators = {
-  'byr' => ->v { v.to_i.between?(1920, 2002) },
-  'iyr' => ->v { v.to_i.between?(2010, 2020) },
-  'eyr' => ->v { v.to_i.between?(2020, 2030) },
-  'hgt' => ->v {
+  'byr' => ->(v) { v.to_i.between?(1920, 2002) },
+  'iyr' => ->(v) { v.to_i.between?(2010, 2020) },
+  'eyr' => ->(v) { v.to_i.between?(2020, 2030) },
+  'hgt' => ->(v) {
     v =~ /^(\d+)(cm|in)$/ && $2 == 'cm' ? $1.to_i.between?(150, 193) : $1.to_i.between?(59, 76)
   },
   'hcl' => /^#[\da-f]{6}$/,
