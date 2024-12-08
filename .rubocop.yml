@@ -1,3 +1,7 @@
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 3.3
   ParserEngine: parser_prism
@@ -64,6 +68,8 @@ Style/CaseEquality:
 Style/CharacterLiteral:
   Enabled: false
 Style/Documentation:
+  Enabled: false
+Style/DocumentDynamicEvalDefinition:
   Enabled: false
 Style/FormatString:
   Enabled: false
