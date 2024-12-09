@@ -16,11 +16,11 @@ def part1(disk)
   left = disk.index nil
   right = disk.size - 1
 
-  until left.nil? || left >= right
+  until left >= disk.size || left >= right
     disk[left] = disk[right]
     disk[right] = nil
     right -= 1 while disk[right].nil?
-    left = disk.index nil
+    left += 1 until disk[left].nil?
   end
 
   checksum disk
