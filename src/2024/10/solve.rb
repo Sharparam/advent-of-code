@@ -9,8 +9,10 @@ GRID = ARGF.readlines(chomp: true).flat_map.with_index { |line, y|
 
 DIRS = [Vector[1, 0], Vector[-1, 0], Vector[0, 1], Vector[0, -1]].freeze
 
+$cache = {}
+
 def neighbors(current)
-  DIRS.map { current + _1 }.select { GRID[_1] - GRID[current] == 1 }
+  $cache[current] ||= DIRS.map { current + _1 }.select { GRID[_1] - GRID[current] == 1 }
 end
 
 puts GRID.filter_map { _2.zero? ? _1 : nil }.map { |start|
