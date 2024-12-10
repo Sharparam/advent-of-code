@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'lib/aoc'
+require_relative 'lib/aoc/version'
 
 Gem::Specification.new 'aoc', AoC::VERSION do |spec|
   spec.authors = ['Adam Hellberg']

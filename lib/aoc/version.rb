@@ -12,4 +12,6 @@ module AoC
       FULL
     end
   end
+
+  VERSION = Version::FULL
 end

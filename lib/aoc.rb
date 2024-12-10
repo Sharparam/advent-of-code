@@ -3,5 +3,4 @@
 require_relative 'aoc/version'
 
 module AoC
-  VERSION = Version::FULL
 end
