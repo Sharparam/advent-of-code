@@ -3,4 +3,7 @@
 
 require 'aoc'
 
+config = AoC::Config.load '.config/aoc.toml'
+
 puts "AoC, version #{AoC::Version}"
+puts "Session: #{config.session}"
