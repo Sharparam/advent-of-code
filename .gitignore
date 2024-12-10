@@ -1,3 +1,5 @@
+.config/aoc.toml
+
 *.txt
 !input.txt
 !test*.txt
