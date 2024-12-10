@@ -1,6 +1,7 @@
 {
   "python.formatting.provider": "black",
   "solargraph.diagnostics": false,
+  "solargraph.useBundler": true,
   "deno.enable": true,
   "deno.lint": true,
   "[ruby]": {
