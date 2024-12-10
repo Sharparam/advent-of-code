@@ -1,12 +1,16 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'bundler/setup'
+
 require 'cgi'
 require 'date'
 require 'fileutils'
 require 'net/http'
 require 'optparse'
 require 'yaml'
+
+require 'aoc'
 
 options = {}
 
@@ -29,41 +33,28 @@ verbose = options[:verbose]
 dry_run = options[:'dry-run']
 year = options[:year] || now.year
 day = options[:day] || now.day
-session_id = options[:session] || YAML.load_file('init.yml')['session']
+session_id = options[:session] || AoC::Config.load('.config/aoc.toml').session
 filename = options[:output] || "src/#{year}/#{'%02d' % day}/input"
-input_url = "https://adventofcode.com/#{year}/day/#{day}/input"
 
-pp options if verbose
+AoC::Logging.level = verbose ? AoC::Logger::TRACE : AoC::Logger::INFO
+
+log = AoC::Logging.logger_for 'main'
+
+log.trace(options:)
 
 abort 'Target file already exists' if File.exist? filename
 abort 'Missing session token' unless session_id
 
-puts "Session token is #{session_id}" if verbose
+log.trace(session_id:)
 
 filedir = File.dirname filename
 unless filedir == '.' || File.directory?(filedir)
-  puts "Creating directory for output file (#{filedir})" if verbose
+  log.debug "Creating directory for output file (#{filedir})"
   FileUtils.mkdir_p filedir
 end
 
-uri = URI(input_url)
-
-if dry_run
-  puts "DRYRUN DL: #{uri}"
-  open(filename, 'w') { |f| f.write 'DRYRUN DOWNLOAD CONTENT' } # rubocop:disable Security/Open
-else
-  Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
-    puts "Performing GET request to #{uri}" if verbose
-    request = Net::HTTP::Get.new(uri)
-    request['User-Agent'] = 'Sharparam-AoC/1.0 (github.com/Sharparam/advent-of-code)'
-    request['From'] = 'sharparam@sharparam.com'
-    request['Cookie'] = "session=#{CGI.escape session_id}"
-    response = http.request request
-    puts "Response: #{response.code} #{response.message}" if verbose
-    abort "Request failed (#{response.code} #{response.message})" unless response.code == '200'
-    puts "Writing response to #{filename}"
-    open(filename, 'w') { |f| f.write response.body } # rubocop:disable Security/Open
-  end
-end
+input_content = AoC::API.input(year, day, session_id, dry_run: dry_run)
+log.info('Writing response', filename:)
+open(filename, 'w') { |f| f.write input_content } # rubocop:disable Security/Open
 
 puts 'OK' if verbose
