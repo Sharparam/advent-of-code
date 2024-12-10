@@ -1,13 +1,14 @@
 .config/aoc.toml
 
 *.txt
-!input.txt
 !test*.txt
 !example*.txt
 !notes*.txt
 
 /init.yml
 
+# Ignore AoC input files
+input
 # Ignore input files from other people
 camille
 itsbth
