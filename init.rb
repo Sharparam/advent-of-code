@@ -8,7 +8,6 @@ require 'date'
 require 'fileutils'
 require 'net/http'
 require 'optparse'
-require 'yaml'
 
 require 'aoc'
 
