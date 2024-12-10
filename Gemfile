@@ -4,6 +4,10 @@ source 'https://rubygems.org'
 
 gemspec
 
+gem 'amazing_print'
+gem 'ougai'
+gem 'tomlib'
+
 group :development do
   gem 'profile'
   gem 'pry'
