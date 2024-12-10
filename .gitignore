@@ -2,7 +2,6 @@
 
 *.txt
 !test*.txt
-!example*.txt
 !notes*.txt
 
 /init.yml
@@ -12,8 +11,10 @@ input
 # Ignore input files from other people
 camille
 itsbth
-
 alt_*
+
+# Ignore AoC example files
+example*
 
 # Ignore everything IntelliJ/IDEA, for now
 .idea/
