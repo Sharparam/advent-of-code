@@ -1,3 +1,6 @@
+.envrc
+.env
+
 .config/aoc.toml
 
 *.txt
