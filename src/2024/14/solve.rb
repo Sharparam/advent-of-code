@@ -45,7 +45,7 @@ robots = ARGF.map { |line|
 # p robots
 
 def display(robots, f = nil)
-  f.puts "=" * WIDTH
+  f.puts '=' * WIDTH
   HEIGHT.times do |y|
     WIDTH.times do |x|
       p = Vector[x, y]
@@ -55,7 +55,7 @@ def display(robots, f = nil)
     end
     f.puts
   end
-  f.puts "=" * WIDTH
+  f.puts '=' * WIDTH
 end
 
 File.open('output', 'w') do |f|
