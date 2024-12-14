@@ -8,7 +8,7 @@ AllCops:
   DisplayStyleGuide: true
   NewCops: enable
   Exclude:
-    - 'src/**/golf*.rb'
+    - '../src/**/golf*.rb'
 
 Layout/BlockEndNewline:
   Enabled: false
