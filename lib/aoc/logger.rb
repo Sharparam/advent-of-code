@@ -3,8 +3,10 @@
 require 'ougai'
 
 module AoC
+  # Logger object used in AoC code, currently just an Ougai logger.
   class Logger < Ougai::Logger
-    def initialize(*, **options)
+    # Initializes the logger.
+    def initialize(*, **)
       super
     end
   end

@@ -7,5 +7,6 @@ require_relative 'aoc/api'
 require_relative 'aoc/math'
 require_relative 'aoc/point'
 
+# Contains utilities and helpers for solving AoC.
 module AoC
 end

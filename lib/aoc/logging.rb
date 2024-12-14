@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 module AoC
+  # Include-able module to enable logging from modules and classes.
   module Logging
+    # Get the {AoC::Logger} instance for the current object.
+    # @return [AoC::Logger]
     def log
       self.class.log
     end
@@ -12,7 +15,10 @@ module AoC
     @loggers = {}
 
     class << self
-      attr_writer :out, :formatter
+      # @param value [IO]
+      attr_writer :out
+
+      attr_writer :formatter
 
       def level=(level)
         @level = level
