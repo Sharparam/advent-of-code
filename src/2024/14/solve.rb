@@ -58,8 +58,6 @@ def display(robots, f = nil)
   f.puts "=" * WIDTH
 end
 
-$neighbor_c = 0
-
 File.open('output', 'w') do |f|
   # f.puts 'i = 0'
   # display(robots, f)
