@@ -17,7 +17,9 @@ group :development do
   gem 'ruby-lsp', '~> 0.22.1'
   # solargraph doesn't support RBS 3.x
   # gem 'solargraph', '~> 0.50.0'
+  gem 'sord', '~> 6.0'
   gem 'stackprof', '~> 0.2.26'
+  gem 'yard', '~> 0.9.37'
 end
 
 group :test do
