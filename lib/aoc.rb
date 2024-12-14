@@ -5,6 +5,7 @@ require_relative 'aoc/logger'
 require_relative 'aoc/config'
 require_relative 'aoc/api'
 require_relative 'aoc/math'
+require_relative 'aoc/point'
 
 module AoC
 end
