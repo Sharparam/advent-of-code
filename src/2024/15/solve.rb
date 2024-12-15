@@ -1,19 +1,22 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'matrix'
+require 'bundler/setup'
+require 'aoc/point'
+
+P = AoC::Point2
+
+LEFT = P[-1, 0]
+DOWN = P[0, 1]
+RIGHT = P[1, 0]
+UP = P[0, -1]
 
 DIRS = {
-  ?< => Vector[-1, 0],
-  ?v => Vector[0, 1],
-  ?> => Vector[1, 0],
-  ?^ => Vector[0, -1]
+  ?< => LEFT,
+  ?v => DOWN,
+  ?> => RIGHT,
+  ?^ => UP
 }.freeze
-
-LEFT = Vector[-1, 0]
-DOWN = Vector[0, 1]
-RIGHT = Vector[1, 0]
-UP = Vector[0, -1]
 
 CELL_MATES = {
   ?. => ?.,
@@ -22,37 +25,33 @@ CELL_MATES = {
   ?[ => ?]
 }.freeze
 
-def display(grid, width, height)
-  puts '=' * width
-  height.times do |y|
-    width.times do |x|
-      print ' ' if grid[Vector[x, y]].nil?
-      print grid[Vector[x, y]]
+def display(grid)
+  $width ||= grid.keys.map(&:x).max + 1
+  $height ||= grid.keys.map(&:y).max + 1
+  puts '=' * $width
+  $height.times do |y|
+    $width.times do |x|
+      print ' ' if grid[P[x, y]].nil?
+      print grid[P[x, y]]
     end
     puts
   end
-  puts '=' * width
+  puts '=' * $width
 end
 
 map_str, move_str = ARGF.read.split "\n\n"
 
 grid = map_str.lines.flat_map.with_index { |line, y|
   line.chomp.chars.map.with_index { |c, x|
-    [Vector[x, y], c]
+    [P[x, y], c]
   }
 }.to_h
 
 grid2 = grid.flat_map { |k, v|
-  new_k = Vector[k[0] * 2, k[1]]
-  first = v == ?O ? ?[ : v
-  second = CELL_MATES[first]
-  [[new_k, first], [new_k + Vector[1, 0], second]]
+  new_k = P[k.x * 2, k.y]
+  cell = v == ?O ? ?[ : v
+  [[new_k, cell], [new_k + P[1, 0], CELL_MATES[cell]]]
 }.to_h
-
-WIDTH = grid.keys.map { _1[0] }.max + 1
-HEIGHT = grid.keys.map { _1[1] }.max + 1
-WIDTH2 = grid2.keys.map { _1[0] }.max + 1
-HEIGHT2 = grid2.keys.map { _1[1] }.max + 1
 
 START = grid.find { |_, v| v == ?@ }.first
 START2 = grid2.find { |_, v| v == ?@ }.first
@@ -99,7 +98,7 @@ def move_vertical(grid, poses, dir)
 end
 
 def move2(grid, pos, dir)
-  return move_vertical(grid, [pos], dir)[0] if dir[0].zero?
+  return move_vertical(grid, [pos], dir)[0] if dir.x.zero?
   move(grid, pos, dir)
 end
 
@@ -111,5 +110,5 @@ MOVES.each do |m|
   pos2 = move2(grid2, pos2, m)
 end
 
-puts grid.filter_map { |p, v| v == ?O ? p : nil }.sum { (100 * _1[1]) + _1[0] }
-puts grid2.filter_map { |p, v| v == ?[ ? p : nil }.sum { (100 * _1[1]) + _1[0] }
+puts grid.filter_map { |p, v| v == ?O ? p : nil }.sum { (100 * _1.y) + _1.x }
+puts grid2.filter_map { |p, v| v == ?[ ? p : nil }.sum { (100 * _1.y) + _1.x }
