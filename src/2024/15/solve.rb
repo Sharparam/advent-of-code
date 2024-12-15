@@ -36,12 +36,8 @@ end
 
 map_str, move_str = ARGF.read.split "\n\n"
 
-# START = nil
-
 grid = map_str.lines.flat_map.with_index { |line, y|
   line.chomp.chars.map.with_index { |c, x|
-    # START = Vector[x, y] if c == ?@
-    # [Vector[x, y], c == ?@ ? ?. : c]
     [Vector[x, y], c]
   }
 }.to_h
@@ -133,25 +129,6 @@ def can_move_vertical?(grid, pos, dir)
   can_move_vertical?(grid, new_left_pos, dir) && can_move_vertical?(grid, new_right_pos, dir)
 end
 
-def move_horizontal(grid, pos, dir)
-  # dir is either Vector[1, 0] or Vector[-1, 0]
-  cell = grid[pos]
-  is_box_edge = cell == ?[ || cell == ?]
-  new_pos = pos + dir
-  new_cell = grid[new_pos]
-  return false if new_cell.nil? || new_cell == ?#
-  new_far_pos = new_pos + dir
-  new_far_cell = grid[new_far_pos]
-  return false if is_box_edge && (new_far_cell.nil? || new_far_cell == ?#)
-
-  return false if new_cell != ?. && !move(grid, new_pos, dir)
-
-  grid[new_pos] = cell
-  grid[pos] = ?.
-
-  true
-end
-
 def move_vertical(grid, pos, dir, checked: false)
   # dir is either Vector[0, 1] or Vector[0, -1]
   cell = grid[pos]
@@ -201,28 +178,19 @@ end
 
 def move2(grid, pos, dir)
   return move_vertical(grid, pos, dir) if dir == UP || dir == DOWN
-  move_horizontal(grid, pos, dir)
+  move(grid, pos, dir)
 end
 
 # display grid
 
 pos = START
+pos2 = START2
 
 MOVES.each do |m|
   pos += m if move(grid, pos, m)
+  pos2 += m if move2(grid2, pos2, m)
   # display grid
 end
 
 puts grid.filter_map { |p, v| v == ?O ? p : nil }.sum { (100 * _1[1]) + _1[0] }
-
-pos2 = START2
-
-# display grid2, WIDTH2, HEIGHT2
-
-MOVES.each do |m|
-  # puts "attempting to move #{grid2[pos2]} #{m}"
-  pos2 += m if move2(grid2, pos2, m)
-  # display grid2, WIDTH2, HEIGHT2
-end
-
 puts grid2.filter_map { |p, v| v == ?[ ? p : nil }.sum { (100 * _1[1]) + _1[0] }
