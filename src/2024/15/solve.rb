@@ -54,142 +54,61 @@ HEIGHT = grid.keys.map { _1[1] }.max + 1
 WIDTH2 = grid2.keys.map { _1[0] }.max + 1
 HEIGHT2 = grid2.keys.map { _1[1] }.max + 1
 
-# puts "grid 1 is #{WIDTH} x #{HEIGHT}"
-# puts "grid 2 is #{WIDTH2} x #{HEIGHT2}"
-
-# puts grid2[Vector[WIDTH2 - 1, HEIGHT2 - 1]]
-
-# display grid, WIDTH, HEIGHT
-# display grid2, WIDTH2, HEIGHT2
-
 START = grid.find { |_, v| v == ?@ }.first
 START2 = grid2.find { |_, v| v == ?@ }.first
 
 MOVES = move_str.tr("\n", '').chars.map { DIRS[_1] }
 
-# p grid
-# p START
-# p MOVES
-
 def move(grid, pos, dir)
   new_pos = pos + dir
   new_cell = grid[new_pos]
-  return false if new_cell.nil? || new_cell == ?#
-  return false if new_cell != ?. && !move(grid, new_pos, dir)
+  return pos if new_cell.nil? || new_cell == ?#
+  move(grid, new_pos, dir) if new_cell != ?.
+  return pos unless grid[new_pos] == ?.
   grid[new_pos] = grid[pos]
   grid[pos] = ?.
-  true
+  new_pos
 end
 
-def can_move_vertical?(grid, pos, dir)
-  cell = grid[pos]
-  is_box = cell == ?[ || cell == ?]
-  new_pos = pos + dir
-  new_cell = grid[new_pos]
-  # puts "  checking if #{cell} at #{pos} can move #{dir}"
-  return false if new_cell.nil? || new_cell == ?#
+BOX_CELLS = Set.new %w[[ ]]
 
-  return true if !is_box && new_cell == ?.
-
-  unless is_box
-    # we are robot pushing on a box
-    new_far_pos = new_cell == ?[ ? new_pos + RIGHT : new_pos + LEFT
-    return can_move_vertical?(grid, new_pos, dir) && can_move_vertical?(grid, new_far_pos, dir)
-  end
-
-  # puts "    before: pos is #{pos} and cell is #{cell}"
-  left_pos = cell == ?[ ? pos : pos + LEFT
-  right_pos = left_pos + RIGHT
-  new_left_pos = left_pos + dir
-  new_right_pos = right_pos + dir
-
-  new_left_cell = grid[new_left_pos]
-  new_right_cell = grid[new_right_pos]
-
-  # puts "    current is #{left_pos} #{right_pos} (#{grid[left_pos]} #{grid[right_pos]})"
-  # puts "    new     is #{new_left_pos} #{new_right_pos} (#{new_left_cell} #{new_right_cell})"
-
-  return true if new_left_cell == ?. && new_right_cell == ?.
-  return false if new_left_cell == ?# || new_right_cell == ?#
-
-  if new_left_cell == ?] && new_right_cell == ?.
-    return can_move_vertical?(grid, new_left_pos, dir)
-  end
-
-  if new_left_cell == ?. && new_right_cell == ?[
-    return can_move_vertical?(grid, new_right_pos, dir)
-  end
-
-  if new_left_cell == ?[
-    return can_move_vertical?(grid, new_left_pos, dir) # && can_move_vertical?(grid, new_right_pos, dir)
-  end
-
-  # at this point we know we have the complex case of a box pushing two other boxes
-
-  can_move_vertical?(grid, new_left_pos, dir) && can_move_vertical?(grid, new_right_pos, dir)
-end
-
-def move_vertical(grid, pos, dir, checked: false)
-  # dir is either Vector[0, 1] or Vector[0, -1]
-  cell = grid[pos]
-  # raise 'trying to move a wall' if cell == ?#
-  if cell == ?#
-    display grid, WIDTH2, HEIGHT2
-    raise "trying to move wall at #{pos} in direction #{dir}"
-  end
-  raise 'trying to move empty space' if cell == ?.
-  is_box = cell == ?[ || cell == ?]
-  new_pos = pos + dir
-  new_cell = grid[new_pos]
-  far_pos = cell == ?[ ? pos + RIGHT : pos + LEFT
-  far_cell = grid[far_pos]
-  far_new_pos = far_pos + dir
-  far_new_cell = grid[far_new_pos]
-
-  return false unless checked || can_move_vertical?(grid, pos, dir)
-
-  if is_box && (new_cell != ?. || far_new_cell != ?.)
-    left_pos = cell == ?[ ? pos : pos + LEFT
-    right_pos = left_pos + RIGHT
-    left_new_pos = left_pos + dir
-    right_new_pos = right_pos + dir
-    left_new_cell = grid[left_new_pos]
-    right_new_cell = grid[right_new_pos]
-    if left_new_cell == ?] && right_new_cell == ?[
-      raise 'checked left move failed' unless move_vertical(grid, left_new_pos, dir, checked: true)
-      raise 'checked right move failed' unless move_vertical(grid, right_new_pos, dir, checked: true)
-    elsif left_new_cell == ?.
-      raise 'checked move failed' unless move_vertical(grid, right_new_pos, dir, checked: true)
-    else
-      raise 'checked move failed' unless move_vertical(grid, left_new_pos, dir, checked: true)
+def move_vertical(grid, poses, dir)
+  new_poses = poses.map { _1 + dir }
+  return poses if new_poses.any? { grid[_1].nil? || grid[_1] == ?# }
+  if new_poses.any? { BOX_CELLS.include?(grid[_1]) }
+    poses_to_move = Set.new
+    new_poses.each do |new_pos|
+      if grid[new_pos] == ?[
+        poses_to_move.add new_pos
+        poses_to_move.add new_pos + RIGHT
+      elsif grid[new_pos] == ?]
+        poses_to_move.add new_pos
+        poses_to_move.add new_pos + LEFT
+      end
     end
-  elsif new_cell != ?.
-    raise 'checked move failed' unless move_vertical(grid, new_pos, dir, checked: true)
+    move_vertical grid, poses_to_move, dir
   end
 
-  grid[new_pos] = cell
-  grid[pos] = ?.
+  return poses unless new_poses.all? { grid[_1] == ?. }
 
-  return true unless is_box
-  grid[far_new_pos] = far_cell
-  grid[far_pos] = ?.
-  true
+  poses.zip(new_poses).each do |pos, new_pos|
+    grid[new_pos] = grid[pos]
+    grid[pos] = ?.
+  end
+  new_poses
 end
 
 def move2(grid, pos, dir)
-  return move_vertical(grid, pos, dir) if dir == UP || dir == DOWN
+  return move_vertical(grid, [pos], dir)[0] if dir[0].zero?
   move(grid, pos, dir)
 end
-
-# display grid
 
 pos = START
 pos2 = START2
 
 MOVES.each do |m|
-  pos += m if move(grid, pos, m)
-  pos2 += m if move2(grid2, pos2, m)
-  # display grid
+  pos = move(grid, pos, m)
+  pos2 = move2(grid2, pos2, m)
 end
 
 puts grid.filter_map { |p, v| v == ?O ? p : nil }.sum { (100 * _1[1]) + _1[0] }
