@@ -6,6 +6,7 @@ gemspec
 
 gem 'amazing_print', '~> 1.6'
 gem 'ougai', '~> 2.0'
+gem 'pairing_heap', '~> 3.1'
 gem 'tomlib', '~> 0.7.3'
 
 group :development do
