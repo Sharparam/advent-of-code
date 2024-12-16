@@ -40,33 +40,32 @@ def display(path)
 end
 
 def dfs2
-  stack = [[START, Point[1, 0], Set.new, 0, [START, GOAL]]]
+  stack = [[START, Point[1, 0], Set.new, 0]]
   min_cost = Float::INFINITY
   pos_mins = Hash.new Float::INFINITY
   paths = Hash.new { |h, k| h[k] = [] }
 
   until stack.empty?
-    pos, dir, vis, cost, path = stack.pop
+    pos, dir, vis, cost = stack.pop
     next if cost > min_cost
     next if cost > pos_mins[pos] + 1000
+    vis.add pos
     if pos == GOAL
-      paths[cost] << path
+      paths[cost] << vis
       min_cost = cost if cost < min_cost
       next
     end
     pos_mins[pos] = cost if cost < pos_mins[pos]
-    vis.add pos
-    path << pos
     DIRS.each do |new_dir|
       new_pos = pos + new_dir
       if !vis.include?(new_pos) && MAZE[new_pos] != ?#
         turn_cost = new_dir == dir ? 0 : 1000
-        stack.push [new_pos, new_dir, vis.dup, cost + turn_cost + 1, path.dup]
+        stack.push [new_pos, new_dir, vis.dup, cost + turn_cost + 1]
       end
     end
   end
 
-  [min_cost, Set.new(paths[min_cost].flatten)]
+  [min_cost, paths[min_cost].reduce(:|)]
 end
 
 part1, paths = dfs2
