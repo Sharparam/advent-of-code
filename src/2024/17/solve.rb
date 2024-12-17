@@ -46,16 +46,18 @@ end
 
 puts run(registers.dup).join ','
 
-heap = PairingHeap::SimplePairingHeap.new
-heap.push [[0, 0, 0], $program.size - 1], 0
-
-until heap.empty?
-  regs, i = heap.pop
-  target = $program[i]
-  (0..0b111).each do |a|
-    regs[0] = (regs[0] & (~0b111)) | a
-    result = run(regs)
+def find(a, i)
+  return a if i == $program.size
+  target = $program[-(i + 1)]
+  (0..7).each do |x|
+    reg_a = (a << 3) + x
+    result = run([reg_a, 0, 0])
+    next unless result[0] == target
+    n = find(reg_a, i + 1)
+    return n unless n.nil?
   end
+
+  nil
 end
 
-# puts (0..).find { |a| run(a) == $program }
+puts find(0, 0)
