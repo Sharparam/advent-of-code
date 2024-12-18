@@ -17,6 +17,7 @@ GEM
     json (2.9.0)
     language_server-protocol (3.17.0.3)
     logger (1.6.3)
+    matrix (0.4.2)
     method_source (1.1.0)
     oj (3.16.7)
       bigdecimal (>= 3.0)
@@ -102,6 +103,7 @@ PLATFORMS
 DEPENDENCIES
   amazing_print (~> 1.6)
   aoc!
+  matrix (~> 0.4.2)
   ougai (~> 2.0)
   pairing_heap (~> 3.1)
   profile (~> 0.4.0)
