@@ -9,11 +9,8 @@ DESIGNS = ARGF.read.strip.lines.map(&:strip)
 $counts = {}
 
 def solve(design)
-  return $counts[design] if $counts.key?(design)
   return 1 if design == ''
-  $counts[design] = PATTERNS.select { design.start_with?(_1) }.sum do |pattern|
-    solve(design[pattern.size..])
-  end
+  $counts[design] ||= PATTERNS.select { design.start_with? _1 }.sum { solve design[_1.size..] }
 end
 
 # puts DESIGNS.count { _1 =~ REGEX }
