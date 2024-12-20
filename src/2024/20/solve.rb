@@ -33,21 +33,6 @@ def manhattan(a, b)
   (a[0] - b[0]).abs + (a[1] - b[1]).abs
 end
 
-def bfs_simple
-  queue = [[START, [START].to_set, 0]]
-
-  until queue.empty?
-    pos, vis, cost = queue.shift
-    return [vis, cost] if pos == GOAL
-    neighbors(pos).each do |neighbor, _| # rubocop:disable Style/HashEachMethods
-      next if MAP[neighbor] == WALL || vis.include?(neighbor)
-      n_vis = vis.dup
-      n_vis.add neighbor
-      queue.push [neighbor, n_vis, cost + 1]
-    end
-  end
-end
-
 def dijkstra_simple
   dist = Hash.new Float::INFINITY
   dist[START] = 0
@@ -86,15 +71,10 @@ def make_path(prev)
   s
 end
 
-# PATH, COST = bfs_simple
-
 DIST, PREV = dijkstra_simple
 PATH = make_path(PREV)
 PATH_SET = PATH.to_set
 COST = DIST[GOAL]
-
-# p PREV
-# p PATH
 
 def bfs_cheat
   queue = [[START, [START].to_set, 0, nil]]
@@ -131,45 +111,6 @@ def bfs_cheat
   results
 end
 
-def bfs_cheat2
-  queue = [[START, [START].to_set, 0, false, 20, nil, nil, nil]]
-  results = {}
-
-  until queue.empty?
-    pos, vis, cost, cheating, cheat_steps, cheat_start, cheat, last_exit = queue.shift
-    next if cost > COST
-    next if cheat_steps <= 0 && MAP[pos] != EMPTY
-    last_exit = pos if last_exit.nil? || MAP[last_exit] != EMPTY
-    if cheating && cheat_steps == 0
-      cheating = false
-      cheat = [cheat_start, last_exit]
-    end
-    if pos == GOAL
-      cheat = [cheat_start, last_exit || pos] if cheating && cheat.nil?
-      results[cheat] = cost
-      next
-    end
-    # if cheating
-    #   if pos[0] != GOAL[0]
-
-    #   end
-    # end
-    neighbors(pos).each do |neighbor, _| # rubocop:disable Style/HashEachMethods
-      next if vis.include?(neighbor)
-      n_vis = vis.dup
-      n_vis.add neighbor
-      if MAP[neighbor] == WALL
-        next unless cheat.nil?
-        queue.push [neighbor, n_vis, cost + 1, true, cheat_steps - 1, neighbor, cheat, neighbor]
-      else
-        queue.push [neighbor, n_vis, cost + 1, cheating, cheat_steps, cheat_start, cheat, last_exit]
-      end
-    end
-  end
-
-  results
-end
-
 cheats = bfs_cheat
 
 # grouped = {}
@@ -190,11 +131,11 @@ puts part1
 
 combs = PATH.combination(2)
 
-puts "#{combs.size} combinations"
+warn "#{combs.size} combinations"
 
 to_try = combs.select { |a, b| manhattan(a, b) <= 20 }
 
-puts "#{to_try.size} to try"
+warn "#{to_try.size} to try"
 
 cheats2 = {}
 
@@ -207,10 +148,6 @@ to_try.each do |a, b|
   total_dist = dist_start_to_c_start + dist_c_stop_to_goal + dist_cheat
   cheats2[id] = total_dist
 end
-
-# cheats2 = bfs_cheat2
-
-# p cheats2
 
 # grouped = {}
 # cheats2.each do |cheat, cost|
