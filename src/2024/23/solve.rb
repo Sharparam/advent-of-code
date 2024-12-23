@@ -13,8 +13,7 @@ part1 = Set.new
 graph.keys.select { _1.start_with?('t') }.each do |start|
   adj = graph[start].to_a
   adj.combination(2) do |a, b|
-    next unless graph[a].include?(start) && graph[b].include?(start) && graph[a].include?(b)
-    part1 << [start, a, b].sort
+    part1 << [start, a, b].sort if graph[a].include?(b)
   end
 end
 
