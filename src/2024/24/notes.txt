@@ -1,0 +1,67 @@
+Part 2:
+
+$ ./solve.rb input
+60614602965288
+MISMATCH FOUND at 5:
+  Expected 1 + 1 to produce 10 but was 00
+       0 0000 0000 0000 0000 0000 0000 0000 0000 0000 0010 0000
+    +  0 0000 0000 0000 0000 0000 0000 0000 0000 0000 0010 0000
+    = 00 0000 0000 0000 0000 0000 0000 0000 0000 0000 1000 0000
+MISMATCH FOUND at 6:
+  Expected 1 + 1 to produce 10 but was 01
+       0 0000 0000 0000 0000 0000 0000 0000 0000 0000 0100 0000
+    +  0 0000 0000 0000 0000 0000 0000 0000 0000 0000 0100 0000
+    = 00 0000 0000 0000 0000 0000 0000 0000 0000 0000 0100 0000
+MISMATCH FOUND at 25:
+  Expected 1 + 1 to produce 10 but was 01
+       0 0000 0000 0000 0000 0010 0000 0000 0000 0000 0000 0000
+    +  0 0000 0000 0000 0000 0010 0000 0000 0000 0000 0000 0000
+    = 00 0000 0000 0000 0000 0010 0000 0000 0000 0000 0000 0000
+MISMATCH FOUND at 30:
+  Expected 1 + 1 to produce 10 but was 00
+       0 0000 0000 0000 0100 0000 0000 0000 0000 0000 0000 0000
+    +  0 0000 0000 0000 0100 0000 0000 0000 0000 0000 0000 0000
+    = 00 0000 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000
+MISMATCH FOUND at 31:
+  Expected 1 + 1 to produce 10 but was 01
+       0 0000 0000 0000 1000 0000 0000 0000 0000 0000 0000 0000
+    +  0 0000 0000 0000 1000 0000 0000 0000 0000 0000 0000 0000
+    = 00 0000 0000 0000 1000 0000 0000 0000 0000 0000 0000 0000
+MISMATCH FOUND at 36:
+  Expected 1 + 1 to produce 10 but was 00
+       0 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000
+    +  0 0000 0001 0000 0000 0000 0000 0000 0000 0000 0000 0000
+    = 00 0000 0100 0000 0000 0000 0000 0000 0000 0000 0000 0000
+
+These Zs are wrong:
+z05, z06, z25, z30, z31, z36
+
+These are the operations for them:
+  crm XOR sss -> z05
+  y06 AND x06 -> z06
+  nbs XOR tnt -> z25
+  rpt XOR rmb -> z30
+  mjr OR hgw -> z31
+  mgn XOR vgd -> z36
+
+z05, z25, z30, z36 are already XOR
+but z06 is AND, and z31 is OR. That is wrong.
+
+for z05 when adding 1+1, the output seems to be appearing in z07 instead of z06:
+  y06 AND x06 -> z06
+  jqn XOR grj -> z07
+
+If we swap them we get one less error bit
+FIRST SWAP: z06,z07
+
+
+z30 is another XOR:
+when adding 1+1, output appears in z32 instead of z31, swap?
+  yes: fewer error bits after swap
+SECOND SWAP: z31,z32
+
+After these two swaps, errors remain on z25 and z36
+
+z25 is another XOR:
+when adding 1+1, output appears in z25 instead of z26, swap them?
+  khj XOR mbh -> z26
