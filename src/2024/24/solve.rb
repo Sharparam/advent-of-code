@@ -52,20 +52,18 @@ end
 x.each_with_index { |_, i| x[i] = 0 }
 y.each_with_index { |_, i| y[i] = 0 }
 
-def valid?(state, x, y, log: false)
+def valid?(state, x, y, e_x, e_y, e_z, log: false)
   valid = true
   45.times do |i|
-    x[i] = 1
-    y[i] = 1
-    z_i = i
-    z_v = 0
+    x[i] = e_x
+    y[i] = e_y
     z = zs(state)
 
-    unless z[z_i] == z_v
+    unless z[i] == e_z
       return false unless log
       valid = false
       warn "MISMATCH FOUND at #{i}:"
-      warn "  Expected #{x[i]} + #{y[i]} to produce #{z_v} at #{z_i} but was #{z[z_i]}"
+      warn "  Expected #{x[i]} + #{y[i]} to produce #{e_z} at #{i} but was #{z[i]}"
       vis_add(state, x, y, '    ')
     end
 
@@ -76,4 +74,5 @@ def valid?(state, x, y, log: false)
   valid
 end
 
-valid? state, x, y, log: true
+valid? state, x, y, 1, 1, 0, log: true
+valid? state, x, y, 1, 0, 1, log: true
