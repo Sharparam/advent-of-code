@@ -8,6 +8,9 @@ indent_size = 2
 [*.{rb,rs,py,p6,raku,rakumod,rakudoc,rakutest,lua}]
 end_of_line = lf
 
+[*.rs]
+indent_size = 4
+
 [*.py]
 indent_size = 4
 

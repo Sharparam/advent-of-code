@@ -1,0 +1,10 @@
+[package]
+name = "aoc"
+# version = "0.1.0"
+edition = "2024"
+description = "Advent of Code solutions in Rust"
+homepage = "https://github.com/Sharparam/advent-of-code"
+repository = "https://github.com/Sharparam/advent-of-code"
+publish = false
+
+[dependencies]
