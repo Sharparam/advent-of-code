@@ -33,7 +33,7 @@ year = options[:year] || now.year
 day = options[:day] || now.day
 session_id = options[:session] || AoC::Config.load('.config/aoc.toml').session
 filename = "data/aoc/#{year}/#{'%02d' % day}/input"
-linkname = "src/#{year}/#{'%02d' % day}/input"
+linkname = "src/y#{year}/d#{'%02d' % day}/input"
 
 AoC::Logging.level = verbose ? AoC::Logger::TRACE : AoC::Logger::INFO
 
