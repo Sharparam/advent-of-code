@@ -8,3 +8,10 @@ repository = "https://github.com/Sharparam/advent-of-code"
 publish = false
 
 [dependencies]
+clap = { version = "4.4", features = ["derive"] }
+once_cell = "1.19"
+aoc_macros = { path = "aoc_macros" }
+ctor = "0.6.0"
+
+[workspace]
+members = [".", "aoc_macros"]

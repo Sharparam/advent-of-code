@@ -12,6 +12,7 @@
 # Ignore AoC input files
 input*
 !input*.md
+!input*.rs
 # Ignore input files from other people
 camille
 itsbth
