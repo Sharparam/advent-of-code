@@ -6,6 +6,7 @@ gemspec
 
 gem 'amazing_print', '~> 2.0'
 gem 'matrix', '~> 0.4.3'
+gem 'openssl', '>= 3.3.2'
 gem 'ougai', '~> 2.0'
 gem 'pairing_heap', '~> 3.1'
 gem 'tomlib', '~> 0.7.3'
