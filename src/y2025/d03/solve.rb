@@ -3,7 +3,7 @@
 
 banks = ARGF.map { |l| l.chomp.chars }
 
-def f(bank, index = 0)
+def max(bank, index = 0)
   max = bank[index]
   bank[(index + 1)..].each_with_index do |batt, i|
     if batt > max
@@ -12,13 +12,11 @@ def f(bank, index = 0)
     end
   end
 
-  # puts "#{bank} max #{max} at #{index}"
-
   [max, index]
 end
 
 puts banks.sum { |bank|
-  first, i = f(bank[...-1])
-  second, = f(bank[(i + 1)..])
+  first, i = max(bank[...-1])
+  second, = max(bank[(i + 1)..])
   "#{first}#{second}".to_i
 }
