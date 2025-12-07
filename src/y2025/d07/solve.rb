@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'matrix'
-
 splits = 0
 counters = Hash.new 0
 
