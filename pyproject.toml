@@ -1,0 +1,10 @@
+[project]
+name = "advent-of-code"
+version = "0.1.0"
+description = "Sharparam's Python code for AoC"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [{ name = "Adam Hellberg", email = "sharparam@sharparam.com" }]
+maintainers = [{ name = "Adam Hellberg", email = "sharparam@sharparam.com" }]
+
+dependencies = []
