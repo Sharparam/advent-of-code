@@ -1,5 +1,5 @@
-.envrc
 .env
+.direnv/
 
 .config/aoc.toml
 
