@@ -22,25 +22,26 @@ end
 machines = ARGF.map do |line|
   parts = line.split
   target = parts[0][1...-1].reverse.tr('.#', '01').to_i(2)
-  buttons = parts[1...-1].map { |part| part[1...-1].split(',').map(&:to_i).reduce(0) { |a, e| a | (1 << e) } }
+  buttons = parts[1...-1].map { |part| part[1...-1].split(',').map(&:to_i) }
   Machine.new target, buttons
 end
 
 part1 = machines.sum do |machine|
-  q = [[0, 0]] # machine.buttons.map { [_1, 1] }
+  q = [[0, 0]]
   best = Float::INFINITY
+  buttons = machine.buttons.map { _1.reduce(0) { |a, e| a | (1 << e) } }
 
   until q.empty?
     lights, steps = q.shift
 
-    next if steps > best
+    next if steps >= best
 
     if lights == machine.target
       best = steps if steps < best
       next
     end
 
-    machine.buttons.each do |button|
+    buttons.each do |button|
       q.push [lights ^ button, steps + 1]
     end
   end
