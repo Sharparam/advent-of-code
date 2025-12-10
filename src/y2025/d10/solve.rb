@@ -2,20 +2,12 @@
 # frozen_string_literal: true
 
 class Machine
-  attr_reader :target, :buttons, :lights
+  attr_reader :target, :buttons, :joltage_target
 
-  def initialize(target, buttons, lights = 0)
+  def initialize(target, buttons, joltage_target)
     @target = target
     @buttons = buttons
-    @lights = lights
-  end
-
-  def push(button)
-    Machine.new(target, buttons, lights ^ button)
-  end
-
-  def push!(button)
-    @lights ^= button
+    @joltage_target = joltage_target
   end
 end
 
@@ -23,7 +15,8 @@ machines = ARGF.map do |line|
   parts = line.split
   target = parts[0][1...-1].reverse.tr('.#', '01').to_i(2)
   buttons = parts[1...-1].map { |part| part[1...-1].split(',').map(&:to_i) }
-  Machine.new target, buttons
+  joltage_target = parts[-1][1...-1].split(',').map(&:to_i)
+  Machine.new target, buttons, joltage_target
 end
 
 part1 = machines.sum do |machine|
@@ -50,3 +43,36 @@ part1 = machines.sum do |machine|
 end
 
 puts part1
+
+# The below will never finish for real input
+
+part2 = machines.sum do |machine|
+  q = [[[0] * machine.joltage_target.size, 0]]
+  best = Float::INFINITY
+  target = machine.joltage_target
+  buttons = machine.buttons
+
+  until q.empty?
+    joltage, steps = q.shift
+
+    next if steps >= best
+    next if joltage.each_with_index.any? { |j, i| j > target[i] }
+
+    if joltage == target
+      best = steps if steps < best
+      next
+    end
+
+    buttons.each do |button|
+      j = joltage.dup
+      button.each { j[_1] += 1 }
+      q.push [j, steps + 1]
+    end
+  end
+
+  # puts "Solved! #{best}"
+
+  best
+end
+
+puts part2
