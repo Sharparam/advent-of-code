@@ -45,6 +45,7 @@ end
 puts part1
 
 # The below will never finish for real input
+exit # Abandon all hope
 
 part2 = machines.sum do |machine|
   q = [[[0] * machine.joltage_target.size, 0]]
