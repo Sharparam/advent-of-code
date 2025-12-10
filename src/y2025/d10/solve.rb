@@ -20,12 +20,12 @@ machines = ARGF.map do |line|
 end
 
 part1 = machines.sum do |machine|
-  q = [[0, 0]]
+  q = [[0, 0, -1]]
   best = Float::INFINITY
   buttons = machine.buttons.map { _1.reduce(0) { |a, e| a | (1 << e) } }
 
   until q.empty?
-    lights, steps = q.shift
+    lights, steps, previous = q.shift
 
     next if steps >= best
 
@@ -35,7 +35,8 @@ part1 = machines.sum do |machine|
     end
 
     buttons.each do |button|
-      q.push [lights ^ button, steps + 1]
+      next if button == previous
+      q.push [lights ^ button, steps + 1, button]
     end
   end
 
