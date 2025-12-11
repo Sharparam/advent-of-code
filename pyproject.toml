@@ -9,6 +9,7 @@ maintainers = [{ name = "Adam Hellberg", email = "sharparam@sharparam.com" }]
 
 dependencies = [
     "jupyterlab>=4.5.0",
+    "networkx[default]>=3.6.1",
     "notebook>=7.5.0",
     "numpy>=2.3.5",
     "scipy>=1.16.3",
