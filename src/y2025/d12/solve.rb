@@ -34,6 +34,4 @@ trees = sections[-1].scan(/(\d+)x(\d+):(( \d+)+)/).map { |w, h, r|
   Tree.new w.to_i, h.to_i, r.split.map(&:to_i)
 }
 
-presents.each { |p| puts p.map(&:to_s).join(' ') }
-
 puts trees.count { |t| t.width * t.height >= t.requirements.sum { |r| r * 9 } }
