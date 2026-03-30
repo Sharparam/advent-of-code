@@ -17,7 +17,7 @@ group :development do
   gem 'rubocop', '~> 1.81.7', '>= 1.81.7'
   gem 'rubocop-rake', '~> 0.7.1'
   gem 'rubocop-rspec', '~> 3.8'
-  gem 'ruby-lsp', '~> 0.26.4'
+  gem 'ruby-lsp', '~> 0.26.9'
   # solargraph doesn't support RBS 3.x
   # gem 'solargraph', '~> 0.50.0'
   gem 'sord', '~> 7.1'
