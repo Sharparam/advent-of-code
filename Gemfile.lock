@@ -103,7 +103,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
-    yard (0.9.37)
+    yard (0.9.42)
 
 PLATFORMS
   ruby
@@ -127,7 +127,7 @@ DEPENDENCIES
   sord (~> 7.1)
   stackprof (~> 0.2.27)
   tomlib (~> 0.7.3)
-  yard (~> 0.9.37)
+  yard (~> 0.9.42)
 
 BUNDLED WITH
    2.5.22
