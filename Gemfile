@@ -22,7 +22,7 @@ group :development do
   # gem 'solargraph', '~> 0.50.0'
   gem 'sord', '~> 7.1'
   gem 'stackprof', '~> 0.2.27'
-  gem 'yard', '~> 0.9.37'
+  gem 'yard', '~> 0.9.42'
 end
 
 group :test do
